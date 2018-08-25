@@ -32,6 +32,30 @@ export default {
     return {
       msg: '这是首页'
     }
+  },
+  method () {
+
+  },
+  beforeCreate () {
+
+  },
+  beforeMount () {
+
+  },
+  mounted () {
+
+  },
+  beforeUpdate () {
+
+  },
+  undated () {
+
+  },
+  beforeDestory () {
+
+  },
+  destoryed () {
+    
   }
 }
 </script>
