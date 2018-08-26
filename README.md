@@ -12,6 +12,7 @@
 
 2.引入axios用作http请求;可在http文件夹下配置baseURL后端服务器地址
 用法:在vue组件需要发送请求的地方直接调用;需要指定请求的URL和入参(JSON格式)
+```javascript
  GET:
 	// 向具有指定ID的用户发出请求
 	this.$http.get('/user?ID=12345')
@@ -40,3 +41,4 @@
   	}).catch(function (error) {
     	console.log(error);
   	});
+```
