@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IndexPage from '@/views/IndexPage'
+import IndexPage from '@/views/homepage/IndexPage'
+import Test from '@/views/HelloWorld'
 
 Vue.use(Router)
 
@@ -14,7 +15,12 @@ export default new Router({
     {
       path: '/index',
       name: 'IndexPage',
-      component: IndexPage
+      component: Test
+    },
+    {
+      path: '/test',
+      name: 'IndexPage',
+      component: Test
     }
   ]
 })
