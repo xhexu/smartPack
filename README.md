@@ -1,13 +1,11 @@
-##智慧园区项目
+### 智慧园区项目
 
-###2018-08-23项目搭建  
+##### 2018-08-23项目搭建  
+* 当前项目环境依赖：vue:2.5.2  node >= 6.0.0  webpack:^3.6.0
+* 项目使用Eslint校验语法错误，可在config/index.js 中搜索useEslint:false 关闭
+* 项目使用scss css预处理框架
 
-说明：
-	* 当前项目环境依赖：vue:2.5.2  node >= 6.0.0  webpack:^3.6.0
-	* 项目使用Eslint校验语法错误，可在config/index.js 中搜索useEslint:false 关闭
-	* 项目使用scss css预处理框架
-
-####2018-08-25基础功能  
+##### 2018-08-25基础功能  
 
 * 引入echarts图表库，
   * 柱状图
