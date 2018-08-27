@@ -35,7 +35,8 @@
             <source src="movie.ogg" type="video/ogg">
           您的浏览器不支持Video标签。
           </video>
-          <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png"> 
+          <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
+          <nav-bar></nav-bar>
         </div>
       </div>
 
@@ -72,16 +73,19 @@
         <li>视频监控</li>
       </ul>
     </div> -->
+    <nav-bar></nav-bar>
   </div>
 </template>
 
 <script>
 import BarChart from '../../components/charts/BarChart.vue'
+import navBar from '../../components/navBar.vue'
 
 export default {
   name: 'IndexPage',
   components: {
-    BarChart
+    BarChart,
+    navBar
   },
   data () {
     return {
@@ -100,7 +104,7 @@ export default {
         },{
           name:'停车费',
           data:[18203, 23489, 29034, 104970, 131744, 630230]
-        }]  
+        }]
       },
       optionBL: {
         legend: {
@@ -111,7 +115,7 @@ export default {
         },
         series:[{
           data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]  
+        }]
       },
       optionBR: {
         legend: {
@@ -122,7 +126,7 @@ export default {
         },
         series:[{
           data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]  
+        }]
       },
       optionTR: {
         legend: {
@@ -133,7 +137,7 @@ export default {
         },
         series:[{
           data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]  
+        }]
       }
     }
   },
@@ -221,7 +225,7 @@ export default {
       position: relative;
       img{
         width:90%;
-        -webkit-transition:all .5s ease .5s; 
+        -webkit-transition:all .5s ease .5s;
         transition: all .5s ease .5s;
       }
       &_video{
@@ -243,7 +247,7 @@ export default {
         background-size: 100% 100%;
         opacity: 0;
         transition: all .5s ease .5s;
-        -webkit-transition:all .5s ease .5s; 
+        -webkit-transition:all .5s ease .5s;
       }
       .videoMapAnim{
         opacity: 1;
