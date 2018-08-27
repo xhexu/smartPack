@@ -15,11 +15,11 @@ export default new Router({
     {
       path: '/index',
       name: 'IndexPage',
-      component: Test
+      component: IndexPage
     },
     {
       path: '/test',
-      name: 'IndexPage',
+      name: 'HelloWorld',
       component: Test
     }
   ]
