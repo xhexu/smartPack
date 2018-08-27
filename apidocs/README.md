@@ -16,3 +16,4 @@
 - 1.2 [注册](user/reg.md)
 - 1.3 [登录](user/login.md)
 - 1.4 [测试登录后的接口](user/test.md)
+- 1.5 [页面权限控制](user/auth.md)
