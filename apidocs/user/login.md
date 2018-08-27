@@ -7,9 +7,11 @@ post :  /itfuser/login
 
 2. 入参
 ```
-email : 邮件地址,    必填
+account : 用户账号
+email : 邮件地址,   
 pwd : 密码,    必填
 ```
+- 注意: account 和 email 必须要有一个有值
 
 3. 出参
 ```
