@@ -58,22 +58,6 @@
         </div>
       </div>
     </div>
-
-
-
-    <!--导航-->
-    <!-- <div class="index_btns">
-      <ul>
-        <li style="background: transparent url('../../assets/btn.png') no-repeat 0 0">
-          经营分析
-        </li>
-        <li>园区展示</li>
-        <li>园区管控</li>
-        <li>孵化管理</li>
-        <li>视频监控</li>
-      </ul>
-    </div> -->
-    <nav-bar></nav-bar>
   </div>
 </template>
 
