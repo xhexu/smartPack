@@ -10,31 +10,19 @@
     <div id="main">
       <div class="main-left">
         <div class="main-left_tl">
-          <div style="position: absolute;top: 28px;left: 22px;font-size: 14px;color: #01A4AE;">本周</div>
-          <div style="position: absolute;top: 20px;left: 80px;color: #01A4AE;">车辆信息</div>
+          <div style="position: absolute;top: 28px;left: 30px;font-size: 14px;color: red;">A</div>
+          <div style="position: absolute;top: 20px;left: 80px;color: #01A4AE;"></div>
           <div style="width: 80%;height: 90%;position: absolute;top: 40px;left: 50px;">
-            <bar-chart :option="optionTL"></bar-chart>
-          </div>
-        </div>
-        <div class="main-left_bl">
-          <div style="position: absolute;bottom: 28px;left: 22px;font-size: 14px;color: #01A4AE;">本周</div>
-          <div style="position: absolute;bottom: 20px;left: 80px;color: #01A4AE;">物业费</div>
-          <div style="width: 80%;height: 90%;position: absolute;left: 50px;top: -20px;">
-            <bar-chart :option="optionBL"></bar-chart>
+
           </div>
         </div>
       </div>
 
-      <!--视频播放区-->
+      <!--gif动态图区-->
       <div class="main-center">
         <div class="main-center_video" >
           <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-          <div class="videoMap" :class="{videoMapAnim:isShowVideo}"></div>
-          <video v-show="!isShowVideo"  width="320" height="240" controls>
-            <source src="/static/video.avi" type="video/avi">
-            <source src="movie.ogg" type="video/ogg">
-          您的浏览器不支持Video标签。
-          </video>
+          <div class="videoMap"></div>
           <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
           <nav-bar></nav-bar>
         </div>
@@ -43,17 +31,10 @@
 
       <div class="main-right">
         <div class="main-right_tr">
-          <div style="position: absolute;top: 28px;right: 22px;font-size: 14px;color: #01A4AE;">本周</div>
-          <div style="position: absolute;top: 20px;right: 80px;color: #01A4AE;">租金表</div>
+          <div style="position: absolute;top: 28px;right: 30px;font-size: 14px;color: red;">B</div>
+          <div style="position: absolute;top: 20px;right: 80px;color: #01A4AE;"></div>
           <div style="width: 80%;height: 80%;position: absolute;top: 40px;right: 40px;">
-            <bar-chart :option="optionTR"></bar-chart>
-          </div>
-        </div>
-        <div class="main-right_br">
-          <div style="position: absolute;bottom: 28px;right: 22px;font-size: 14px;color: #01A4AE;">本周</div>
-          <div style="position: absolute;bottom: 20px;right: 80px;color: #01A4AE;">出租率</div>
-          <div style="width: 80%;height: 80%;position: absolute;right: 40px;">
-            <bar-chart :option="optionBR"></bar-chart>
+
           </div>
         </div>
       </div>
@@ -62,110 +43,28 @@
 </template>
 
 <script>
-import BarChart from '../../components/charts/BarChart.vue'
 import navBar from '../../components/navBar.vue'
 
 export default {
-  name: 'IndexPage',
+  name: 'management',
   components: {
-    BarChart,
     navBar
   },
   data () {
     return {
-      isPlayAnimation:false,
-      isShowVideo: false,
-      optionTL: {
-        legend: {
-          data:['车流量', '停车费']
-        },
-        yAxis: {
-          data: ['9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series: [{
-          name:'车流量',
-          data:[18203, 23489, 29034, 104970, 131744, 630230]
-        },{
-          name:'停车费',
-          data:[18203, 23489, 29034, 104970, 131744, 630230]
-        }]
-      },
-      optionBL: {
-        legend: {
-          data:[]
-        },
-        yAxis: {
-          data: ['9-3','9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series:[{
-          data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]
-      },
-      optionBR: {
-        legend: {
-          data:[]
-        },
-        yAxis: {
-          data: ['9-3','9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series:[{
-          data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]
-      },
-      optionTR: {
-        legend: {
-          data:[]
-        },
-        yAxis: {
-          data: ['9-3','9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series:[{
-          data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]
-      }
+      isPlayAnimation: false
     }
   },
   methods: {
-    /**
-     * 查询数据
-     * @return {[type]} [description]
-     */
-    queryChartData () {
-      this.$http.get('/user', {
-        params: {
-          ID: 12345
-        }
-      }).then(function (response) {
-          console.log(response);
-      }).catch(function (error) {
-          console.log(error);
-      });
-    },
     playAanimation () {
-      let me = this
       this.isPlayAnimation = !this.isPlayAnimation
-      setTimeout(function(){
-        me.isShowVideo = !me.isShowVideo
-      },200)
     }
-  },
-  beforeCreate () {
-
   },
   beforeMount () {
     this.isPlayAnimation = false
-    this.isShowVideo = false
   },
   mounted () {
-    //查询首页数据
-    this.queryChartData()
     this.playAanimation()
-    let me = this
-    setInterval(function(){
-      me.optionBL.series = [{
-          data:[parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000)]
-      }];
-    },5000)
   }
 }
 </script>
@@ -192,14 +91,6 @@ export default {
         height: 300px;
         max-width: 260px;
         margin-bottom: 15px;
-      }
-      &_bl{
-        left:50px;
-        position: relative;
-        background:transparent url('/static/divBL.png') no-repeat;
-        background-size:100% 100%;
-        height: 300px;
-        max-width: 260px;
       }
     }
     .main-center{
@@ -251,14 +142,6 @@ export default {
         height: 300px;
         max-width: 260px;
         margin-bottom: 15px;
-      }
-      &_br{
-        right:-55px;
-        position:relative;
-        background:transparent url('/static/divBR.png') no-repeat;
-        background-size:100% 100%;
-        height: 300px;
-        max-width: 260px;
       }
     }
   }
