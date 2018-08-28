@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import IndexPage from '@/views/homepage/IndexPage'
+import showPage from '@/views/parkShow/index'
+import managementPage from '@/views/parkManagement/index'
 import Test from '@/views/HelloWorld'
 
 Vue.use(Router)
@@ -21,6 +23,16 @@ export default new Router({
       path: '/test',
       name: 'HelloWorld',
       component: Test
+    },
+    {
+      path: '/show',
+      name: 'show',
+      component: showPage
+    },
+    {
+      path: '/management',
+      name: 'management',
+      component: managementPage
     }
   ]
 })
