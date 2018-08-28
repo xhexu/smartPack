@@ -4,12 +4,9 @@
     <div class="index_title">
       <img src="../../assets/title.png">
     </div>
-
-
     <!--内容区域-->
     <div id="main">
       <div class="main-left"></div>
-
       <!--园区展示区-->
       <div class="main-center">
         <div class="main-center_video">
@@ -19,38 +16,36 @@
         </div>
         <nav-bar></nav-bar>
       </div>
-
-
       <div class="main-right"></div>
     </div>
   </div>
 </template>
 
 <script>
-  import navBar from '../../components/navBar.vue'
+import navBar from '../../components/navBar.vue'
 
-  export default {
-    name: 'show',
-    components: {
-      navBar
-    },
-    data() {
-      return {
-        isPlayAnimation: false
-      }
-    },
-    methods: {
-      playAanimation() {
-        this.isPlayAnimation = !this.isPlayAnimation
-      }
-    },
-    beforeMount() {
-      this.isPlayAnimation = false
-    },
-    mounted() {
-      this.playAanimation()
+export default {
+  name: 'show',
+  components: {
+    navBar
+  },
+  data () {
+    return {
+      isPlayAnimation: false
     }
+  },
+  methods: {
+    playAanimation () {
+      this.isPlayAnimation = !this.isPlayAnimation
+    }
+  },
+  beforeMount () {
+    this.isPlayAnimation = false
+  },
+  mounted () {
+    this.playAanimation()
   }
+}
 </script>
 
 <!-- 首页样式 -->
