@@ -26,6 +26,7 @@ export default {
     li{float: left;width:120px; height:40px; margin: 0 15px; list-style: none;
       background:transparent url('/static/btn.png') no-repeat;background-size:100% 100%;
       font-size: 14px;color: #01A4AE; font-weight: bold; line-height: 40px; text-align: center;
+      cursor: pointer;
     }
     li:hover{background-image: url("/static/btn_active.png"); color: #bb4b00;}
 	}
