@@ -26,12 +26,12 @@ export default new Router({
     },
     {
       path: '/show',
-      name: 'show',
+      name: '园区展示',
       component: showPage
     },
     {
       path: '/management',
-      name: 'management',
+      name: '园区管控',
       component: managementPage
     }
   ]
