@@ -1,9 +1,5 @@
 <template>
   <div class="index">
-    <!--title-->
-    <div class="index_title">
-      <img src="../../assets/title.png">
-    </div>
     <!--内容区域-->
     <div id="main">
       <div class="main-left"></div>
@@ -51,9 +47,6 @@ export default {
 <!-- 首页样式 -->
 <style lang="scss" scoped>
   .index {
-    &_title {
-      font-size: 20px;
-    }
     #main {
       width: 100%;
       .main-left {
