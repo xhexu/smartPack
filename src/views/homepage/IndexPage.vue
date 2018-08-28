@@ -1,11 +1,5 @@
 <template>
   <div class="index">
-    <!--title-->
-    <div class="index_title">
-      <img src="../../assets/title.png">
-    </div>
-
-
     <!--内容区域-->
     <div id="main">
       <div class="main-left">
