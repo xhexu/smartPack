@@ -1,18 +1,33 @@
 <template>
   <div class="echart">
-    <bar-chart :option="option"></bar-chart>
+    <!-- <bar-chart :option="option"></bar-chart> -->
+    <card :option="card" :chart="option"></card>
   </div>
 </template>
 
 <script>
 import BarChart from '../components/charts/BarChart.vue'
+import Card from './homepage/Card.vue'
 import echarts from 'echarts'
 
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      option: {
+      card: {
+        title:'测试',
+        position: 'BL',
+        item: {
+          title: '本月'
+        }
+      },
+      option: {}
+    }
+  },
+  mounted () {
+    let me = this
+    setTimeout(function(){
+      var option = {
         legend: {
           data:['2011', '2012']
         },
@@ -27,10 +42,14 @@ export default {
           data:[18203, 23489, 29034, 104970, 131744, 630230]
         }]  
       }
-    }
+      
+      me.option = me.$set(me.option, option)
+      console.log(me.option)
+    },4000)
   },
   components: {
-    BarChart
+    BarChart,
+    Card
   }
 }
 </script>
