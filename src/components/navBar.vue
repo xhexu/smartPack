@@ -10,8 +10,8 @@
       <li>
         <router-link to="management">园区管控</router-link>
       </li>
-      <li>孵化管理</li>
-      <li>视频监控</li>
+      <li><router-link to="">孵化管理</router-link></li>
+      <li><router-link to="">视频监控</router-link></li>
     </ul>
   </div>
 </template>
@@ -33,8 +33,6 @@
       margin: 15px auto;
       li {
         float: left;
-        width: 120px;
-        height: 40px;
         margin: 0 15px;
         list-style: none;
         background: transparent url('/static/btn.png') no-repeat;
@@ -46,6 +44,9 @@
         text-align: center;
         cursor: pointer;
         a {
+          display: block;
+          width: 120px;
+          height: 40px;
           text-decoration: none;
           color: #01A4AE;
         }
