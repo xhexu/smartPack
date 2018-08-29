@@ -10,11 +10,13 @@
 }
 ```
 - 测试服务器地址 : http://www.sesame.kim:8086
+- swagger-ui 地址 : http://www.sesame.kim:8086/swagger-ui.html
 
 #### 用户登录
 
-- 1.1 [发送邮件](user/sendEmail.md)
-- 1.2 [注册](user/reg.md)
-- 1.3 [登录](user/login.md)
-- 1.4 [测试登录后的接口](user/test.md)
-- 1.5 [页面权限控制](user/auth.md)
+- 1.1 [判断邮件在系统中是否存在](user/vifemail.md)
+- 1.2 [发送邮件](user/sendEmail.md)
+- 1.3 [注册](user/reg.md)
+- 1.4 [登录](user/login.md)
+- 1.5 [测试登录后的接口](user/test.md)
+- 1.6 [页面权限控制](user/auth.md)

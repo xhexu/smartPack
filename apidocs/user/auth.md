@@ -11,7 +11,7 @@ post :  /itfuser/getAuthKeys
 
 2. 入参
 ```
-需要传jwt的字段, 登录后返回的jwt字段
+需要传jwt的字段, 登录后返回的jwt字段, 字段名 : access_token
 ```
 
 3. 出参
