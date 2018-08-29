@@ -48,7 +48,6 @@ export default {
       text-decoration: none;
     }
   }
-  .el-col:hover,
   .el-col.active{
     background-image: url("/static/btn_active.png");
     a {
