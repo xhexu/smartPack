@@ -1,24 +1,25 @@
 <template>
-  <div class="navBar">
-    <ul>
-      <li>
-        <router-link to="index">经营分析</router-link>
-      </li>
-      <li>
-        <router-link to="show">园区展示</router-link>
-      </li>
-      <li>
-        <router-link to="management">园区管控</router-link>
-      </li>
-      <li><router-link to="">孵化管理</router-link></li>
-      <li><router-link to="">视频监控</router-link></li>
-    </ul>
-  </div>
+  <el-row style="width:720px; margin: 20px auto;">
+    <el-col :span="4">
+      <router-link to="index">经营分析</router-link>
+    </el-col>
+    <el-col :span="4"  :offset="1">
+      <router-link to="show">园区展示</router-link>
+    </el-col>
+    <el-col :span="4"  :offset="1">
+      <router-link to="management">园区管控</router-link>
+    </el-col>
+    <el-col :span="4"  :offset="1">
+      <router-link to="">孵化管理</router-link>
+    </el-col>
+    <el-col :span="4"  :offset="1">
+      <router-link to="">视频监控</router-link>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
 export default {
-  name: 'navBar',
   data () {
     return {}
   }
@@ -26,39 +27,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .navBar {
-    ul {
-      overflow: hidden;
-      width: 750px;
-      margin: 15px auto;
-      li {
-        float: left;
-        margin: 0 15px;
-        list-style: none;
-        background: transparent url('/static/btn.png') no-repeat;
-        background-size: 100% 100%;
-        font-size: 14px;
-        color: #01A4AE;
-        font-weight: bold;
-        line-height: 40px;
-        text-align: center;
-        cursor: pointer;
-        a {
-          display: block;
-          width: 120px;
-          height: 40px;
-          text-decoration: none;
-          color: #01A4AE;
-        }
-      }
-      li:hover {
-        background-image: url("/static/btn_active.png");
-        color: #bb4b00;
-        a {
-          text-decoration: none;
-          color: #bb4b00;
-        }
-      }
+  .el-col {
+    background: transparent url('/static/btn.png') no-repeat;
+    background-size: 100% 100%;
+    a {
+      display: block;
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+      line-height: 40px;
+      color: #01A4AE;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+  .el-col:hover {
+    background-image: url("/static/btn_active.png");
+    a {
+      color: #bb4b00;
     }
   }
 </style>
