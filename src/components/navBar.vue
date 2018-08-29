@@ -1,33 +1,58 @@
 <template>
-  <div class="navBar">
-    <ul>
-      <li>经营分析</li>
-      <li>园区展示</li>
-      <li>园区管控</li>
-      <li>孵化管理</li>
-      <li>视频监控</li>
-    </ul>
-  </div>
+  <el-row style="width:720px; margin: 20px auto;">
+    <el-col :span="4" :class="{active: index==0}" @click="index=0">
+      <router-link :to="{path:'/index',query:{index:0}}">经营分析</router-link>
+    </el-col>
+    <el-col :span="4" :class="{active: index==1}" @click="index=1"  :offset="1">
+      <router-link :to="{path:'/show',query:{index:1}}">园区展示</router-link>
+    </el-col>
+    <el-col :span="4" :class="{active: index==2}" @click="index=2"  :offset="1">
+      <router-link :to="{path:'/management',query:{index:2}}">园区管控</router-link>
+    </el-col>
+    <el-col :span="4" :class="{active: index==3}" @click="index=3"  :offset="1">
+      <router-link to="">孵化管理</router-link>
+    </el-col>
+    <el-col :span="4" :class="{active: index==4}" @click="index=4"  :offset="1">
+      <router-link to="">视频监控</router-link>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
 export default {
-  name: 'navBar',
   data () {
-    return {}
+    return {
+      index: 0
+    }
+  },
+  mounted () {
+    this.index = this.$route.query.index
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.navBar{
-	ul{
-    overflow: hidden;width:750px;margin: 15px auto;
-    li{float: left;width:120px; height:40px; margin: 0 15px; list-style: none;
-      background:transparent url('/static/btn.png') no-repeat;background-size:100% 100%;
-      font-size: 14px;color: #01A4AE; font-weight: bold; line-height: 40px; text-align: center;
+  .el-col {
+    background: transparent url('/static/btn.png') no-repeat;
+    background-size: 100% 100%;
+    a {
+      display: block;
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+      line-height: 40px;
+      color: #01A4AE;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
     }
-    li:hover{background-image: url("/static/btn_active.png"); color: #bb4b00;}
-	}
-}
+  }
+  .el-col:hover,
+  .el-col.active{
+    background-image: url("/static/btn_active.png");
+    a {
+      color: #bb4b00;
+    }
+  }
 </style>
