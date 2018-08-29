@@ -11,12 +11,10 @@
       <div class="main-center">
         <div class="main-center_video" >
           <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-          <div class="videoMap" :class="{videoMapAnim:isShowVideo}"></div>
-          <video v-show="!isShowVideo"  width="320" height="240" controls>
-            <source src="/static/video.avi" type="video/avi">
-            <source src="movie.ogg" type="video/ogg">
-          您的浏览器不支持Video标签。
-          </video>
+          <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
+            <MapView :om="MapData"></MapView>
+          </div>
+          
           <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
         </div>
         <div class="main-center_navbar">
@@ -35,18 +33,25 @@
 <script>
 import navBar from '../../components/navBar.vue'
 import Card from './Card.vue'
+import MapView from './Map.vue'
 
 
 export default {
   name: 'IndexPage',
   components: {
     navBar,
-    Card
+    Card,
+    MapView
   },
   data () {
     return {
       isPlayAnimation:false,
       isShowVideo: false,
+      MapData: {
+        height:400,
+        longitude:121.269869,
+        latitude:31.205909
+      },
       cardTL: {
         title:'车辆信息',
         position: 'TL',
@@ -204,18 +209,17 @@ export default {
         left:-40px;
       }
       .animTop{
-        margin-top:50px !important;
+        margin-top:0px !important;
       }
       .animBtm{
-        margin-top:360px !important;
+        margin-top:410px !important;
       }
       .videoMap{
         width: 85%;
         margin-left: 50px;
-        top: 64px;
-        height: 49%;
+        top: 13px;
+        height: 55%;
         position: absolute;
-        background:transparent url('/static/map.png') no-repeat center;
         background-size: 100% 100%;
         opacity: 0;
         transition: all .5s ease .5s;
