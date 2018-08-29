@@ -17,12 +17,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'navBar',
-    data() {
-      return {}
-    }
+export default {
+  name: 'navBar',
+  data () {
+    return {}
   }
+}
 </script>
 
 <style lang="scss" scoped>

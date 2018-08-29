@@ -2,7 +2,6 @@
   <div id="app">
     <top-bar></top-bar>
     <router-view/>
-   
   </div>
 </template>
 
@@ -12,7 +11,7 @@ export default {
   name: 'App',
   components: {
     topBar
-  },
+  }
 }
 </script>
 
