@@ -3,18 +3,15 @@
     <!--内容区域-->
     <div id="main">
       <div class="main-left">
-        <card :option="cardTL" :chart="optionTL"></card>
-        <card :option="cardBL" :chart="optionBL"></card>
+        <card :option="cardTL" :info="optionTL"></card>
+        <card :option="cardBL" :info="optionBL"></card>
       </div>
 
       <!--视频播放区-->
       <div class="main-center">
         <div class="main-center_video" >
           <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-          <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
-            <MapView :om="MapData"></MapView>
-          </div>
-          
+          <div class="videoMap" :class="{videoMapAnim:isShowVideo}"></div>
           <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
         </div>
         <div class="main-center_navbar">
@@ -23,8 +20,8 @@
       </div>
 
       <div class="main-right">
-        <card :option="cardTR" :chart="optionTR"></card>
-        <card :option="cardBR" :chart="optionBR"></card>
+        <card :option="cardTR" :info="optionTR"></card>
+        <card :option="cardBR" :info="optionBR"></card>
       </div>
     </div>
   </div>
@@ -33,102 +30,80 @@
 <script>
 import navBar from '../../components/navBar.vue'
 import Card from './Card.vue'
-import MapView from './Map.vue'
 
 
 export default {
   name: 'IndexPage',
   components: {
     navBar,
-    Card,
-    MapView
+    Card
   },
   data () {
     return {
       isPlayAnimation:false,
       isShowVideo: false,
-      MapData: {
-        height:400,
-        longitude:121.269869,
-        latitude:31.205909
-      },
       cardTL: {
-        title:'车辆信息',
-        position: 'TL',
-        item: {
-          title: '本月'
-        }
+        title:'政策',
+        position: 'TL'
       },
       cardTR: {
-        title:'物业费',
-        position: 'TR',
-        item: {
-          title: '本月'
-        }
+        title:'活动',
+        position: 'TR'
       },
       cardBL: {
-        title:'租金表',
-        position: 'BL',
-        item: {
-          title: '本月'
-        }
+        title:'孵化器',
+        position: 'TL'
       },
       cardBR: {
-        title:'出租率',
-        position: 'BR',
-        item: {
-          title: '本月'
-        }
+        title:'指南',
+        position: 'TR'
       },
-      optionTL: {
-        legend: {
-          data:['车流量', '停车费']
-        },
-        yAxis: {
-          data: ['9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series: [{
-          name:'车流量',
-          data:[18203, 23429, 29034, 104970, 131744, 63230]
-        },{
-          name:'停车费',
-          data:[18203, 2489, 29034, 104970, 13744, 630230]
-        }]
-      },
-      optionBL: {
-        legend: {
-          data:[]
-        },
-        yAxis: {
-          data: ['9-1','9-2','9-3','9-4','9-5','9-6','9-7','9-8','9-9','9-10','9-11','9-12','9-13','9-14','9-15','9-16',
-          '9-17','9-18','9-19','9-20','9-21','9-22','9-23','9-24','9-25','9-26','9-27','9-28','9-29','9-30','9-31']
-        },
-        series:[{
-          data:[630230, 18203, 23489, 18203, 23489, 29034, 104970, 131744, 630230,630230, 18203, 23489, 29034, 104970, 131744, 630230,630230, 18203, 23489, 18203, 23489, 29034, 104970, 131744, 630230,630230, 18203, 29034, 104970, 131744, 630230]
-        }]
-      },
-      optionBR: {
-        legend: {
-          data:[]
-        },
-        yAxis: {
-          data: ['9-3','9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series:[{
-          data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]
-      },
-      optionTR: {
-        legend: {
-          data:[]
-        },
-        yAxis: {
-          data: ['9-3','9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series:[{
-          data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]
-      }
+      optionTL: [{
+        title:'xxxx',
+        detail:'aaaaaaa',
+        time:'2018-7-23'
+      },{
+        title:'xxxx',
+        detail:'bbbbbbbb',
+        time:'2018-7-23'
+      },{
+        title:'xxxx',
+        detail:'cccccccc',
+        time:'2018-7-23'
+      }],
+      optionBL: [{
+        title:'xxxx',
+        detail:'aaaaaaa',
+        time:'2018-7-23'
+      },{
+        title:'xxxx',
+        detail:'bbbbbbbb',
+        time:'2018-7-23'
+      },{
+        title:'xxxx',
+        detail:'cccccccc',
+        time:'2018-7-23'
+      }],
+      optionBR: [{
+        title:'xxxx',
+        detail:'aaaaaaa'
+      },{
+    title:'xxxx',
+        detail:'bbbbbbbb'
+      },{
+    title:'xxxx',
+        detail:'cccccccc'
+      }],
+      optionTR: [{
+        title:'xxxx',
+        detail:'aaaaaaa'
+      },{
+    title:'xxxx',
+        detail:'bbbbbbbb'
+      },{
+    title:'xxxx',
+        detail:'cccccccc'
+      }]
     }
   },
   methods: {
@@ -159,8 +134,8 @@ export default {
     this.queryChartData()
     this.playAanimation()
     let me = this
-    setInterval(function(){
-      me.optionTR.series = [{
+     /**setInterval(function(){
+     me.optionTR.series = [{
           data:[parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000)]
       }];
     },5000)
@@ -169,7 +144,7 @@ export default {
       me.optionBR.series = [{
           data:[parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000), parseInt(Math.random()*1000)]
       }];
-    },10000)
+    },10000)**/
   }
 }
 </script>
@@ -209,17 +184,18 @@ export default {
         left:-40px;
       }
       .animTop{
-        margin-top:0px !important;
+        margin-top:50px !important;
       }
       .animBtm{
-        margin-top:410px !important;
+        margin-top:360px !important;
       }
       .videoMap{
         width: 85%;
         margin-left: 50px;
-        top: 13px;
-        height: 55%;
+        top: 64px;
+        height: 49%;
         position: absolute;
+        background:transparent url('/static/hatch_center.gif') no-repeat center;
         background-size: 100% 100%;
         opacity: 0;
         transition: all .5s ease .5s;

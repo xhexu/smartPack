@@ -1,144 +1,77 @@
 <template>
-  <div class="index">
-    <!--内容区域-->
-    <div id="main">
-      <div class="main-left">
-        <div class="main-left_tl">
-          <div style="position: absolute;top: 28px;left: 30px;font-size: 14px;color: red;">A</div>
-          <div style="position: absolute;top: 20px;left: 80px;color: #01A4AE;"></div>
-          <div style="width: 80%;height: 90%;position: absolute;top: 40px;left: 50px;">
-
-          </div>
+  <div>
+    <el-row>
+      <el-col :span="7" class="left">
+        <div class="boxA">
+          <b>A</b>
+          <p>本栋共4层</p>
+          <p>入驻企业6家</p>
+          <p>企业类型包含餐饮，金融，IT等</p>
+          <span class="btn">进入本栋</span>
         </div>
-      </div>
-
-      <!--gif动态图区-->
-      <div class="main-center">
-        <div class="main-center_video" >
-          <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-          <div class="videoMap"></div>
-          <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
-          <nav-bar></nav-bar>
+      </el-col>
+      <el-col :span="10" class="center">
+        <img class="imgT" src="../../assets/top_bar.png"/>
+        <div class="view">
+          <img src="../../assets/building.gif"/>
         </div>
-      </div>
-
-
-      <div class="main-right">
-        <div class="main-right_tr">
-          <div style="position: absolute;top: 28px;right: 30px;font-size: 14px;color: red;">B</div>
-          <div style="position: absolute;top: 20px;right: 80px;color: #01A4AE;"></div>
-          <div style="width: 80%;height: 80%;position: absolute;top: 40px;right: 40px;">
-
-          </div>
+        <img class="imgB" src="../../assets/top_bar.png"/>
+      </el-col>
+      <el-col :span="7" class="right">
+        <div class="boxB">
+          <b>B</b>
+          <p>本栋共12层</p>
+          <p>入驻企业62家</p>
+          <p>企业类型包含餐饮，金融，制造，IT，服务业等</p>
+          <span class="btn">进入本栋</span>
         </div>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="7">&nbsp;</el-col>
+      <el-col :span="10">
+        <nav-bar></nav-bar>
+      </el-col>
+      <el-col :span="7">&nbsp;</el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import navBar from '../../components/navBar.vue'
+  import navBar from '../../components/navBar.vue'
+  require('vue2-animate/dist/vue2-animate.min.css')
 
-export default {
-  name: 'management',
-  components: {
-    navBar
-  },
-  data () {
-    return {
-      isPlayAnimation: false
+  export default {
+    components: {
+      navBar
+    },
+    data () {
+      return {}
     }
-  },
-  methods: {
-    playAanimation () {
-      this.isPlayAnimation = !this.isPlayAnimation
-    }
-  },
-  beforeMount () {
-    this.isPlayAnimation = false
-  },
-  mounted () {
-    this.playAanimation()
   }
-}
 </script>
 
-<!-- 首页样式 -->
 <style lang="scss" scoped>
-.index{
-  #main{
-    width: 100%;
-    .main-left{
-      position: relative;
-      top: -55px;
-      width:25%;
-      min-height:800px;
-      float: left;
-      &_tl{
-        left:50px;
-        position: relative;
-        background:transparent url('/static/divTL.png') no-repeat;
-        background-size:100% 100%;
-        height: 300px;
-        max-width: 260px;
-        margin-bottom: 15px;
-      }
-    }
-    .main-center{
-      width:50%;
-      height:800px;
-      float:left;
-      position: relative;
-      img{
-        width:90%;
-        -webkit-transition:all .5s ease .5s;
-        transition: all .5s ease .5s;
-      }
-      &_video{
-        min-height:300px;
-      }
-      .animTop{
-        margin-top:50px !important;
-      }
-      .animBtm{
-        margin-top:360px !important;
-      }
-      .videoMap{
-        width: 85%;
-        margin-left: 50px;
-        top: 64px;
-        height: 49%;
-        position: absolute;
-        background:transparent url('/static/map.png') no-repeat center;
-        background-size: 100% 100%;
-        opacity: 0;
-        transition: all .5s ease .5s;
-        -webkit-transition:all .5s ease .5s;
-      }
-      .videoMapAnim{
-        opacity: 1;
-      }
-    }
-    .main-right{
-      position: relative;
-      top: -50px;
-      width:25%;
-      height:800px;
-      float:right;
-      &_tr{
-        right:-55px;
-        position:relative;
-        background:transparent url('/static/divTR.png') no-repeat;
-        background-size:100% 100%;
-        height: 300px;
-        max-width: 260px;
-        margin-bottom: 15px;
-      }
-    }
+  .boxA{
+    background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;width:40%;font-size: 14px;color:#01A4AE;font-weight: bold;padding:100px 0 50px 80px;text-align: left;
+    margin: 100px auto 0; position: relative;
+    b{color:red;position: absolute;font-size: 16px; top:32px;left:32px;}
+    span.btn{display: block;width:156px; height:44px; margin: 30px auto 0; line-height: 44px;text-align: center;background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;}
   }
-  &_map{
-    min-height: 300px;
-    width: 90%;
+  .boxB{
+    background: url('/static/divTR.png') no-repeat;background-size: 100% 100%;width:40%;font-size: 14px;color:#01A4AE;font-weight: bold;padding:100px 60px 50px 40px;text-align: left;
+    margin: 100px auto 0; position: relative;
+    b{color:red;position: absolute;font-size: 16px; top:34px;right:34px;}
+    span.btn{display: block;width:156px; height:44px; margin: 30px auto 0; line-height: 44px;text-align: center;background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;}
   }
-}
+  .left{}
+  .center{
+    .imgT{width:100%;}
+    .view{
+      width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;
+      img{width:100%;margin: 80px auto 10px;}
+    }
+    .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
+  }
+  .right{}
 </style>

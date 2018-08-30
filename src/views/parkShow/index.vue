@@ -1,104 +1,59 @@
 <template>
-  <div class="index">
-    <!--内容区域-->
-    <div id="main">
-      <div class="main-left"></div>
-      <!--园区展示区-->
-      <div class="main-center">
-        <div class="main-center_video">
-          <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-          <div class="videoMap"></div>
-          <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
-        </div>
+  <div>
+    <el-row>
+      <el-col :span="7">1</el-col>
+      <el-col :span="10">
+        <img class="imgT" src="../../assets/top_bar.png"/>
+        <div class="view" id="map"></div>
+        <img class="imgB" src="../../assets/top_bar.png"/>
+      </el-col>
+      <el-col :span="7">1</el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="7">&nbsp;</el-col>
+      <el-col :span="10">
         <nav-bar></nav-bar>
-      </div>
-      <div class="main-right"></div>
-    </div>
+      </el-col>
+      <el-col :span="7">&nbsp;</el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import navBar from '../../components/navBar.vue'
+require('vue2-animate/dist/vue2-animate.min.css')
 
 export default {
-  name: 'show',
   components: {
     navBar
   },
+  created () {
+    this.initMap()
+  },
   data () {
-    return {
-      isPlayAnimation: false
-    }
+    return {}
   },
   methods: {
-    playAanimation () {
-      this.isPlayAnimation = !this.isPlayAnimation
+    initMap () {
+      let map = new BMap.Map('map')
+      map.centerAndZoom(new BMap.Point(121.269141, 31.205226), 17)
+      map.enableScrollWheelZoom(true)
+      // 覆盖区域图层测试
+      map.addTileLayer(new BMap.PanoramaCoverageLayer())
+
+      let stCtrl = new BMap.PanoramaControl() //构造全景控件
+      stCtrl.setOffset(new BMap.Size(20, 20))
+      map.addControl(stCtrl) //添加全景控件
     }
-  },
-  beforeMount () {
-    this.isPlayAnimation = false
-  },
-  mounted () {
-    this.playAanimation()
   }
 }
 </script>
 
-<!-- 首页样式 -->
 <style lang="scss" scoped>
-  .index {
-    #main {
-      width: 100%;
-      .main-left {
-        position: relative;
-        top: -55px;
-        width: 25%;
-        min-height: 800px;
-        float: left;
-      }
-      .main-center {
-        width: 50%;
-        height: 800px;
-        float: left;
-        position: relative;
-        img {
-          width: 90%;
-          -webkit-transition: all .5s ease .5s;
-          transition: all .5s ease .5s;
-        }
-        .animTop {
-          margin-top: 50px !important;
-        }
-        .animBtm {
-          margin-top: 360px !important;
-        }
-        .videoMap {
-          width: 85%;
-          margin-left: 50px;
-          top: 64px;
-          height: 49%;
-          position: absolute;
-          background: transparent url('/static/map.png') no-repeat center;
-          background-size: 100% 100%;
-          opacity: 0;
-          transition: all .5s ease .5s;
-          -webkit-transition: all .5s ease .5s;
-        }
-      }
-      .main-right {
-        position: relative;
-        top: -50px;
-        width: 25%;
-        height: 800px;
-        float: right;
-      }
-    }
-    &_map {
-      min-height: 300px;
-      width: 90%;
-    }
-    &_btns {
-
-    }
+  .imgT{width:100%;}
+  .view{
+    width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;height:510px;
+    /*img{width:100%;margin: 80px auto 10px;}*/
   }
+  .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
 </style>
