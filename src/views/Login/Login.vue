@@ -1,20 +1,20 @@
 <template>
 <div>
   <div align="left">
-    <img style="left:20px" src="/static/login_login.png" />
+    <img style="left:20px;height: 90px" src="/static/login_login.png" />
   </div>
   <div class="login-container">
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <div class="title-container">
         <h4 class="title">欢迎登陆智慧园区系统</h4>
       </div>
-      <el-form-item prop="username">
-        <el-input name="username" type="text" placeholder="请输入用户名" v-model="loginForm.username" autoComplete="on"
+      <el-form-item prop="email">
+        <el-input name="email" type="text" placeholder="请输入用户名" v-model="loginForm.email" autoComplete="on"
         />
       </el-form-item>
 
-    <el-form-item prop="password">
-      <el-input name="password" placeholder="请输入密码"  :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"/>
+    <el-form-item prop="pwd">
+      <el-input name="pwd" placeholder="请输入密码"  :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.pwd" autoComplete="on"/>
     </el-form-item>
  <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
 
@@ -33,12 +33,12 @@ export default {
   data () {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        email: '',
+        pwd: ''
       },
       loginRules: {
-        username: [{required: true, trigger: 'blur'}],
-        password: [{required: true, trigger: 'blur'}]
+        email: [{required: true, trigger: 'blur'}],
+        pwd: [{required: true, trigger: 'blur'}]
       },
       passwordType: 'password',
       loading: false,
@@ -99,15 +99,12 @@ export default {
   right:40px;
   bottom:20px
 }
-#app {
-  background-image: '';
-}
 .login-container {
   position: fixed;
   height: 100%;
   width: 100%;
   background: url('../../../static/login_bg.png') no-repeat;
-  background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;
+  background-size:100%;-moz-background-size:100%;
   .login-form {
     position: absolute;
     left: 0;

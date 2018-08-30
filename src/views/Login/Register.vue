@@ -1,7 +1,7 @@
 <template>
 <div>
   <div align="left">
-    <img style="left:20px;" src="../../assets/title.png" />
+    <img style="left:20px;height: 90px" src="../../assets/title.png" />
   </div>
 <div class="login-container">
 <el-form :model="registerForm" ref="registerForm" label-width="100px" class="login-form">
@@ -13,6 +13,7 @@
 <el-form-item
     prop="email"
     label="邮箱"
+    :suffix-icon="emailIsHave?'el-icon-error':''"
     :rules="[
       { required: true, message: '请输入邮箱', trigger: 'blur' },
       { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
@@ -39,10 +40,25 @@
   </el-form-item>
 </el-col>
 </el-row>
+  <el-row >
+    <el-col :span="18">
+      <el-form-item label="昵称" prop="name">
+        <el-input v-model="registerForm.name" ></el-input>
+      </el-form-item>
+    </el-col>
+  </el-row>
+  <el-row >
+    <el-col :span="18">
+      <el-form-item label="性别" prop="sex">
+        <el-radio v-model="registerForm.sex" label="男">男</el-radio>
+        <el-radio v-model="registerForm.sex" label="女">女</el-radio>
+      </el-form-item>
+    </el-col>
+  </el-row>
 <el-row >
 <el-col :span="18">
   <el-form-item label="密码" prop="password">
-    <el-input v-model="registerForm.password" type="password"></el-input>
+    <el-input v-model="registerForm.pwd" type="password"></el-input>
   </el-form-item>
   </el-col>
 </el-row>
@@ -50,7 +66,7 @@
 <el-row >
   <el-col :span="18">
    <el-form-item label="重新输入" prop="password2">
-      <el-input v-model="registerForm.password2" type="password" :suffix-icon="isDiffer?'el-icon-error':''"></el-input>
+      <el-input v-model="registerForm.pwd2" type="password" :suffix-icon="isDiffer?'el-icon-error':''"></el-input>
     </el-form-item>
   </el-col>
 
@@ -67,40 +83,42 @@
 <script>
 export default {
   name: 'register',
-  data() {
+  data () {
     return {
       registerForm: {
         email: '',
-        password:'',
-        password2:'',
-        verification:''
+        pwd: '',
+        pwd2: '',
+        vifcode: '',
+        name: '',
+        sex: '男'
       },
-      sendTime:0,
-      but_disabled:false
-    };
+      emailIsHave: false,
+      sendTime: 0,
+      but_disabled: false
+    }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
 
     },
-    loginForm() {
-      this.$router.push({path:'/login'})
+    loginForm () {
+      this.$router.push({path: '/login'})
     },
-    verification(formName){
+    verification (formName) {
 
     },
-    timeFun:function(){
+    timeFun: function () {
       if(this.sendTime <= 0){
         return;
       }
       let time = this.sendTime;
       setTimeout(() => {
-              this.sendTime = time-1;
-              this.timeFun();
-          }, 1000);
+          this.sendTime = time-1;
+          this.timeFun();
+      }, 1000);
     },
     sendMessage(email){
-      console.info(email);
       this.sendTime=30;
       this.timeFun();
     }
@@ -123,8 +141,10 @@ export default {
       }else{
         return false;
       }
-    }
+    },
+    ifHaveEmal: function(){
 
+    }
   }
 }
 </script>
@@ -145,7 +165,8 @@ export default {
   position: fixed;
   height: 100%;
   width: 100%;
-  background: url('../../../static/login_bg.png') no-repeat;;
+  background: url('../../../static/login_bg.png') no-repeat;
+  background-size:100%;-moz-background-size:100%;
   .login-form {
     position: absolute;
     left: 0;

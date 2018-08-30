@@ -1,7 +1,7 @@
 <template>
 <div>
   <div align="left">
-    <img style="left:20px;" src="../../assets/title.png" />
+    <img style="left:20px;height: 90px" src="../../assets/title.png" />
   </div>
 <div class="login-container">
 <el-form :model="registerForm" ref="registerForm" label-width="100px" class="login-form">
@@ -19,7 +19,7 @@
     ]"
   >
     <el-input v-model="registerForm.email"></el-input>
-    
+
   </el-form-item>
   </el-col>
   <el-col :span="4" :offset="1">
@@ -69,7 +69,7 @@
     },
     methods: {
       submitForm(formName) {
-        
+
       },
       loginForm() {
         this.$router.push({path:'/login'})
@@ -126,7 +126,8 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  background: url('../../../static/login_bg.png') no-repeat;;
+  background: url('../../../static/login_bg.png') no-repeat;
+  background-size:100% ;-moz-background-size:100% ;
   .login-form {
     position: absolute;
     left: 0;
