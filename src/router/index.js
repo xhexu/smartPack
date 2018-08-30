@@ -6,6 +6,9 @@ import managementPage from '@/views/parkManagement/index'
 import Test from '@/views/HelloWorld'
 import hatch from '@/views/parkHatch'
 import monitor from '@/views/parkMonitor'
+import Login from '@/views/Login/Login'
+import Register from '@/views/Login/Register'
+import ForgetPwd from '@/views/Login/ForgetPwd'
 
 Vue.use(Router)
 
@@ -47,6 +50,21 @@ export default new Router({
       path: '/monitor',
       name: '视频监控',
       component: monitor
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
+      path: '/forgetPwd',
+      name: 'forgetPwd',
+      component: ForgetPwd
     }
   ]
 })
