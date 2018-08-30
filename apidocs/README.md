@@ -10,6 +10,7 @@
 }
 ```
 - 测试服务器地址 : http://www.sesame.kim:8086
+- 后台测试账号 systemadmin/123456
 - swagger-ui 地址 : http://www.sesame.kim:8086/swagger-ui.html
 
 #### 用户登录
@@ -20,3 +21,8 @@
 - 1.4 [登录](user/login.md)
 - 1.5 [测试登录后的接口](user/test.md)
 - 1.6 [页面权限控制](user/auth.md)
+
+####  数据信息 `相关的接口文档就不详细写了,会在swagger里写清楚`
+
+- 2.1 [园区实体](data/park.md)
+- 2.2 [企业实体](data/enter.md)
