@@ -4,7 +4,7 @@
       <el-col :span="7">1</el-col>
       <el-col :span="10">
         <img class="imgT" src="../../assets/top_bar.png"/>
-        <div class="view"></div>
+        <div class="view" id="map"></div>
         <img class="imgB" src="../../assets/top_bar.png"/>
       </el-col>
       <el-col :span="7">1</el-col>
@@ -20,17 +20,33 @@
 </template>
 
 <script>
-  import navBar from '../../components/navBar.vue'
-  require('vue2-animate/dist/vue2-animate.min.css')
+import navBar from '../../components/navBar.vue'
+require('vue2-animate/dist/vue2-animate.min.css')
 
-  export default {
-    components: {
-      navBar
-    },
-    data () {
-      return {}
+export default {
+  components: {
+    navBar
+  },
+  created () {
+    this.initMap()
+  },
+  data () {
+    return {}
+  },
+  methods: {
+    initMap () {
+      let map = new BMap.Map('map')
+      map.centerAndZoom(new BMap.Point(121.269141, 31.205226), 17)
+      map.enableScrollWheelZoom(true)
+      // 覆盖区域图层测试
+      map.addTileLayer(new BMap.PanoramaCoverageLayer())
+
+      let stCtrl = new BMap.PanoramaControl() //构造全景控件
+      stCtrl.setOffset(new BMap.Size(20, 20))
+      map.addControl(stCtrl) //添加全景控件
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
