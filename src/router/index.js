@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import IndexPage from '@/views/homepage/IndexPage'
 import showPage from '@/views/parkShow/index'
 import managementPage from '@/views/parkManagement/index'
+import buildingA from '@/views/parkManagement/buildingA'
+import buildingB from '@/views/parkManagement/buildingB'
 import Test from '@/views/HelloWorld'
 import hatch from '@/views/parkHatch'
 import monitor from '@/views/parkMonitor'
@@ -38,6 +40,18 @@ export default new Router({
       path: '/management',
       name: '园区管控',
       component: managementPage
+    }
+    ,
+    {
+      path: '/buildingA',
+      name: '园区管控A栋',
+      component: buildingA
+    }
+    ,
+    {
+      path: '/buildingB',
+      name: '园区管控B栋',
+      component: buildingB
     }
     ,
     {
