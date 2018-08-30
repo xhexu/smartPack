@@ -1,5 +1,5 @@
 <template>
-  <el-row>
+  <el-row style="margin-top: 30px;">
     <el-col :span="6" :offset="2" class="left">
       <img class="imgT" src="../../assets/building_top.png"/>
       <div class="view">
@@ -23,7 +23,15 @@
         <li>1</li>
       </ul>
     </el-col>
-    <el-col :span="12" :offset="2" class="right">2</el-col>
+    <el-col :span="14" class="right">
+      <div class="content"></div>
+      <el-row>
+        <el-col :span="6">8F</el-col>
+        <el-col :span="18">
+
+        </el-col>
+      </el-row>
+    </el-col>
   </el-row>
 </template>
 
@@ -50,5 +58,7 @@
       cursor: pointer;}
     }
   }
-  .right{}
+  .right{
+    .content{width:60%; height:500px;background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%; margin: 40px 0 0 20px;}
+  }
 </style>
