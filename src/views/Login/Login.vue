@@ -54,6 +54,13 @@ export default {
       }
     },
     handleLogin() {
+
+      //-----这里模拟了一次正常登录，用作测试;后续做登录功能请删除 ----
+      window.localStorage.setItem('token', 1232)
+      this.$router.push({path:'/'})
+      //--------------------------------------------
+
+
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true

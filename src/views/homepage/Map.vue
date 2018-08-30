@@ -48,8 +48,9 @@ export default {
       let mapStyle ={ 
         style : "dark"  //设置地图风格为高端黑
       }
-      map.setMapStyle(mapStyle);
+      map.setMapStyle(mapStyle)
       // map.setMapType({styleJson:myStyleJson})
+      map.enableScrollWheelZoom(true)
       map.centerAndZoom(new BMap.Point(option.longitude,option.latitude), 18)
       let opts = {
         width: 250,

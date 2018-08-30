@@ -1,16 +1,14 @@
 <template>
   <div id="app">
-    <top-bar></top-bar>
-    <router-view/>
+    <router-view transition="fade" transition-mode="out-in"></router-view>
   </div>
 </template>
 
 <script>
-import topBar from './components/topBar.vue'
+
 export default {
   name: 'App',
   components: {
-    topBar
   }
 }
 </script>
@@ -43,7 +41,7 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
+a{
   color: #42b983;
 }
 .anchorBL{display:none;}

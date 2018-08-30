@@ -156,6 +156,7 @@ export default {
   },
   mounted () {
     //查询首页数据
+    // this.$router.push({path:'/index',query:{index:0}})
     this.queryChartData()
     this.playAanimation()
     let me = this
