@@ -35,6 +35,9 @@
 
 <style lang="scss" scoped>
   .imgT{width:100%;}
-  .view{width:100%;height:450px;}
+  .view{
+    width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;height:510px;
+    /*img{width:100%;margin: 80px auto 10px;}*/
+  }
   .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
 </style>
