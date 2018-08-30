@@ -11,7 +11,9 @@
       <div class="main-center">
         <div class="main-center_video" >
           <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-          <div class="videoMap" :class="{videoMapAnim:isShowVideo}"></div>
+          <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
+            <div style="">申请</div>
+          </div>
           <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
         </div>
         <div class="main-center_navbar">
@@ -112,7 +114,7 @@ export default {
      * @return {[type]} [description]
      */
     queryChartData () {
-      
+
     },
     playAanimation () {
       let me = this
