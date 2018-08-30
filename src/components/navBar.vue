@@ -10,10 +10,10 @@
       <router-link :to="{path:'/management',query:{index:2}}">园区管控</router-link>
     </el-col>
     <el-col :span="4" :class="{active: index==3}" @click="index=3"  :offset="1">
-      <router-link to="">孵化管理</router-link>
+      <router-link :to="{path:'/hatch',query:{index:3}}">孵化管理</router-link>
     </el-col>
     <el-col :span="4" :class="{active: index==4}" @click="index=4"  :offset="1">
-      <router-link to="">视频监控</router-link>
+      <router-link :to="{path:'/monitor',query:{index:4}}">视频监控</router-link>
     </el-col>
   </el-row>
 </template>
