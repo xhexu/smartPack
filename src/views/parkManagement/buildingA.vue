@@ -24,13 +24,9 @@
       </ul>
     </el-col>
     <el-col :span="14" class="right">
-      <div class="content"></div>
-      <el-row>
-        <el-col :span="6">8F</el-col>
-        <el-col :span="18">
-
-        </el-col>
-      </el-row>
+      <el-carousel type="card" trigger="click" indicator-position="none" :autoplay="false" arrow="never" style="height: 100%;">
+        <el-carousel-item v-for="item in 6" :key="item"></el-carousel-item>
+      </el-carousel>
     </el-col>
   </el-row>
 </template>
@@ -59,6 +55,12 @@
     }
   }
   .right{
-    .content{width:60%; height:500px;background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%; margin: 40px 0 0 20px;}
+    height: 800px;
+    .el-carousel__item {
+      width:600px; height:500px;background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%;opacity: 0;
+    }
+    .el-carousel__item.is-active {
+      opacity: 1.0;
+    }
   }
 </style>
