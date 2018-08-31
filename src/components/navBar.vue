@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width:720px; margin: 20px auto;">
+  <el-row style="width:720px; margin:0 auto;">
     <el-col :span="4" :class="{active: index==0}" @click="index=0">
       <router-link :to="{path:'/index',query:{index:0}}">经营分析</router-link>
     </el-col>
