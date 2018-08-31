@@ -1,38 +1,30 @@
 <template>
   <div class="index">
-    <!--内容区域-->
-    <div id="main">
-      <div class="main-left">
-        <card :option="cardTL" :info="optionTL"></card>
-        <card :option="cardBL" :info="optionBL"></card>
-      </div>
-
-      <!--视频播放区-->
-      <div class="main-center">
-        <div class="main-center_video" >
-          <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-          <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
-            <div style="">申请</div>
-          </div>
-          <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
+    <el-row>
+      <el-col :span="7" class="left">
+        <card :option="cardTL" :info="optionTL" :clientHeight="clientHeight"></card>
+        <card :option="cardBL" :info="optionBL" :clientHeight="clientHeight"></card>
+      </el-col>
+      <el-col :span="10" class="center">
+        <img class="imgT" src="../../assets/top_bar.png"/>
+        <div class="view">
+          <img src="../../assets/building.gif"/>
         </div>
-        <div class="main-center_navbar">
-          <nav-bar></nav-bar>
-        </div>
-      </div>
-
-      <div class="main-right">
+        <img class="imgB" src="../../assets/top_bar.png"/>
+        <nav-bar></nav-bar>
+      </el-col>
+      <el-col :span="7" class="right">
         <card :option="cardTR" :info="optionTR"></card>
         <card :option="cardBR" :info="optionBR"></card>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
   </div>
+
 </template>
 
 <script>
 import navBar from '../../components/navBar.vue'
 import Card from './Card.vue'
-
 
 export default {
   name: 'IndexPage',
@@ -42,6 +34,7 @@ export default {
   },
   data () {
     return {
+      clientHeight:0,
       isPlayAnimation:false,
       isShowVideo: false,
       cardTL: {
@@ -108,6 +101,11 @@ export default {
       }]
     }
   },
+  watch: {
+    clientHeight(newValue, oldValue) {
+      console.log(newValue)
+    }
+  },
   methods: {
     /**
      * 查询数据
@@ -151,76 +149,29 @@ export default {
 }
 </script>
 
-<!-- 首页样式 -->
 <style lang="scss" scoped>
-.index{
-  max-width: 1366px;
-  margin: 0 auto;
-  &_title{
-    font-size: 20px;
+  .boxA{
+    background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;width:40%;font-size: 14px;color:#01A4AE;font-weight: bold;padding:100px 0 50px 80px;text-align: left;
+    margin: 100px auto 0; position: relative;
+    b{color:red;position: absolute;font-size: 16px; top:32px;left:32px;}
+    a.btn{display: block;width:156px; height:44px; margin: 30px auto 0; line-height: 44px;text-align: center;background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
+      text-decoration: none;color:#ccc;}
   }
-  #main{
-    width: 100%;
-    .main-left{
-      position: relative;
-      top: -55px;
-      width:25%;
-      min-height:800px;
-      float: left;
+  .boxB{
+    background: url('/static/divTR.png') no-repeat;background-size: 100% 100%;width:40%;font-size: 14px;color:#01A4AE;font-weight: bold;padding:100px 60px 50px 40px;text-align: left;
+    margin: 100px auto 0; position: relative;
+    b{color:red;position: absolute;font-size: 16px; top:34px;right:34px;}
+    a.btn{display: block;width:156px; height:44px; margin: 30px auto 0; line-height: 44px;text-align: center;background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
+      text-decoration: none; color:#ccc;}
+  }
+  .left{}
+  .center{
+    .imgT{width:100%;}
+    .view{
+      width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;
+      img{width:100%;margin: 80px auto 10px;}
     }
-    .main-center{
-      width:50%;
-      height:800px;
-      float:left;
-      position: relative;
-      img{
-        width:90%;
-        -webkit-transition:all .5s ease .5s;
-        transition: all .5s ease .5s;
-      }
-      &_video{
-        min-height:300px;
-      }
-      &_navbar{
-        position:absolute;
-        left:-40px;
-      }
-      .animTop{
-        margin-top:50px !important;
-      }
-      .animBtm{
-        margin-top:360px !important;
-      }
-      .videoMap{
-        width: 85%;
-        margin-left: 50px;
-        top: 64px;
-        height: 49%;
-        position: absolute;
-        background:transparent url('/static/hatch_center.gif') no-repeat center;
-        background-size: 100% 100%;
-        opacity: 0;
-        transition: all .5s ease .5s;
-        -webkit-transition:all .5s ease .5s;
-      }
-      .videoMapAnim{
-        opacity: 1;
-      }
-    }
-    .main-right{
-      position: relative;
-      top: -50px;
-      width:25%;
-      height:800px;
-      float:right;
-    }
+    .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
   }
-  &_map{
-    min-height: 300px;
-    width: 90%;
-  }
-  &_btns{
-
-  }
-}
+  .right{}
 </style>

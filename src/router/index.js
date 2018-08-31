@@ -26,6 +26,16 @@ const router = new Router({
       component: Login
     },
     {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
+      path: '/forgetPwd',
+      name: 'forgetPwd',
+      component: ForgetPwd
+    },
+    {
       path: '/index',
       component: Index,
       children:[
@@ -70,16 +80,6 @@ const router = new Router({
           path: '/monitor',
           name: '视频监控',
           component: monitor
-        },
-        {
-          path: '/register',
-          name: 'register',
-          component: Register
-        },
-        {
-          path: '/forgetPwd',
-          name: 'forgetPwd',
-          component: ForgetPwd
         }
       ]
     }
@@ -92,7 +92,7 @@ router.beforeEach((to, from, next) => {
     if(userInfo){ //如果有就直接到首页
         next();
     } else {
-        if(to.path=='/login'){ //如果是登录页面路径，就直接next()
+        if(to.path=='/login' || to.path=='/register' || to.path=='/forgetPwd'){ //如果是登录页面路径，就直接next()
             next();
         } else { //不然就跳转到登录；
             next('/login');

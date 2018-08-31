@@ -1,5 +1,5 @@
 <template>
-<div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
+<div class="card" :style="{height: `${cardH}px`,backgroundImage: 'url(' + cardBgUrl + ')'}">
   <div class="card-title" :class="titleClass">{{title}}</div>
   <div class="card-div" :class="cardDivClass" >
     <ul>
@@ -27,6 +27,12 @@ export default {
       default () {
         return []
       }
+    },
+    clientHeight: {
+      type: Number,
+      default () {
+        return document.documentElement.clientHeight || document.body.clientHeight
+      }
     }
   },
   data () {
@@ -43,6 +49,13 @@ export default {
   mounted () {
     this.dealChartOption()
     this.dealCardOption()
+  },
+  computed: {
+    cardH: function () {
+      var hx = this.clientHeight * 0.35
+      console.info('heithgt');
+      return hx;
+    }
   },
   methods: {
     dealChartOption () {
@@ -90,7 +103,6 @@ export default {
   position: relative;
       background-repeat: no-repeat;
       background-size:100% 100%;
-      height: 300px;
       max-width: 260px;
       margin: 0 auto;
       &-item{
