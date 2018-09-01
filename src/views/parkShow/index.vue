@@ -4,7 +4,7 @@
       <el-col :span="6">&nbsp;</el-col>
       <el-col :span="12" style="position: relative;height: 480px;">
         <img style="top:220px;" :class="{animTop:playFlag}" src="../../assets/top_bar.png"/>
-        <div id="map"  :class="{animMap:showMap}"></div>
+        <div id="allMap"  :class="{animMap:showMap}"></div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:220px;" :class="{animBtm:playFlag}" src="../../assets/top_bar.png"/>
         <nav-bar class="nav"></nav-bar>
       </el-col>
@@ -38,7 +38,7 @@ export default {
       vm.showMap = true;
     },
     initMap () {
-      let map = new BMap.Map('map')
+      let map = new BMap.Map('allMap')
       map.centerAndZoom(new BMap.Point(121.269141, 31.205226), 18)
       map.enableScrollWheelZoom(true)
       // 覆盖区域图层测试
@@ -67,7 +67,7 @@ export default {
     img{
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
-    #map{
+    #allMap{
       width:95%;height:95%;opacity:0;margin: 15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
     }
     .animTop{
