@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="main">
     <top-bar></top-bar>
     <router-view></router-view>
     
@@ -16,4 +16,8 @@ export default {
 }
 </script>
 <style scoped>
+#main {
+  height: 100%;
+  background: url('../assets/bg.png')
+}
 </style>

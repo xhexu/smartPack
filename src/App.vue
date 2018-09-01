@@ -28,7 +28,6 @@ html,body{
   text-align: center;
   color: #2c3e50;
   height: 100%;
-  background: url('assets/bg.png')
 }
 h1, h2 {
   font-weight: normal;
