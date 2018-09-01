@@ -1,5 +1,5 @@
 <template>
-  <el-row style="margin-top: 30px;">
+  <el-row class="layout">
     <el-col :span="6" :offset="2" class="left">
       <img class="imgT" src="../../assets/building_top.png"/>
       <div class="view">
@@ -40,27 +40,30 @@
 </script>
 
 <style lang="scss" scoped>
-  .left{
-    .imgT{width:100%;}
-    .view{
-      width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;
-      img{width:80%;margin: 120px auto;}
+  .layout{
+    height: 100%;max-width: 1366px;min-width:1200px;margin: 0 auto;
+    .left{
+      .imgT{width:100%;}
+      .view{
+        width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;
+        img{width:80%;margin: 120px auto;}
+      }
+      .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
     }
-    .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
-  }
-  .center{
-    ul{
-      li{width:100%;width:40px;height:40px;background:url('/static/btn_build_index.png') no-repeat center;background-size: 100% 100%;margin-bottom:3px;line-height: 40px; color:white;font-weight: bold;
-      cursor: pointer;}
+    .center{
+      ul{
+        li{width:100%;width:40px;height:40px;background:url('/static/btn_build_index.png') no-repeat center;background-size: 100% 100%;margin-bottom:3px;line-height: 40px; color:white;font-weight: bold;
+          cursor: pointer;}
+      }
     }
-  }
-  .right{
-    height: 800px;
-    .el-carousel__item {
-      width:600px; height:500px;background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%;opacity: 0;
-    }
-    .el-carousel__item.is-active {
-      opacity: 1.0;
+    .right{
+      height: 800px;
+      .el-carousel__item {
+        width:600px; height:500px;background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%;opacity: 0;
+      }
+      .el-carousel__item.is-active {
+        opacity: 1.0;
+      }
     }
   }
 </style>

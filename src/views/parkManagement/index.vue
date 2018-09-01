@@ -2,13 +2,16 @@
   <div class="layout">
     <el-row>
       <el-col :span="6" class="left">
-        <div class="box">
-          <b>A</b>
-          <p>本栋共4层</p>
-          <p>入驻企业6家</p>
-          <p>企业类型包含餐饮，金融，IT等</p>
-          <router-link class="btn" to="/buildingA">进入本栋</router-link>
-        </div>
+        <transition name="el-fade-in-linear">
+          <div class="box" v-show="showBox">
+            <b>A</b>
+            <p>本栋共4层</p>
+            <p>入驻企业6家</p>
+            <p>企业类型包含餐饮，金融，IT等</p>
+            <router-link class="btn" to="/buildingA">进入本栋</router-link>
+          </div>
+        </transition>
+        &nbsp;
       </el-col>
       <el-col :span="12" style="position: relative;height: 480px;">
         <img style="top:220px;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
@@ -19,13 +22,16 @@
         <nav-bar class="nav"></nav-bar>
       </el-col>
       <el-col :span="6" class="right">
-        <div class="box">
-          <b>B</b>
-          <p>本栋共12层</p>
-          <p>入驻企业62家</p>
-          <p>企业类型包含餐饮，金融，制造，IT，服务业等</p>
-          <router-link class="btn" to="/buildingB">进入本栋</router-link>
-        </div>
+        <transition name="el-fade-in-linear">
+          <div class="box" v-show="showBox">
+            <b>B</b>
+            <p>本栋共12层</p>
+            <p>入驻企业62家</p>
+            <p>企业类型包含餐饮，金融，制造，IT，服务业等</p>
+            <router-link class="btn" to="/buildingB">进入本栋</router-link>
+          </div>
+        </transition>
+        &nbsp;
       </el-col>
     </el-row>
   </div>
@@ -45,7 +51,8 @@
     data () {
       return {
         playFlag: false,
-        showMap: false
+        showMap: false,
+        showBox: false
       }
     },
     methods: {
@@ -53,6 +60,9 @@
         let vm = this;
         vm.playFlag = true;
         vm.showMap = true;
+        setTimeout(()=>{
+          vm.showBox = true;
+        },500)
       }
     }
   }
@@ -99,7 +109,7 @@
   }
   .box{
     width:60%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
-    font-weight: bold;text-align: left;margin:100px auto;position: relative;padding-top: 100px;padding-bottom:50px;
+    font-weight: bold;text-align: left;margin:80px auto;position: relative;padding-top: 100px;padding-bottom:50px;
     b{color:red;position: absolute;font-size: 16px; top:33px;}
     .btn{
       display: block;width:50%; height:36px; margin: 0 auto; line-height: 36px;text-align: center;
