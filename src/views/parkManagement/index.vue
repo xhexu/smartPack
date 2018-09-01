@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="layout">
     <el-row>
-      <el-col :span="7" class="left">
-        <div class="boxA">
+      <el-col :span="6" class="left">
+        <div class="box">
           <b>A</b>
           <p>本栋共4层</p>
           <p>入驻企业6家</p>
@@ -10,15 +10,16 @@
           <router-link class="btn" to="/buildingA">进入本栋</router-link>
         </div>
       </el-col>
-      <el-col :span="10" class="center">
-        <img class="imgT" src="../../assets/top_bar.png"/>
-        <div class="view">
-          <img src="../../assets/building.gif"/>
+      <el-col :span="12" style="position: relative;height: 480px;">
+        <img style="top:220px;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <div class="building"  :class="{animMap:showMap}">
+          <img style="width:100%;" src="../../assets/building.gif"/>
         </div>
-        <img class="imgB" src="../../assets/top_bar.png"/>
+        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:220px;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <nav-bar class="nav"></nav-bar>
       </el-col>
-      <el-col :span="7" class="right">
-        <div class="boxB">
+      <el-col :span="6" class="right">
+        <div class="box">
           <b>B</b>
           <p>本栋共12层</p>
           <p>入驻企业62家</p>
@@ -26,13 +27,6 @@
           <router-link class="btn" to="/buildingB">进入本栋</router-link>
         </div>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="7">&nbsp;</el-col>
-      <el-col :span="10">
-        <nav-bar></nav-bar>
-      </el-col>
-      <el-col :span="7">&nbsp;</el-col>
     </el-row>
   </div>
 </template>
@@ -45,35 +39,72 @@
     components: {
       navBar
     },
+    mounted () {
+      this.animate()
+    },
     data () {
-      return {}
+      return {
+        playFlag: false,
+        showMap: false
+      }
+    },
+    methods: {
+      animate(){
+        let vm = this;
+        vm.playFlag = true;
+        vm.showMap = true;
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .boxA{
-    background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;width:40%;font-size: 14px;color:#01A4AE;font-weight: bold;padding:100px 0 50px 80px;text-align: left;
-    margin: 100px auto 0; position: relative;
-    b{color:red;position: absolute;font-size: 16px; top:32px;left:32px;}
-    a.btn{display: block;width:156px; height:44px; margin: 30px auto 0; line-height: 44px;text-align: center;background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
-    text-decoration: none;color:#ccc;}
-  }
-  .boxB{
-    background: url('/static/divTR.png') no-repeat;background-size: 100% 100%;width:40%;font-size: 14px;color:#01A4AE;font-weight: bold;padding:100px 60px 50px 40px;text-align: left;
-    margin: 100px auto 0; position: relative;
-    b{color:red;position: absolute;font-size: 16px; top:34px;right:34px;}
-    a.btn{display: block;width:156px; height:44px; margin: 30px auto 0; line-height: 44px;text-align: center;background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
-      text-decoration: none; color:#ccc;}
-  }
-  .left{}
-  .center{
-    .imgT{width:100%;}
-    .view{
-      width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;
-      img{width:100%;margin: 80px auto 10px;}
+  .layout{
+    height: 100%;max-width: 1366px;min-width:1200px;margin: 0 auto;position: relative;
+    img.anim{
+      width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
-    .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
+    .building{
+      width:95%;height:95%;opacity:0;margin: 15px auto;background:url('/static/bg_view.png') no-repeat center;
+      background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
+    }
+    .animTop{
+      top:0!important;
+    }
+    .animBtm{
+      bottom:0!important;
+    }
+    .animMap{
+      opacity:1.0!important;
+    }
+    .nav{
+      position:absolute;bottom:-60px;
+    }
   }
-  .right{}
+  .left{
+    b{
+      left:31px;
+    }
+    .box{
+      padding-left: 20%;
+    }
+  }
+  .right{
+    b{
+      right:31px;
+    }
+    .box{
+      background-image:url("/static/divTR.png");padding-left: 10%;padding-right: 10%;
+    }
+  }
+  .box{
+    width:60%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
+    font-weight: bold;text-align: left;margin:100px auto;position: relative;padding-top: 100px;padding-bottom:50px;
+    b{color:red;position: absolute;font-size: 16px; top:33px;}
+    .btn{
+      display: block;width:50%; height:36px; margin: 0 auto; line-height: 36px;text-align: center;
+      background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
+      text-decoration: none;color:#ccc;
+    }
+  }
 </style>
