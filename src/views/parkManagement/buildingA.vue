@@ -1,68 +1,112 @@
 <template>
   <el-row class="layout">
     <el-col :span="6" :offset="2" class="left">
-      <img class="imgT" src="../../assets/building_top.png"/>
-      <div class="view">
-        <img src="../../assets/building.png"/>
+      <img style="top:220px;" :class="{animTop:playFlag,anim:true}" src="../../assets/building_top.png"/>
+      <div class="building"  :class="{animMap:showMap}">
+        <img style="width:100%;" src="../../assets/building.png"/>
       </div>
-      <img class="imgB" src="../../assets/building_top.png"/>
+      <img style="-moz-transform:rotateX(180deg);-webkit-transform:rotateX(180deg);bottom:220px;" :class="{animBtm:playFlag,anim:true}" src="../../assets/building_top.png"/>
     </el-col>
     <el-col :span="1" :offset="1" class="center">
       <ul>
-        <li>12</li>
-        <li>11</li>
-        <li>10</li>
-        <li>9</li>
-        <li>8</li>
-        <li>7</li>
-        <li>6</li>
-        <li>5</li>
-        <li>4</li>
-        <li>3</li>
-        <li>2</li>
-        <li>1</li>
+        <li :class="{active:index==12}" @click="index=12">12</li>
+        <li :class="{active:index==11}" @click="index=11">11</li>
+        <li :class="{active:index==10}" @click="index=10">10</li>
+        <li :class="{active:index==9}" @click="index=9">9</li>
+        <li :class="{active:index==8}" @click="index=8">8</li>
+        <li :class="{active:index==7}" @click="index=7">7</li>
+        <li :class="{active:index==6}" @click="index=6">6</li>
+        <li :class="{active:index==5}" @click="index=5">5</li>
+        <li :class="{active:index==4}" @click="index=4">4</li>
+        <li :class="{active:index==3}" @click="index=3">3</li>
+        <li :class="{active:index==2}" @click="index=2">2</li>
+        <li :class="{active:index==1}" @click="index=1">1</li>
       </ul>
     </el-col>
     <el-col :span="14" class="right">
-      <el-carousel type="card" trigger="click" indicator-position="none" :autoplay="false" arrow="never" style="height: 100%;">
+      <el-carousel type="card" trigger="click" indicator-position="none" :autoplay="false" arrow="never">
         <el-carousel-item v-for="item in 6" :key="item"></el-carousel-item>
       </el-carousel>
+      <div>123</div>
     </el-col>
   </el-row>
 </template>
 
 <script>
+  import navBar from '../../components/navBar.vue'
+  require('vue2-animate/dist/vue2-animate.min.css')
+
   export default {
+    components: {
+      navBar
+    },
+    mounted () {
+      this.animate()
+    },
     data () {
-      return {}
+      return {
+        playFlag: false,
+        showMap: false,
+        showBox: false,
+        index: 1
+      }
+    },
+    methods: {
+      animate(){
+        let vm = this;
+        vm.playFlag = true;
+        vm.showMap = true;
+        setTimeout(()=>{
+          vm.showBox = true;
+        },500)
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
   .layout{
-    height: 100%;max-width: 1366px;min-width:1200px;margin: 0 auto;
+    height: 100%;max-width: 1366px;min-width:1200px;margin: 80px auto;
     .left{
-      .imgT{width:100%;}
-      .view{
-        width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;
+      position: relative;height: 480px;
+      img.anim{
+        width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
+      }
+      .building{
+        width:94%;height:95%;opacity:0;margin: 12px 0 0 15px;background:url('/static/bg_view.png') no-repeat center;
+        background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
         img{width:80%;margin: 120px auto;}
       }
-      .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
+      .animTop{
+        top:0!important;
+      }
+      .animBtm{
+        bottom:0!important;
+      }
+      .animMap{
+        opacity:1.0!important;
+      }
     }
     .center{
+      height: 480px;
       ul{
-        li{width:100%;width:40px;height:40px;background:url('/static/btn_build_index.png') no-repeat center;background-size: 100% 100%;margin-bottom:3px;line-height: 40px; color:white;font-weight: bold;
-          cursor: pointer;}
+        li{width:36px;height:36px;background:url('/static/btn_build_index.png') no-repeat center;background-size: 100% 100%;
+          margin-bottom:3px;line-height: 36px; color:white;font-weight: bold;cursor: pointer;}
+        .active{
+          background-image:url("/static/btn_build_index_active.png");color: #bb4b00;
+        }
       }
     }
     .right{
-      height: 800px;
-      .el-carousel__item {
-        width:600px; height:500px;background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%;opacity: 0;
-      }
-      .el-carousel__item.is-active {
-        opacity: 1.0;
+      height: 520px;
+      .el-carousel{
+        height:480px;
+        .el-carousel__item {
+          width:600px; height:480px;background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%;opacity: 0;
+        }
+        .el-carousel__item.is-active {
+          opacity: 1.0;
+        }
       }
     }
   }
