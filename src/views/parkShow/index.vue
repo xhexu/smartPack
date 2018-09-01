@@ -1,20 +1,14 @@
 <template>
-  <div>
+  <div class="layout">
     <el-row>
-      <el-col :span="7">&nbsp;</el-col>
-      <el-col :span="10">
-        <img class="imgT" src="../../assets/top_bar.png"/>
-        <div id="map"></div>
-        <img class="imgB" src="../../assets/top_bar.png"/>
+      <el-col :span="6">&nbsp;</el-col>
+      <el-col :span="12" style="position: relative;height: 480px;">
+        <img style="top:220px;" :class="{animTop:playFlag}" src="../../assets/top_bar.png"/>
+        <div id="map"  :class="{animMap:showMap}"></div>
+        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:220px;" :class="{animBtm:playFlag}" src="../../assets/top_bar.png"/>
+        <nav-bar class="nav"></nav-bar>
       </el-col>
-      <el-col :span="7">&nbsp;</el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="7">&nbsp;</el-col>
-      <el-col :span="10">
-        <nav-bar></nav-bar>
-      </el-col>
-      <el-col :span="7">&nbsp;</el-col>
+      <el-col :span="6">&nbsp;</el-col>
     </el-row>
   </div>
 </template>
@@ -28,12 +22,21 @@ export default {
     navBar
   },
   mounted () {
+    this.animate()
     this.initMap()
   },
   data () {
-    return {}
+    return {
+      playFlag: false,
+      showMap: false
+    }
   },
   methods: {
+    animate(){
+      let vm = this;
+      vm.playFlag = true;
+      vm.showMap = true;
+    },
     initMap () {
       let map = new BMap.Map('map')
       map.centerAndZoom(new BMap.Point(121.269141, 31.205226), 18)
@@ -59,9 +62,25 @@ export default {
   .anchorBL {
     display: none;
   }
-  .imgT{width:100%;}
-  #map{
-    width:95%;margin: -15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;height:510px;
+  .layout{
+    height: 100%;max-width: 1366px;margin: 0 auto;position: relative;
+    img{
+      width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
+    }
+    #map{
+      width:95%;height:95%;opacity:0;margin: 15px auto;background:url('/static/bg_view.png') no-repeat center;background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
+    }
+    .animTop{
+      top:0!important;
+    }
+    .animBtm{
+      bottom:0!important;
+    }
+    .animMap{
+      opacity:1.0!important;
+    }
+    .nav{
+      position:absolute;bottom:-60px;
+    }
   }
-  .imgB{width:100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);}
 </style>
