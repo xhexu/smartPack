@@ -104,12 +104,12 @@
       right:31px;
     }
     .box{
-      background-image:url("/static/divTR.png");padding-left: 10%;padding-right: 10%;
+      background-image:url("/static/divTR.png");padding-left: 10%;padding-right: 15%;
     }
   }
   .box{
     width:60%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
-    font-weight: bold;text-align: left;margin:80px auto;position: relative;padding-top: 100px;padding-bottom:50px;
+    font-weight: bold;text-align: left;margin:80px auto;position: relative;padding-top: 100px;padding-bottom:50px;font-size: 14px;
     b{color:red;position: absolute;font-size: 16px; top:33px;}
     .btn{
       display: block;width:50%; height:36px; margin: 0 auto; line-height: 36px;text-align: center;
