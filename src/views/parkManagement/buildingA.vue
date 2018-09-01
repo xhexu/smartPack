@@ -27,7 +27,12 @@
       <el-carousel type="card" trigger="click" indicator-position="none" :autoplay="false" arrow="never">
         <el-carousel-item v-for="item in 6" :key="item"></el-carousel-item>
       </el-carousel>
-      <div>123</div>
+      <p class="btns">
+        <span style="margin-right: 80px;"><span style="font-size: 40px;">{{index}}</span>F</span>
+        <span style="color:white;font-size: 50px;margin-right:40px;cursor:pointer;" @click="indexI = indexI-1">&lsaquo;</span>
+        <span v-for="item in 6" :key="item" style="margin-right:20px;cursor:pointer;" :class="{active:indexI==item}" @click="indexI=item">{{`${index}-0${item}`}}</span>
+        <span style="color:white;font-size: 50px;margin-left:20px;cursor:pointer;" @click="indexI = indexI + 1">&rsaquo;</span>
+      </p>
     </el-col>
   </el-row>
 </template>
@@ -48,7 +53,8 @@
         playFlag: false,
         showMap: false,
         showBox: false,
-        index: 1
+        index: 1,
+        indexI: 1
       }
     },
     methods: {
@@ -107,6 +113,10 @@
         .el-carousel__item.is-active {
           opacity: 1.0;
         }
+      }
+      .btns{
+        height:40px; line-height: 40px;color:#01A4AE;font-weight: bold;font-size: 26px;text-align: center;
+        .active{color:yellow;}
       }
     }
   }
