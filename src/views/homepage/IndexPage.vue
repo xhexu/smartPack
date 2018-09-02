@@ -1,40 +1,23 @@
 <template>
   <div class="index">
     <!--内容区域-->
-    <el-row :gutter="20" style="height:100%">
-      <el-col :span="6" style="height:100%">
-        <div class="main-left">
-          <card @chooseQuery="chooseQuery" :option="cardTL" :chart="optionTL"></card>
-          <div style="margin-top:50px">
-            <card :option="cardBL" :chart="optionBL"></card>
-          </div>
-        </div>
+    <el-row :gutter="20">
+      <el-col :span="6" :style="{height: layoutHeight+'px'}">
+        <card @chooseQuery="chooseQuery" :option="cardTL" :chart="optionTL" style="top:-50px"></card>
+        <card :option="cardBL" :chart="optionBL" style="margin-top: 40px"></card>
       </el-col>
-      <el-col :span="12" style="height:100%">
-        <el-row style="margin-top:5%;height:100%">
-          <div class="main-center" :style="{height:jsHeight}">
-            <div class="main-center_video" >
-              <img style="margin-top: 250px;" :class="{animTop:isPlayAnimation}" src="../../assets/top_bar.png">
-              <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
-                <MapView :om="MapData"></MapView>
-              </div>
-              <img style="position: absolute;bottom: 0;left:0;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" :class="{animBtm:isPlayAnimation}" src="../../assets/top_bar.png">
-            </div>
-          </div>
-          <el-row style="margin-top:40px">
-            <div>
-              <nav-bar></nav-bar>
-            </div>
-          </el-row>
-        </el-row>
-      </el-col>
-      <el-col :span="6" style="height:100%">
-        <div class="main-right">
-          <card :option="cardTR" :chart="optionTR"></card>
-          <div style="margin-top:50px">
-            <card :option="cardBR" :chart="optionBR"></card>
-          </div>
+      <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
+        <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
+          <MapView :om="MapData"></MapView>
         </div>
+        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <nav-bar class="nav"></nav-bar>
+      </el-col>
+
+      <el-col :span="6" :style="{height: layoutHeight+'px'}">
+        <card :option="cardTR" :chart="optionTR" style="top:-50px"></card>
+        <card :option="cardBR" :chart="optionBR" style="margin-top: 40px"></card>
       </el-col>
     </el-row>
    
@@ -57,6 +40,8 @@ export default {
   },
   data () {
     return {
+      playFlag: false,
+      showMap: false,
       isPlayAnimation:false,
       isShowVideo: false,
       jsHeight: document.body.clientHeight>768?630+'px':'60%',
@@ -68,27 +53,31 @@ export default {
       cardTL: {
         title:'车辆信息',
         position: 'TL',
+        isCanChoose: true,
         item: {
           title: '本周'
         }
       },
       cardTR: {
-        title:'物业费',
+        title:'物业费/租金/出租率',
         position: 'TR',
+        isCanChoose: false,
         item: {
           title: '本年'
         }
       },
       cardBL: {
-        title:'租金表',
+        title:'环比数据',
         position: 'BL',
+        isCanChoose: true,
         item: {
           title: '本周'
         }
       },
       cardBR: {
-        title:'出租率',
+        title:'同比数据',
         position: 'BR',
+        isCanChoose: true,
         item: {
           title: '本周'
         }
@@ -99,11 +88,10 @@ export default {
           data:[]
         },
         yAxis: {
-          data: ['9-1','9-2','9-3','9-4','9-5','9-6','9-7','9-8','9-9','9-10','9-11','9-12','9-13','9-14','9-15','9-16',
-          '9-17','9-18','9-19','9-20','9-21','9-22','9-23','9-24','9-25','9-26','9-27','9-28','9-29','9-30','9-31']
+          data: []
         },
         series:[{
-          data:[630230, 18203, 23489, 18203, 23489, 29034, 104970, 131744, 630230,630230, 18203, 23489, 29034, 104970, 131744, 630230,630230, 18203, 23489, 18203, 23489, 29034, 104970, 131744, 630230,630230, 18203, 29034, 104970, 131744, 630230]
+          data:[]
         }]
       },
       optionBR: {
@@ -111,22 +99,23 @@ export default {
           data:[]
         },
         yAxis: {
-          data: ['9-3','9-4','9-5','9-6','9-7','9-8','9-9']
+          data: []
         },
         series:[{
-          data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
+          data:[]
         }]
       },
-      optionTR: {
-        legend: {
-          data:[]
-        },
-        yAxis: {
-          data: ['9-3','9-4','9-5','9-6','9-7','9-8','9-9']
-        },
-        series:[{
-          data:[630230, 18203, 23489, 29034, 104970, 131744, 630230]
-        }]
+      optionTR: {}
+    }
+  },
+  computed: {
+    layoutHeight(){
+      if(document.documentElement.clientHeight>800){
+        return 720
+      }else if(document.documentElement.clientHeight<700){
+        return 480
+      }else{
+        return 600
       }
     }
   },
@@ -150,7 +139,7 @@ export default {
         case 'TL':
           this.sendHttpForCar(item)
         case 'TR':
-          this.sendHttpForCar(item)
+          this.sendHttpForFee()
       }
     },
     //查询车辆信息
@@ -193,7 +182,7 @@ export default {
     //查询物业费
     sendHttpForFee () {
       let me = this
-      busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(res){
+      busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(data){
         var obj = {
           legend: {
             data:['物业费', '租金', '出租率']
@@ -207,7 +196,22 @@ export default {
           },{
             name:'租金',
             data:[]
+          },{
+            name:'出租率',
+            data:[]
           }]
+        }
+        if(_.isObject(data)){//parking : 停车费,traffic : 车流量
+          obj.yAxis.data = data.axis
+          obj.series[0].data = data.property
+          obj.series[1].data = data.rent
+          obj.series[2].data = data.letting
+          me.optionTR = obj
+        }else{
+          me.$message({
+            message: '车辆信息返回数据异常',
+            type: 'warning'
+          })
         }
       },function(error){
 
@@ -233,7 +237,8 @@ export default {
     },
     playAanimation () {
       let me = this
-      this.isPlayAnimation = !this.isPlayAnimation
+      this.playFlag = true
+      this.showMap = true
       setTimeout(function(){
         me.isShowVideo = !me.isShowVideo
       },200)
@@ -252,59 +257,48 @@ export default {
   height:100%;
   max-width: 1920px;
   margin: 0 auto;
+  img.anim{
+    width:100%;
+    position: absolute;
+    left: 0;
+    transition: all .5s ease .5s;
+    -webkit-transition:all .5s ease .5s;
+  }
+  .videoMapAnim{
+    opacity: 1 !important;
+  }
+  .videoMap{
+    width: 95%;
+    height: 93%;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    opacity: 0;
+    transition: all .5s ease .5s;
+    -webkit-transition:all .5s ease .5s;
+  }
+  .nav{
+    position:absolute;bottom:-60px;
+  }
+  .animTop{
+    top:0!important;
+  }
+  .animBtm{
+    bottom:0!important;
+  }
   &_title{
     font-size: 20px;
   }
   .main-left{
     position: relative;
     top: -55px;
+    left: 40px;
     height: 100%;
   }
   .main-right{
     position: relative;
     top: -55px;
     height: 100%;
-  }
-  .main-center{
-    width:100%;
-    float:left;
-    position: relative;
-    img{
-      width:100%;
-      -webkit-transition:all .5s ease .5s;
-      transition: all .5s ease .5s;
-    }
-    &_video{
-      min-height:300px;
-    }
-    &_navbar{
-      position:absolute;
-      left:-40px;
-    }
-    .animTop{
-      margin-top:0px !important;
-    }
-    .animBtm{
-      margin-top:410px !important;
-    }
-    .videoMap{
-      width: 95%;
-      margin:auto 0;
-      margin-left: 2.5%;
-      top: 0;
-      bottom: 0;
-      right:0;
-      left:0;
-      height: 95%;
-      position: absolute;
-      background-size: 100% 100%;
-      opacity: 0;
-      transition: all .5s ease .5s;
-      -webkit-transition:all .5s ease .5s;
-    }
-    .videoMapAnim{
-      opacity: 1;
-    }
   }
 }
 </style>

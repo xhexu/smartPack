@@ -17,7 +17,7 @@ export default {
 </script>
 <style scoped>
 #main {
-  height: 100%;
-  background: url('../assets/bg.png')
+  height: 900px;
+  background: url('../../static/bg.png');
 }
 </style>

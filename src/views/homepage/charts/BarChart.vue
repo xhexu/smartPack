@@ -73,6 +73,32 @@ export default {
           },
           barGap: '10%',
           data: []
+      },{
+          name: '',
+          type: 'bar',
+          barWidth:10,
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(
+                  1, 0, 0, 0,
+                  [
+                      {offset: 0, color: '#EFFB01'},
+                      {offset: 0.5, color: '#D7BD0D'},
+                      {offset: 1, color: '#BB771A'}
+                  ]
+              ),
+              label: {
+                show: true, //开启显示
+                position: 'right', //在上方显示
+                textStyle: { //数值样式
+                  color: '#fff',
+                  fontSize: 12
+                }
+              }
+            }
+          },
+          barGap: '10%',
+          data: []
       }]
     }
   },

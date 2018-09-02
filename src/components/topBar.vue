@@ -53,6 +53,7 @@
 
 <style lang="scss" scoped>
   .topBar {
+    height: 100px;
     .clock{
       position: absolute;
       top: 30px;

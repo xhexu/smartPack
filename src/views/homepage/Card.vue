@@ -1,5 +1,5 @@
 <template>
-	<div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')',height:jsHeight+'px'}">
+	<div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
 		<div class="card-div" :class="cardDivClass" v-show="showItemDiv">
 			<ul>
 				<li v-for="item in itemList" @click="chooseItem(item)">
@@ -19,8 +19,8 @@
 		position: relative;
         background-repeat: no-repeat;
         background-size:100% 100%;
-        height: auto;
-        width: 70%;
+        width:80%;
+    	height:50%;
         margin: 0 auto;
         &-item{
         	position: absolute;
@@ -81,7 +81,7 @@
         	top: 7% !important;
         }
         &-chart-tl{
-        	left: 50px;
+        	left: 80px;
 			top: 40px;
         }
         &-item-tr{
@@ -93,7 +93,7 @@
         	top: 7% !important;
         }
         &-chart-tr{
-        	right: 20px;
+        	right: 40px;
 			top: 40px;
         }
         &-item-bl{
