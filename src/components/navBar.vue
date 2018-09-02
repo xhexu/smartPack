@@ -12,9 +12,12 @@
     <el-col :span="4" :class="{active: index==3}" @click="index=3"  :offset="1">
       <router-link :to="{path:'/hatch',query:{index:3}}">孵化管理</router-link>
     </el-col>
-    <el-col :span="4" :class="{active: index==4}" @click="index=4"  :offset="1">
-      <router-link :to="{path:'/monitor',query:{index:4}}">视频监控</router-link>
-    </el-col>
+    <el-col :span="4"  :offset="1">
+    <!--<router-link :to="{path:'/monitor',query:{index:4}}">视频监控</router-link>-->
+    <a  target="_blank" href="http://61.134.28.101:90" >
+      <span>视频监控</span>
+    </a>
+  </el-col>
   </el-row>
 </template>
 

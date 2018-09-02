@@ -40,7 +40,7 @@ const router = new Router({
       component: Index,
       children:[
         {
-          path: '/index', 
+          path: '/index',
           redirect: '/parkanalyze'
         },
         {
@@ -88,16 +88,16 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     //后续这里增加是否登录校验
-    var userInfo = window.localStorage.getItem('token');//获取浏览器缓存的用户信息
-    if(userInfo){ //如果有就直接到首页
-        next();
-    } else {
-        if(to.path=='/login' || to.path=='/register' || to.path=='/forgetPwd'){ //如果是登录页面路径，就直接next()
-            next();
-        } else { //不然就跳转到登录；
-            next('/login');
-        }
+  var userInfo = window.localStorage.getItem('access_token');//获取浏览器缓存的用户信息
+  if(userInfo){ //如果有就直接到首页
+    next();
+  } else {
+    if(to.path=='/login' || to.path=='/register' || to.path=='/forgetPwd'){ //如果是登录页面路径，就直接next()
+      next();
+    } else { //不然就跳转到登录；
+      next('/login');
     }
+  }
 })
 
 export default router

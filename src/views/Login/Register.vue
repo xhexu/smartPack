@@ -1,7 +1,7 @@
 <template>
 <div>
   <div align="left">
-    <img style="left:20px;height: 90px" src="../../assets/title.png" />
+    <img style="left:20px;height: 90px" src="/static/login_login.png" />
   </div>
 <div class="login-container">
 <el-form :model="registerForm" ref="registerForm" label-width="100px" class="login-form">
@@ -24,19 +24,19 @@
   </el-form-item>
   </el-col>
   <el-col :span="4" :offset="1">
-  <el-button :disabled="but_disabled" @click.prevent="sendMessage(registerForm.email)">{{but_text}}</el-button>
+  <el-button :disabled="but_disabled" @click="sendMessage">{{but_text}}</el-button>
   </el-col>
 </el-row>
 <el-row >
 <el-col :span="18">
   <el-form-item
     label="验证码"
-    prop="verification"
+    prop="vifcode"
     :rules="{
       required: true, message: '验证码不能为空', trigger: 'blur'
     }"
   >
-  <el-input v-model="registerForm.verification"></el-input>
+  <el-input v-model="registerForm.vifcode"></el-input>
   </el-form-item>
 </el-col>
 </el-row>
@@ -44,6 +44,13 @@
     <el-col :span="18">
       <el-form-item label="昵称" prop="name">
         <el-input v-model="registerForm.name" ></el-input>
+      </el-form-item>
+    </el-col>
+  </el-row>
+  <el-row >
+    <el-col :span="18">
+      <el-form-item label="手机号" prop="phone">
+        <el-input v-model="registerForm.phone" ></el-input>
       </el-form-item>
     </el-col>
   </el-row>
@@ -91,6 +98,7 @@ export default {
         pwd2: '',
         vifcode: '',
         name: '',
+        phone: '',
         sex: '男'
       },
       emailIsHave: false,
@@ -100,7 +108,18 @@ export default {
   },
   methods: {
     submitForm (formName) {
-
+      this.$http.post('/itfuser/reg', `name=${this.registerForm.name}&email=${this.registerForm.email}&pwd=${this.registerForm.pwd}&vifcode=${this.registerForm.vifcode}&sex=${this.registerForm.sex}`)
+        .then( (response) => {
+          console.info(response)
+          if (response.data.success) {
+            this.$router.push({path: '/'})
+          }else{
+            this.$message(response.data.message)
+          }
+        })
+        .catch((error) => {
+          this.$message('发送失败，请稍后再试!');
+        });
     },
     loginForm () {
       this.$router.push({path: '/login'})
@@ -108,7 +127,7 @@ export default {
     verification (formName) {
 
     },
-    timeFun: function () {
+    timeFun () {
       if(this.sendTime <= 0){
         return;
       }
@@ -118,13 +137,26 @@ export default {
           this.timeFun();
       }, 1000);
     },
-    sendMessage(email){
+    sendMessage () {
       this.sendTime=30;
+      console.info('发送');
+      this.$http.post('/itfuser/sendEmail', `email=${this.registerForm.email}`)
+        .then( (response) => {
+          console.info(response)
+          if (response.data.success) {
+            this.$message('发送成功')
+          }else{
+            this.$message(response.data.message)
+          }
+        })
+        .catch((error) => {
+          this.$message('发送失败，请稍后再试!');
+        });
       this.timeFun();
     }
   },
   computed:{
-    but_text:function(){
+    but_text: function(){
       if(this.sendTime == 0){
         this.but_disabled = false;
         return '验证码';

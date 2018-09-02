@@ -1,7 +1,7 @@
 <template>
 <div>
   <div align="left">
-    <img style="left:20px;height: 90px" src="../../assets/title.png" />
+    <img style="left:20px;height: 90px" src="/static/login_login.png" />
   </div>
 <div class="login-container">
 <el-form :model="registerForm" ref="registerForm" label-width="100px" class="login-form">

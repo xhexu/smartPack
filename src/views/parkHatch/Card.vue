@@ -1,11 +1,11 @@
 <template>
-<div class="card" :style="{height: `${cardH}px`,backgroundImage: 'url(' + cardBgUrl + ')'}">
+<div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
   <div class="card-title" :class="titleClass">{{title}}</div>
   <div class="card-div" :class="cardDivClass" >
     <ul>
-      <li v-for="item in info">
-        {{item.title}}
-        </li>
+      <li v-for="item in info" style="width: 100%;">
+        {{ item.content }}
+      </li>
     </ul>
   </div>
 </div>
@@ -33,6 +33,14 @@ export default {
       default () {
         return document.documentElement.clientHeight || document.body.clientHeight
       }
+    }
+  },
+  watch: {
+    info: {
+      handler (newValue, oldValue) {
+        console.info(newValue,oldValue)
+      },
+      deep: true
     }
   },
   data () {
@@ -104,6 +112,8 @@ export default {
       background-repeat: no-repeat;
       background-size:100% 100%;
       max-width: 260px;
+      max-height: 400px;
+      height: 300px;
       margin: 0 auto;
       &-item{
         position: absolute;

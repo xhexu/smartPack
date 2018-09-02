@@ -1,3 +1,3 @@
 import axios from 'axios'
-axios.defaults.baseURL = 'https://127.0.0.1:8080'
+axios.defaults.baseURL = 'http://www.sesame.kim:8086'
 export default axios
