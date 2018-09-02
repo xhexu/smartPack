@@ -2,10 +2,10 @@
   <div class="layout">
     <el-row>
       <el-col :span="6">&nbsp;</el-col>
-      <el-col :span="12" style="position: relative;height: 480px;">
-        <img style="top:220px;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+      <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
+        <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div id="allMap"  :class="{animMap:showMap}"></div>
-        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:220px;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <nav-bar class="nav"></nav-bar>
       </el-col>
       <el-col :span="6">&nbsp;</el-col>
@@ -29,6 +29,17 @@ export default {
     return {
       playFlag: false,
       showMap: false
+    }
+  },
+  computed: {
+    layoutHeight(){
+      if(document.documentElement.clientHeight>800){
+        return 720
+      }else if(document.documentElement.clientHeight<700){
+        return 480
+      }else{
+        return 600
+      }
     }
   },
   methods: {
@@ -63,7 +74,7 @@ export default {
     display: none;
   }
   .layout{
-    height: 100%;max-width: 1366px;min-width:1200px;margin: 0 auto;position: relative;
+    height: 100%;min-width:1200px;margin: 0 auto;position: relative;
     img.anim{
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
