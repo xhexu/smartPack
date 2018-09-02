@@ -57,8 +57,8 @@
   <el-row >
     <el-col :span="18">
       <el-form-item label="性别" prop="sex">
-        <el-radio v-model="registerForm.sex" label="男">男</el-radio>
-        <el-radio v-model="registerForm.sex" label="女">女</el-radio>
+        <el-radio v-model="registerForm.sex" label="1">男</el-radio>
+        <el-radio v-model="registerForm.sex" label="2">女</el-radio>
       </el-form-item>
     </el-col>
   </el-row>
@@ -99,7 +99,7 @@ export default {
         vifcode: '',
         name: '',
         phone: '',
-        sex: '男'
+        sex: '1'
       },
       emailIsHave: false,
       sendTime: 0,
@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$http.post('/itfuser/reg', `name=${this.registerForm.name}&email=${this.registerForm.email}&pwd=${this.registerForm.pwd}&vifcode=${this.registerForm.vifcode}&sex=${this.registerForm.sex}`)
+      this.$http.post('/itfuser/reg', `name=${this.registerForm.name}&email=${this.registerForm.email}&pwd=${this.registerForm.pwd}&vifcode=${this.registerForm.vifcode}&sex=${this.registerForm.sex}&phone=${this.registerForm.phone}`)
         .then( (response) => {
           console.info(response)
           if (response.data.success) {
