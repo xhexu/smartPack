@@ -4,7 +4,7 @@
     <img style="left:20px;height: 90px" src="/static/login_login.png" />
   </div>
 <div class="login-container">
-<el-form :model="registerForm" ref="registerForm" label-width="100px" class="login-form">
+<el-form :model="registerForm" ref="registerForm" :rules="registerRules" label-width="100px" class="login-form">
   <div class="title-container">
         <h3 class="title">用户注册</h3>
       </div>
@@ -64,15 +64,15 @@
   </el-row>
 <el-row >
 <el-col :span="18">
-  <el-form-item label="密码" prop="password">
-    <el-input v-model="registerForm.pwd" type="password"></el-input>
+  <el-form-item label="密码" prop="pwd">
+    <el-input v-model="registerForm.pwd" type="password" autoComplete="on"></el-input>
   </el-form-item>
   </el-col>
 </el-row>
 
 <el-row >
   <el-col :span="18">
-   <el-form-item label="重新输入" prop="password2">
+   <el-form-item label="重新输入" prop="pwd2">
       <el-input v-model="registerForm.pwd2" type="password" :suffix-icon="isDiffer?'el-icon-error':''"></el-input>
     </el-form-item>
   </el-col>
@@ -91,6 +91,22 @@
 export default {
   name: 'register',
   data () {
+    const validatePwd2 = (rule, value, callback) => {
+      if (this.isDiffer) {
+        callback(new Error('两次密码不一样.'))
+      } else {
+        callback()
+      }
+    }
+    const validatePhone = (rule, value, callback) => {
+      let mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/
+      let tel = /^\d{3,4}-?\d{7,9}$/
+      if (!tel.test(value) || !mobile.test(value)) {
+        callback(new Error('输入正确的手机号'))
+      } else {
+        callback()
+      }
+    }
     return {
       registerForm: {
         email: '',
@@ -103,7 +119,14 @@ export default {
       },
       emailIsHave: false,
       sendTime: 0,
-      but_disabled: false
+      but_disabled: false,
+      registerRules: {
+        name: { required: true, trigger: 'blur', message: '请输入昵称'},
+        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
+        sex: [{ required: true, trigger: 'blur'}],
+        pwd: [{ required: true, trigger: 'blur', message: '请输入密码'}],
+        pwd2: [{ required: true, trigger: 'blur', validator: validatePwd2 }]
+      }
     }
   },
   methods: {
@@ -123,9 +146,6 @@ export default {
     },
     loginForm () {
       this.$router.push({path: '/login'})
-    },
-    verification (formName) {
-
     },
     timeFun () {
       if(this.sendTime <= 0){
@@ -155,8 +175,8 @@ export default {
       this.timeFun();
     }
   },
-  computed:{
-    but_text: function(){
+  computed: {
+    but_text () {
       if(this.sendTime == 0){
         this.but_disabled = false;
         return '验证码';
@@ -165,17 +185,14 @@ export default {
         return this.sendTime+'(秒)';
       }
     },
-    isDiffer:function(){
-      if(this.registerForm.password != ''
-      && this.registerForm.password2 != ''
-      && this.registerForm.password != this.registerForm.password2){
+    isDiffer () {
+      if(this.registerForm.pwd != ''
+      && this.registerForm.pwd2 != ''
+      && this.registerForm.pwd != this.registerForm.pwd2){
         return true;
       }else{
         return false;
       }
-    },
-    ifHaveEmal: function(){
-
     }
   }
 }

@@ -27,9 +27,9 @@
         class="upload-demo"
         ref="upload"
         action="http://www.sesame.kim:8086/itfincubationinfo/save"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :file-list="fileList"
+        :on-success="handleSuccess"
+        :on-error="handleError"
+        :headers="headers"
         :auto-upload="false">
         <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">申请</el-button>
@@ -51,14 +51,11 @@ export default {
   },
   data () {
     return {
+      headers: {access_token: window.localStorage.getItem('access_token')},
       playFlag: false,
       showMap: false,
       showBox: false,
-      form: {
-        name: ''
-      },
       dialogFormVisible: false,
-      clientHeight:0,
       cardTL: {
         title:'政策',
         position: 'TL'
@@ -92,6 +89,18 @@ export default {
   methods: {
     submitUpload() {
       this.$refs.upload.submit();
+    },
+    handleSuccess (res) {
+      if (res.success) {
+        this.$message('上传成功')
+        this.dialogFormVisible = false
+      } else {
+        this.$message(res.message)
+      }
+    },
+    handleError (res) {
+      console.info(res)
+      this.$message('上传异常');
     },
     animate(){
       let vm = this;
