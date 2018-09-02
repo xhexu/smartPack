@@ -13,6 +13,10 @@
 - 后台测试账号 systemadmin/123456
 - swagger-ui 地址 : http://www.sesame.kim:8086/swagger-ui.html
 
+#### 实体信息
+-  [园区实体](data/park.md)
+-  [企业实体](data/enter.md)
+
 #### 用户登录
 
 - 1.1 [判断邮件在系统中是否存在](user/vifemail.md)
@@ -22,7 +26,7 @@
 - 1.5 [测试登录后的接口](user/test.md)
 - 1.6 [页面权限控制](user/auth.md)
 
-####  数据信息 `相关的接口文档就不详细写了,会在swagger里写清楚`
+####  园区
 
-- 2.1 [园区实体](data/park.md)
-- 2.2 [企业实体](data/enter.md)
+- 2.1 [查询园区详情](data/parkDetail.md)
+- 2.2 [经营分析-车辆](data/console1.1.md)
