@@ -1,5 +1,5 @@
 <template>
-	<div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
+	<div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')',height:jsHeight+'px'}">
 		<div class="card-div" :class="cardDivClass" v-show="showItemDiv">
 			<ul>
 				<li v-for="item in itemList" @click="chooseItem(item)">
@@ -19,8 +19,8 @@
 		position: relative;
         background-repeat: no-repeat;
         background-size:100% 100%;
-        height: 300px;
-        max-width: 260px;
+        height: auto;
+        width: 70%;
         margin: 0 auto;
         &-item{
         	position: absolute;
@@ -45,20 +45,20 @@
 		    }
         }
         &-div-tl{
-		    left: -10px;
-		    top: 60px;
+		    left: 1%;
+		    top: 20%;
         }
         &-div-tr{
-		    right: -10px;
-		    top: 60px;
+		    right: 1%;
+		    top: 20%;
         }
         &-div-bl{
-		    left: -10px;
-		    bottom: 60px;
+		    left: 1%;
+		    bottom: 20%;
         }
         &-div-br{
-		    right: -10px;
-		    bottom: 60px;
+		    right: 1%;
+		    bottom: 20%;
         }
         &-item:hover{
         	color: #EB850C;
@@ -73,48 +73,48 @@
         	position: absolute;
         }
         &-item-tl{
-        	left:22px;
-        	top: 28px !important;
+        	left:9%;
+        	top: 10% !important;
         }
         &-title-tl{
-        	left: 80px;
-        	top: 15px !important;
+        	left: 30%;
+        	top: 7% !important;
         }
         &-chart-tl{
         	left: 50px;
 			top: 40px;
         }
         &-item-tr{
-        	right: 22px;
-        	top: 28px !important;
+        	right: 9%;
+        	top: 10% !important;
         }
         &-title-tr{
-        	right: 80px;
-        	top: 15px !important;
+        	right: 30%;
+        	top: 7% !important;
         }
         &-chart-tr{
         	right: 20px;
 			top: 40px;
         }
         &-item-bl{
-        	left:22px;
-        	bottom: 28px !important;
+        	left:9%;
+        	bottom: 10% !important;
         }
         &-title-bl{
-        	left: 80px;
-        	bottom: 15px !important;
+        	left: 30%;
+        	bottom: 7% !important;
         }
         &-chart-bl{
         	left: 50px;
 			top: -20px;
         }
         &-item-br{
-        	right:22px;
-        	bottom: 28px !important;
+        	right:9%;
+        	bottom: 10% !important;
         }
         &-title-br{
-        	right: 80px;
-        	bottom: 15px !important;
+        	right: 30%;
+        	bottom: 7% !important;
         }
         &-chart-br{
         	right: 20px;
@@ -124,7 +124,7 @@
 </style>
 <script>
 	import _ from 'underscore'
-	import BarChart from '../../components/charts/BarChart.vue'
+	import BarChart from './charts/BarChart.vue'
 	export default {
 		name: 'card',
 		components: {
@@ -141,6 +141,14 @@
 		    	type: Object
 		    }
 		},
+		watch: {
+			chart: {  
+		　　　　handler(newValue, oldValue) {  
+		　　　　　　this.chartOption = newValue
+		　　　　},  
+		　　　　deep: true  
+		　　}  
+		},
 		data () {
 			return {
 				showItemDiv: false,
@@ -154,29 +162,42 @@
 					title: '本周'
 				},
 				chartOption: {},
+				jsHeight:(document.body.clientHeight-100)/2,
 				itemList:[{
 					title:'本周',
-					value:'week'
+					type:'d',
+					time:''
 				},{
 					title:'本月',
-					value:'month'
+					type:'m',
+					time: this.getTime()
 				},{
 					title:'本年',
-					value:'year'
+					type:'y',
+					time: new Date().getFullYear()
 				}]
 			}
 		},
 		mounted () {
 			this.dealChartOption()
 			this.dealCardOption()
+			window.onresize = function(){
+				this.jsHeight = (document.body.clientHeight-100)/2
+			}
 		},
 		methods: {
+			getTime () {
+				let m = (new Date().getMonth()+1)>10?(new Date().getMonth()+1):'0'+(new Date().getMonth()+1)
+				return new Date().getFullYear()+'-'+m
+			},
 			clickitem () {
 				this.showItemDiv = !this.showItemDiv
 			},
 			chooseItem (item) {
 				this.showItemDiv = false
 				this.item.title = item.title
+				item.cardId = this.option.position
+				this.$emit('chooseQuery',item);
 			},
 			dealChartOption () {
 				if(_.isObject(this.chart)){
@@ -229,43 +250,7 @@
 				}else{
 					console.error('卡片入参异常')
 				}
-			},
-			//查询车辆信息
-			sendHttpForCar (querParams) {
-				this.$http.post('/user', querParams)
-				.then(function (response) {
-			    	
-			  	}).catch(function (error) {
-			    	
-			  	})
-			},
-			//查询租金信息
-			sendHttpForRent (querParams) {
-				this.$http.post('/user', querParams)
-				.then(function (response) {
-			    	
-			  	}).catch(function (error) {
-			    	
-			  	})
-			},//查询物业费
-			sendHttpForFee (querParams) {
-				this.$http.post('/user', querParams)
-				.then(function (response) {
-			    	
-			  	}).catch(function (error) {
-			    	
-			  	})
-			},//查询出租率
-			sendHttpForRate (querParams) {
-				this.$http.post('/user', querParams)
-				.then(function (response) {
-			    	
-			  	}).catch(function (error) {
-			    	
-			  	})
 			}
 		}
-
 	}
-	
 </script>

@@ -56,13 +56,13 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$http.post('/itfuser/login', `account=${this.loginForm.email}&pwd=${this.loginForm.pwd}`)
+          this.$http.post('/itfuser/login', {account:this.loginForm.email,pwd:this.loginForm.pwd})
             .then( (response) => {
-              if (response.data.success) {
-                window.localStorage.setItem('access_token', response.data.result)
+              if (response.success) {
+                window.localStorage.setItem('access_token', response.result)
                 this.$router.push({path: '/'})
               }else{
-                this.$message(response.data.message);
+                this.$message(response.message);
               }
             })
             .catch(function (error) {
