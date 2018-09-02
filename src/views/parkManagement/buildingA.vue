@@ -25,11 +25,11 @@
     </el-col>
     <el-col :span="15" class="right" :style="{height: layoutHeight+'px'}">
       <el-carousel type="card" trigger="click" indicator-position="none" :autoplay="false" arrow="never"  :style="{height: layoutHeight-100+'px'}">
-        <el-carousel-item v-for="item in 6" :key="item"  :style="{width: layoutHeight-100+'px',height: layoutHeight-140+'px'}">
+        <el-carousel-item v-for="item in 1" :key="item"  :style="{width: layoutHeight-100+'px',height: layoutHeight-140+'px'}">
           <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
             <b>某某某某公司</b>
             <p>公司简介</p>
-            <div class="chart">图表ao</div>
+            <div id="chart"></div>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -45,6 +45,7 @@
 
 <script>
 import navBar from '../../components/navBar.vue'
+import echarts from 'echarts'
 require('vue2-animate/dist/vue2-animate.min.css')
 
 export default {
@@ -52,7 +53,8 @@ export default {
     navBar
   },
   mounted () {
-    this.animate()
+    this.animate();
+    this.initChart();
   },
   computed: {
     layoutHeight () {
@@ -82,6 +84,47 @@ export default {
       setTimeout(()=>{
         vm.showBox = true;
       },500)
+    },
+    initChart(){
+      let myChart = echarts.init(document.getElementById('chart'));
+
+      // 指定图表的配置项和数据
+      let option = {
+        color: ['#11eef9', '#f9f211'],
+        legend: {
+          data: ['营业额', '纳税额']
+        },
+        xAxis: [
+          {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+          }
+          ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+          ],
+        series: [
+          {
+            name: '营业额',
+            type: 'bar',
+            barGap: 0,
+            label: 'top',
+            data: [320, 332, 301, 334, 390, 332, 301, 334, 390, 332, 301, 334]
+          },
+          {
+            name: '纳税额',
+            type: 'bar',
+            label: 'top',
+            data: [220, 182, 191, 234, 290, 220, 182, 191, 234, 290, 234, 290]
+          }
+          ]
+      }
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
     }
   }
 }
@@ -133,8 +176,8 @@ export default {
           p{
             color:white; font-size:14px;text-indent: 30px;width:95%;height:20px;line-height: 20px;
           }
-          .chart{
-            position: absolute;left:5%;bottom:12%;min-height: 50%;
+          #chart{
+            position: absolute;left:5%;bottom:12%;height: 250px;width:400px;color:white;
           }
         }
         .el-carousel__item.is-active {
