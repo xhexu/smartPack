@@ -22,18 +22,19 @@ parkCode=e&type=m&time=2018-03
 parkCode=e&type=d
 ```
 
-3. 出参
+4. 出参
 ```
 // dataTime :  根据 参数type 的不同,表示不同的意思
-// y : 表示月份 1-12
-// m : 表示天 1-31
-// d ; 表示天 : 值直接是日期: 例如 : 2018-08-29
+    // y : 表示月份 1-12
+    // m : 表示天 1-31
+    // d ; 表示天 : 值直接是日期: 例如 : 2018-08-29
 
 // dataType 有两个值 
-//  parking : 停车费
-// traffic : 车流量
+    //  parking : 停车费
+    // traffic : 车流量
 
  // dataValue 这个就不解释了
+ 
 {
   "success": true,
   "exceptionType": "",
