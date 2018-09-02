@@ -12,7 +12,7 @@ post :  /itfincubationinfo/list
 
 3. 出参
 ```
-// type : 有4ge
+// type : 有4个, 这个接口最多只会返回4个结果, 4个类型一样一个
 policy : 政策
 activity : 活动
 incubator : 孵化器
