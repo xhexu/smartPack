@@ -30,3 +30,4 @@
 
 - 2.1 [查询园区详情](data/parkDetail.md)
 - 2.2 [经营分析-车辆](data/console1.1.md)
+- 2.3 [经营分析-物业费](data/console1.2.md)
