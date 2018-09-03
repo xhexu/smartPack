@@ -58,11 +58,11 @@ export default {
   computed: {
     layoutHeight(){
       if(document.documentElement.clientHeight>800){
-        return 720
+        return 680
       }else if(document.documentElement.clientHeight<700){
         return 480
       }else{
-        return 600
+        return 580
       }
     }
   },
