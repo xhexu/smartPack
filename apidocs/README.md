@@ -34,8 +34,8 @@
 
 #### 企业信息
 
-- 3.1 [查询园区集合--不包含图片](data/enterList.md) 
-- 3.2 [查询园区详情--包含图片](data/enterDetail.md) 
+- 3.1 [查询企业集合--不包含图片](data/enterList.md) 
+- 3.2 [查询企业详情--包含图片](data/enterDetail.md) 
 
 #### 孵化信息
 
