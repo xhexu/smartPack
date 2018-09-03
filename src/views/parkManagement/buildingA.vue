@@ -10,26 +10,26 @@
     </el-col>
     <el-col :span="1" :offset="1" class="center" :style="{height: layoutHeight-80+'px'}">
       <ul :class="{marT: layoutHeight>599}">
-        <li :class="{active:index==12}" @click="index=12">12</li>
-        <li :class="{active:index==11}" @click="index=11">11</li>
-        <li :class="{active:index==10}" @click="index=10">10</li>
-        <li :class="{active:index==9}" @click="index=9">9</li>
-        <li :class="{active:index==8}" @click="index=8">8</li>
-        <li :class="{active:index==7}" @click="index=7">7</li>
-        <li :class="{active:index==6}" @click="index=6">6</li>
-        <li :class="{active:index==5}" @click="index=5">5</li>
-        <li :class="{active:index==4}" @click="index=4">4</li>
-        <li :class="{active:index==3}" @click="index=3">3</li>
-        <li :class="{active:index==2}" @click="index=2">2</li>
-        <li :class="{active:index==1}" @click="index=1">1</li>
+        <li :class="{active:index==12}" @click="itemClick(12)" >12</li>
+        <li :class="{active:index==11}" @click="itemClick(11)">11</li>
+        <li :class="{active:index==10}" @click="itemClick(10)">10</li>
+        <li :class="{active:index==9}" @click="itemClick(9)">9</li>
+        <li :class="{active:index==8}" @click="itemClick(8)">8</li>
+        <li :class="{active:index==7}" @click="itemClick(7)">7</li>
+        <li :class="{active:index==6}" @click="itemClick(6)">6</li>
+        <li :class="{active:index==5}" @click="itemClick(5)">5</li>
+        <li :class="{active:index==4}" @click="itemClick(4)">4</li>
+        <li :class="{active:index==3}" @click="itemClick(3)">3</li>
+        <li :class="{active:index==2}" @click="itemClick(2)">2</li>
+        <li :class="{active:index==1}" @click="itemClick(1)">1</li>
       </ul>
     </el-col>
     <el-col :span="15" class="right" :style="{height: layoutHeight+'px'}">
       <el-carousel type="card" trigger="click" indicator-position="none" :autoplay="false" arrow="never"  :style="{height: layoutHeight-100+'px'}">
         <el-carousel-item v-for="item in 1" :key="item"  :style="{width: layoutHeight-100+'px',height: layoutHeight-140+'px'}">
           <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
-            <b>某某某某公司</b>
-            <p>公司简介</p>
+            <b>{{compData.enterpriseName}}</b>
+            <p>{{compData.business}}</p>
             <div id="chart"></div>
           </div>
         </el-carousel-item>
@@ -37,7 +37,7 @@
       <p class="btns">
         <span style="margin-right: 80px;"><span style="font-size: 40px;">{{index}}</span>F</span>
         <span style="color:white;font-size: 50px;margin-right:40px;cursor:pointer;" @click="indexI = indexI-1">&lsaquo;</span>
-        <span v-for="item in 6" :key="item" style="margin-right:20px;cursor:pointer;" :class="{active:indexI==item}" @click="indexI=item">{{`${index}-0${item}`}}</span>
+        <span v-for="item in floorData" :key="item.floorCode" style="margin-right:20px;cursor:pointer;" :class="{active:indexI==item.floorCode}" @click="comClick(item.floorCode)">{{item.floorCode}}</span>
         <span style="color:white;font-size: 50px;margin-left:20px;cursor:pointer;" @click="indexI = indexI + 1">&rsaquo;</span>
       </p>
     </el-col>
@@ -54,8 +54,8 @@ export default {
     navBar
   },
   mounted () {
-    this.animate();
-    this.initChart();
+    this.animate()
+    this.initData()
   },
   computed: {
     layoutHeight () {
@@ -74,7 +74,13 @@ export default {
       showMap: false,
       showBox: false,
       index: 1,
-      indexI: 1
+      indexI: '1-01',
+      data: [],
+      floorData: [],
+      compData: {},
+      yyeData: [],
+      nsyData: [],
+      myChart: {}
     }
   },
   methods: {
@@ -86,9 +92,53 @@ export default {
         vm.showBox = true;
       },500)
     },
-    initChart(){
-      let myChart = echarts.init(document.getElementById('chart'));
-
+    comClick (floorCode) {
+      this.compData = {}
+      this.yyeData = []
+      this.nsyData = []
+      this.indexI = floorCode
+      for(let i in this.floorData){
+        if(floorCode === this.floorData[i].floorCode){
+          this.compData = this.floorData[i]
+        }
+      }
+      if(Object.keys(this.compData).length === 0) {
+        this.initChart()
+        return
+      }
+      this.$http.post('/itfenterinfo/searchJY', {code: this.compData.code, time: new Date().getFullYear()})
+        .then((data) => {
+          if (data.success) {
+            const resData = data.result
+            for (let i in resData){
+              let en = resData[i]
+              if(en.dataType === 'income'){
+                this.yyeData.push(en.dataValue)
+              }else{
+                this.nsyData.push(en.dataValue)
+              }
+            }
+            this.initChart()
+          } else {
+            this.$message(data.message)
+          }
+        })
+        .catch(function (error) {
+          console.info(error)
+        })
+    },
+    itemClick (index) {
+      this.index = index
+      this.floorData = []
+      for (let i in this.data) {
+        let en = this.data[i]
+        if (index == en.floorCode.substr(0, 1)) {
+          this.floorData.push(en)
+        }
+      }
+      this.comClick(`${index}-01`)
+    },
+    initChart (){
       // 指定图表的配置项和数据
       let option = {
         color: ['#11eef9', '#f9f211'],
@@ -101,31 +151,45 @@ export default {
             axisTick: {show: false},
             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
           }
-          ],
+        ],
         yAxis: [
           {
             type: 'value'
           }
-          ],
+        ],
         series: [
           {
             name: '营业额',
             type: 'bar',
             barGap: 0,
             label: 'top',
-            data: [320, 332, 301, 334, 390, 332, 301, 334, 390, 332, 301, 334]
+            data: this.yyeData
           },
           {
             name: '纳税额',
             type: 'bar',
             label: 'top',
-            data: [220, 182, 191, 234, 290, 220, 182, 191, 234, 290, 234, 290]
+            data: this.nsyData
           }
-          ]
+        ]
       }
-
       // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
+      this.myChart.setOption(option);
+    },
+    initData(){
+      this.$http.post('/itfenterinfo/list',{floor: 'A', parkCode: 'e'})
+        .then((data) => {
+          if (data.success) {
+            this.data = data.result
+            this.itemClick(1)
+          } else {
+            this.$message(data.message)
+          }
+        })
+        .catch(function (error) {
+          console.info(error)
+        })
+      this.myChart = echarts.init(document.getElementById('chart'));
     }
   }
 }
