@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>同比,环比测试</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<h1>查询车辆的同比和环比信息</h1>
+<h2>数据在控制台上有打印</h2>
+</body>
+</html>
+<script>
+  var host = "http://www.sesame.kim:8086";
+  var parkCode = "e";
+  var typeArr = ['parking', 'traffic'];
+
+  var time = "2018";
+  var thisYearData = cheliang(time); // 今年的数据
+  var pastYearData = cheliang((parseInt(time) - 1) + ''); // 去年的数据
+
+  var data1 = tongbiCL(thisYearData, pastYearData);
+  console.log(data1);
+  var data2 = huanbiCL(thisYearData, pastYearData);
+  console.log(data2);
+
+  /**
+   * 获取车辆同比数据
+   * 比较 两个年份, 相同月份的增长率
+   */
+  function tongbiCL(thisYearData, pastYearData) {
+
+    // 定义返回的数据格式
+    var obj = {};
+    for (var i = 0; i < typeArr.length; i++) {
+      var key = typeArr[i];
+      obj[key] = [];
+
+      var thisArr = thisYearData[key]; // 每一个类别今年的数据
+      var pastArr = pastYearData[key]; // 每一个类别去年的数据
+      //比较数据, 以今年为准
+      for (var x = 0; x < thisArr.length; x++) {
+        var month = thisArr[x].dataTime; // 当前月份
+        var thisVal = thisArr[x].dataValue;// 当前月份的值
+        var pastVal = getValByMonth(pastArr, month); // 去年这个月份的值
+        var reducedVal = null; // 对比值
+        if (pastVal != null && pastVal != 0) {
+          reducedVal = (thisVal - pastVal) / pastVal
+        }
+
+        var json = {
+          dataType: key
+          , dataTime: month
+          , dataValue: reducedVal
+          // , dataValue: reducedVal == null ? null : reducedVal.toFixed(2)
+        };
+        obj[key][obj[key].length] = json;
+      }
+    }
+    return obj;
+  }
+
+  /**
+   * 获取车辆环比数据
+   * 比较 两个相邻月份的增长率,  这个月和上一个月的数据
+   * @param time 年份
+   */
+  function huanbiCL(thisYearData, pastYearData) {
+    var thisYearData = cheliang(time); // 今年的数据
+    var pastYearData = cheliang((parseInt(time) - 1) + ''); // 去年的数据
+    // 定义返回的数据格式
+    var obj = {};
+    for (var i = 0; i < typeArr.length; i++) {
+      var key = typeArr[i];
+      obj[key] = [];
+
+      var thisArr = thisYearData[key]; // 每一个类别今年的数据
+      var pastArr = pastYearData[key]; // 每一个类别去年的数据
+      //比较数据, 以今年为准
+      for (var x = 0; x < thisArr.length; x++) {
+        var month = thisArr[x].dataTime; // 当前月份
+        var thisVal = thisArr[x].dataValue;// 当前月份的值
+        var pastVal = null;
+        if (month == "01") {
+          // 要获取去年12月份的数据
+          pastVal = getValByMonth(pastArr, "12");
+        } else {
+          // 上一个月的数据
+          pastVal = getValByMonth(thisArr, (parseInt(month) - 1) + '');
+        }
+        var reducedVal = null; // 对比值
+        if (pastVal != null && pastVal != 0) {
+          reducedVal = (thisVal - pastVal) / pastVal
+        }
+
+        var json = {
+          dataType: key
+          , dataTime: month
+          , dataValue: reducedVal
+          // , dataValue: reducedVal == null ? null : reducedVal.toFixed(2)
+        };
+        obj[key][obj[key].length] = json;
+      }
+    }
+    return obj;
+  }
+
+  /**
+   * 获取当前这个数据在某一个月的值, 可能为空
+   * @param arr 要寻找的数组
+   * @param m 月份
+   */
+  function getValByMonth(arr, m) {
+    var val = null;
+    if (arr == null) {
+      return val;
+    }
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].dataTime == m) {
+        val = arr[i].dataValue;
+      }
+    }
+    return val;
+  }
+
+  /**
+   * 获取车辆年份的信息
+   * @param time 年份
+   */
+  function cheliang(time) {
+    var url = host + '/itfparkinfo/searchCL';
+    var obj = {};
+    for (var i = 0; i < typeArr.length; i++) {
+      obj[typeArr[i]] = [];
+    }
+    req({
+      url: url
+      , async: false
+      , data: {
+        parkCode: parkCode
+        , type: 'y'
+        , time: time
+      }
+      , done: function (data) {
+        var list = data.result;
+        for (var i = 0; i < list.length; i++) {
+          for (var j = 0; j < typeArr.length; j++) {
+            var key = typeArr[j];
+            if (list[i].dataType == key) {
+              var size = obj[key].length;
+              obj[key][size] = list[i];
+            }
+          }
+        }
+      }
+    });
+    return obj;
+  }
+
+  function req(params) {
+    //   ,async: false
+    params = params == null ? {} : params;
+    params.type = params.type == null ? 'post' : params.type;
+    params.done = params.done == null ? function (d) {
+    } : params.done;
+
+    params.success = function (d) {
+      if (d.success) {
+        params.done(d);
+      } else {
+        alert(d.message);
+      }
+    };
+    params.error = function (e) {
+      alert("系统错误,请重试");
+    }
+    $.ajax(params);
+  }
+</script>

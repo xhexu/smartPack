@@ -32,6 +32,8 @@
 - 2.2 [经营分析-车辆](data/console1.1.md)
 - 2.3 [经营分析-物业费](data/console1.2.md)
 
+- 2.4 [车辆同比和环比js算法](cl.html)
+
 #### 企业信息
 
 - 3.1 [查询企业集合--不包含图片](data/enterList.md) 
