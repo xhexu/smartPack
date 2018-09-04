@@ -20,8 +20,12 @@
   var pastYearData = cheliang((parseInt(time) - 1) + ''); // 去年的数据
 
   var data1 = tongbiCL(thisYearData, pastYearData);
+  console.log("同比数据");
   console.log(data1);
+
+  console.log("");
   var data2 = huanbiCL(thisYearData, pastYearData);
+  console.log("环比数据");
   console.log(data2);
 
   /**
@@ -86,7 +90,7 @@
           pastVal = getValByMonth(pastArr, "12");
         } else {
           // 上一个月的数据
-          pastVal = getValByMonth(thisArr, (parseInt(month) - 1) + '');
+          pastVal = getValByMonth(thisArr, prevMonth(month));
         }
         var reducedVal = null; // 对比值
         if (pastVal != null && pastVal != 0) {
@@ -103,6 +107,15 @@
       }
     }
     return obj;
+  }
+
+  // 上一个月
+  function prevMonth(m) {
+    var p = (parseInt(m) - 1);
+    if (p < 10) {
+      return '0' + p;
+    }
+    return p + '';
   }
 
   /**
