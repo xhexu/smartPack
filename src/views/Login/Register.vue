@@ -131,18 +131,21 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$http.post('/itfuser/reg', `name=${this.registerForm.name}&email=${this.registerForm.email}&pwd=${this.registerForm.pwd}&vifcode=${this.registerForm.vifcode}&sex=${this.registerForm.sex}&phone=${this.registerForm.phone}`)
-        .then( (response) => {
-          console.info(response)
-          if (response.data.success) {
-            this.$router.push({path: '/'})
-          }else{
-            this.$message(response.data.message)
-          }
-        })
-        .catch((error) => {
-          this.$message('发送失败，请稍后再试!');
-        });
+      this.$refs.registerForm.validate(valid => {
+        if (valid) {
+          this.$http.post('/itfuser/reg', this.registerForm)
+            .then( (data) => {
+              if (data.success) {
+                this.$router.push({path: '/'})
+              } else {
+                this.$message(data.message)
+              }
+            })
+            .catch((error) => {
+              this.$message('发送失败，请稍后再试!');
+            });
+        }
+      })
     },
     loginForm () {
       this.$router.push({path: '/login'})

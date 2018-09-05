@@ -8,16 +8,8 @@
       </div>
       <img style="-moz-transform:rotateX(180deg);-webkit-transform:rotateX(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/building_top.png"/>
     </el-col>
-    <el-col :span="1" :offset="1" class="center" :style="{height: layoutHeight-80+'px'}">
-      <ul :class="{marT: layoutHeight>599}">
-        <li :class="{active:index==12}" @click="itemClick(12)" >12</li>
-        <li :class="{active:index==11}" @click="itemClick(11)">11</li>
-        <li :class="{active:index==10}" @click="itemClick(10)">10</li>
-        <li :class="{active:index==9}" @click="itemClick(9)">9</li>
-        <li :class="{active:index==8}" @click="itemClick(8)">8</li>
-        <li :class="{active:index==7}" @click="itemClick(7)">7</li>
-        <li :class="{active:index==6}" @click="itemClick(6)">6</li>
-        <li :class="{active:index==5}" @click="itemClick(5)">5</li>
+    <el-col :span="1" :offset="1" class="center" :style="{height: layoutHeight-80+'px'}" style="position: relative">
+      <ul :class="{marT: layoutHeight>599}" style="position: absolute;bottom: 50px">
         <li :class="{active:index==4}" @click="itemClick(4)">4</li>
         <li :class="{active:index==3}" @click="itemClick(3)">3</li>
         <li :class="{active:index==2}" @click="itemClick(2)">2</li>
@@ -28,15 +20,15 @@
       <div class="infoBox">
         <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
           <b>{{compData.enterpriseName}}</b>
-          <p>{{compData.business}}</p>
+          <p>{{compData.enterpriseIntro}}</p>
           <div id="chart"></div>
         </div>
       </div>
       <p class="btns">
         <span style="margin-right: 80px;"><span style="font-size: 40px;">{{index}}</span>F</span>
-        <span style="color:white;font-size: 50px;margin-right:40px;cursor:pointer;" @click="indexI = indexI-1">&lsaquo;</span>
-        <span v-for="item in floorData" :key="item.floorCode" style="margin-right:20px;cursor:pointer;" :class="{active:indexI==item.floorCode}" @click="comClick(item.floorCode)">{{item.floorCode}}</span>
-        <span style="color:white;font-size: 50px;margin-left:20px;cursor:pointer;" @click="indexI = indexI + 1">&rsaquo;</span>
+        <span style="color:white;font-size: 50px;margin-right:40px;cursor:pointer;" @click="comClick(-1)">&lsaquo;</span>
+        <span v-for="item in showFloorData" :key="item.floorCode" style="margin-right:20px;cursor:pointer;" :class="{active:compData.floorCode==item.floorCode}" @click="comClick(item.floorCode)">{{item.floorCode}}</span>
+        <span style="color:white;font-size: 50px;margin-left:20px;cursor:pointer;" @click="comClick(1)">&rsaquo;</span>
       </p>
     </el-col>
   </el-row>
@@ -72,8 +64,9 @@ export default {
       showMap: false,
       showBox: false,
       index: 1,
-      indexI: '1-01',
+      indexI: 0,
       data: [],
+      showFloorData: [],
       floorData: [],
       compData: {},
       yyeData: [],
@@ -90,29 +83,74 @@ export default {
         vm.showBox = true;
       },500)
     },
-    comClick (floorCode) {
+    showFloorDataInit (param) {
+      if (param === 0) {
+        if (this.floorData.length <= 6) {
+          this.showFloorData = this.floorData
+        } else {
+          this.showFloorData = this.floorData.slice(0, 6)
+        }
+      } else {
+        if (this.showFloorData.some((en) =>
+          en.floorCode === this.compData['floorCode']
+        )) {
+        } else if (param === 1) {
+          let index = Number(this.indexI)
+          this.showFloorData = this.floorData.slice(index - 5, index + 1)
+        } else {
+          let index = Number(this.indexI)
+          this.showFloorData = this.floorData.slice(index, index + 6)
+        }
+      }
+    },
+    comClick (param) {
       this.compData = {}
       this.yyeData = []
       this.nsyData = []
-      this.indexI = floorCode
-      for(let i in this.floorData){
-        if(floorCode === this.floorData[i].floorCode){
-          this.compData = this.floorData[i]
-        }
-      }
-      if(Object.keys(this.compData).length === 0) {
+      if (this.floorData.length === 0) {
         this.initChart()
+        this.showFloorData = []
         return
       }
+      if (typeof param === 'number') {
+        let indexI = Number(this.indexI) + param
+        if (indexI >= 0 && indexI < this.floorData.length) {
+          this.indexI = indexI
+        }
+        this.compData = this.floorData[this.indexI]
+        this.showFloorDataInit(param)
+      } else {
+        for (let i in this.floorData) {
+          if (param === this.floorData[i].floorCode) {
+            this.indexI = i
+            continue
+          }
+        }
+        this.compData = this.floorData[this.indexI]
+      }
+      this.$http.post('/itfenterinfo/searchDetail', {code: this.compData.code})
+        .then((data) => {
+          if (data.success) {
+            const resData = data.result
+            console.info(resData)
+            this.compData = resData
+          } else {
+            this.$message(data.message)
+          }
+        })
+        .catch(function (error) {
+          console.info(error)
+        })
+
       this.$http.post('/itfenterinfo/searchJY', {code: this.compData.code, time: new Date().getFullYear()})
         .then((data) => {
           if (data.success) {
             const resData = data.result
-            for (let i in resData){
+            for (let i in resData) {
               let en = resData[i]
-              if(en.dataType === 'income'){
+              if (en.dataType === 'income') {
                 this.yyeData.push(en.dataValue)
-              }else{
+              } else {
                 this.nsyData.push(en.dataValue)
               }
             }
@@ -125,18 +163,33 @@ export default {
           console.info(error)
         })
     },
+    compare (property) {
+      return function (a, b) {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value1 - value2;
+      }
+    },
     itemClick (index) {
       this.index = index
       this.floorData = []
+      let list = []
       for (let i in this.data) {
         let en = this.data[i]
-        if (index == en.floorCode.substr(0, 1)) {
-          this.floorData.push(en)
+        let floorCode = en.floorCode
+        let fl = floorCode.split('-')
+        if (index == fl[0]) {
+          en.floor = index
+          en.home = fl[1]
+          list.push(en)
         }
       }
-      this.comClick(`${index}-01`)
+      list = list.sort(this.compare('home'))
+      this.floorData = list
+      this.indexI = 0
+      this.comClick(0)
     },
-    initChart (){
+    initChart () {
       // 指定图表的配置项和数据
       let option = {
         color: ['#11eef9', '#f9f211'],

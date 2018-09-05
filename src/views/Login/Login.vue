@@ -56,7 +56,21 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$http.post('/itfuser/login', {account:this.loginForm.email,pwd:this.loginForm.pwd})
+          let value = this.loginForm.email;
+          let param = {}
+          let nameValid = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+          if (nameValid.test(value)) {
+            param = {
+              email: value,
+              pwd: this.loginForm.pwd
+            }
+          } else {
+            param = {
+              account: this.loginForm.email,
+              pwd: this.loginForm.pwd
+            }
+          }
+          this.$http.post('/itfuser/login', param)
             .then( (response) => {
               if (response.success) {
                 window.localStorage.setItem('access_token', response.result)

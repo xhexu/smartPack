@@ -7,12 +7,12 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.timeout = 5000
 
 axios.interceptors.request.use((config) => {
-  if(config.method  === 'post'){
+  if(config.method  === 'post' && typeof config.data === 'object') {
     config.data = qs.stringify(config.data);
   }
   return config;
 },(error) =>{
-  console.error('入参格式异常',入参格式异常)
+  console.error('入参格式异常')
 })
 
 axios.interceptors.response.use(function (response) {

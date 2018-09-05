@@ -91,18 +91,22 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$http.post('/itfuser/updatePwd', `email=${this.forgetPwdForm.email}&pwd=${this.forgetPwdForm.pwd}&vifcode=${this.forgetPwdForm.vifcode}`)
-        .then( (response) => {
-          console.info(response)
-          if (response.data.success) {
-            this.$router.push({path: '/'})
-          }else{
-            this.$message(response.data.message)
-          }
-        })
-        .catch((error) => {
-          this.$message('发送失败，请稍后再试!');
-        });
+      this.$refs.registerForm.validate(valid => {
+        if (valid) {
+          this.$http.post('/itfuser/updatePwd', this.forgetPwdForm)
+            .then( (data) => {
+              console.info(data)
+              if (data.success) {
+                this.$router.push({path: '/'})
+              }else{
+                this.$message(data.message)
+              }
+            })
+            .catch((error) => {
+              this.$message('发送失败，请稍后再试!');
+            });
+        }
+      })
     },
     loginForm() {
       this.$router.push({path:'/login'})
@@ -120,12 +124,12 @@ export default {
     sendMessage(email){
       this.sendTime = 30;
       this.$http.post('/itfuser/sendEmail', `email=${this.forgetPwdForm.email}`)
-        .then( (response) => {
-          console.info(response)
-          if (response.data.success) {
+        .then( (data) => {
+          console.info(data)
+          if (data.success) {
             this.$message('发送成功')
           }else{
-            this.$message(response.data.message)
+            this.$message(data.message)
           }
         })
         .catch((error) => {

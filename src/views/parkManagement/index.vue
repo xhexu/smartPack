@@ -6,8 +6,8 @@
           <div class="box" v-show="showBox">
             <b>A</b>
             <p>本栋共4层</p>
-            <p>入驻企业6家</p>
-            <p>企业类型包含餐饮，金融，IT等</p>
+            <p>入驻企业{{dataA.count}}家</p>
+            <p>企业类型包含{{dataA.type}}等</p>
             <router-link class="btn" to="/buildingA">进入本栋</router-link>
           </div>
         </transition>
@@ -26,8 +26,8 @@
           <div class="box" v-show="showBox">
             <b>B</b>
             <p>本栋共12层</p>
-            <p>入驻企业62家</p>
-            <p>企业类型包含餐饮，金融，制造，IT，服务业等</p>
+            <p>入驻企业{{dataB.count}}家</p>
+            <p>企业类型包含{{dataB.type}}等</p>
             <router-link class="btn" to="/buildingB">进入本栋</router-link>
           </div>
         </transition>
@@ -47,22 +47,25 @@ export default {
   },
   mounted () {
     this.animate()
+    this.initData()
   },
   data () {
     return {
       playFlag: false,
       showMap: false,
-      showBox: false
+      showBox: false,
+      dataA: {},
+      dataB: {}
     }
   },
   computed: {
     layoutHeight(){
       if(document.documentElement.clientHeight>800){
-        return 680
+        return 720
       }else if(document.documentElement.clientHeight<700){
         return 480
       }else{
-        return 580
+        return 600
       }
     }
   },
@@ -74,6 +77,34 @@ export default {
       setTimeout(()=>{
         vm.showBox = true;
       },500)
+    },
+    initData(){
+      this.$http.post('/itfenterinfo/getInfo', {floor: 'A', parkCode: 'e'})
+        .then((data) => {
+          if (data.success) {
+            this.dataA = data.result
+            let type = data.result.type.toString()
+            this.dataA.type = type
+          } else {
+            this.$message(data.message)
+          }
+        })
+        .catch(function (error) {
+          console.info(error)
+        })
+      this.$http.post('/itfenterinfo/getInfo', {floor: 'B', parkCode: 'e'})
+        .then((data) => {
+          if (data.success) {
+            this.dataB = data.result
+            let type = data.result.type.toString()
+            this.dataB.type = type
+          } else {
+            this.$message(data.message)
+          }
+        })
+        .catch(function (error) {
+          console.info(error)
+        })
     }
   }
 }
@@ -81,7 +112,9 @@ export default {
 
 <style lang="scss" scoped>
   .layout{
-    height: 100%;min-width:1200px;margin: 0 auto;position: relative;
+    height:100%;
+    max-width: 1920px;
+    margin: 0 auto;
     img.anim{
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }

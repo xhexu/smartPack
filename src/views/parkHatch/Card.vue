@@ -1,14 +1,21 @@
 <template>
-<div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
-  <div class="card-title" :class="titleClass">{{title}}</div>
-  <div class="card-div" :class="cardDivClass" >
-    <ul>
-      <li v-for="item in info" style="width: 100%;">
-        {{ item.content }}
-      </li>
-    </ul>
+  <div style="position: relative;width: 100%;height: 50%">
+    <div>
+      <el-dialog :title="htmlTitle" :visible.sync="dialogFormVisible">
+      <div v-html="htmlContent"></div>
+      </el-dialog>
+    </div>
+    <div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
+      <div class="card-title" :class="titleClass">{{title}}</div>
+      <div class="card-div" :class="cardDivClass" >
+        <ul>
+          <li v-for="item in info" style="width: 100%;" @click="handleClick(item)">
+            {{ item.title }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -27,20 +34,6 @@ export default {
       default () {
         return []
       }
-    },
-    clientHeight: {
-      type: Number,
-      default () {
-        return document.documentElement.clientHeight || document.body.clientHeight
-      }
-    }
-  },
-  watch: {
-    info: {
-      handler (newValue, oldValue) {
-        console.info(newValue,oldValue)
-      },
-      deep: true
     }
   },
   data () {
@@ -51,21 +44,22 @@ export default {
       titleClass: '',
       chartClass: '',
       cardBgUrl: '',
-      title: '-----'
+      title: '-----',
+      dialogFormVisible: false,
+      htmlContent: '',
+      htmlTitle: ''
     }
   },
   mounted () {
     this.dealChartOption()
     this.dealCardOption()
   },
-  computed: {
-    cardH: function () {
-      var hx = this.clientHeight * 0.35
-      console.info('heithgt');
-      return hx;
-    }
-  },
   methods: {
+    handleClick (item) {
+      this.dialogFormVisible = true
+      this.htmlContent = item.content
+      this.htmlTitle = item.title
+    },
     dealChartOption () {
       if(_.isObject(this.chart)){
         this.chartOption = this.chart
@@ -111,9 +105,8 @@ export default {
   position: relative;
       background-repeat: no-repeat;
       background-size:100% 100%;
-      max-width: 260px;
-      max-height: 400px;
-      height: 300px;
+      width:60%;
+      height:100%;
       margin: 0 auto;
       &-item{
         position: absolute;

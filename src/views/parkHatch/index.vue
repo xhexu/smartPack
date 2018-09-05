@@ -1,27 +1,6 @@
 <template>
   <div>
-  <div class="layout">
-    <el-row>
-      <el-col :span="6" class="left">
-        <card ref="policy" :option="cardTL" :info="policy" ></card>
-        <card ref="incubator" :option="cardBL" :info="incubator" ></card>
-      </el-col>
-      <el-col :span="12" style="position: relative;height: 480px;">
-        <img style="top:220px;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <div class="building"  :class="{animMap:showMap}">
-          <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;height: 28px;width: 92px;color: #01A4AE;">申请</div>
-          <img style="height: 100%;" src="/static/hatch_center.gif"/>
-        </div>
-        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:220px;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <nav-bar class="nav"></nav-bar>
-      </el-col>
-      <el-col :span="6" class="right">
-        <card :option="cardTR" :info="activity"></card>
-        <card :option="cardBR" :info="guide"></card>
-      </el-col>
-    </el-row>
-
-  </div>
+  <div>
     <el-dialog title="申请文件" :visible.sync="dialogFormVisible">
       <el-upload
         class="upload-demo"
@@ -36,6 +15,31 @@
       </el-upload>
     </el-dialog>
   </div>
+  <div class="index">
+    <!--内容区域-->
+    <el-row :gutter="20">
+      <el-col :span="6" :style="{height: layoutHeight+'px'}">
+        <card :option="cardTL" :info="policy" style="top:-50px"></card>
+        <card :option="cardBL" :info="incubator" style="margin-top: 40px"></card>
+      </el-col>
+      <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
+        <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
+          <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;height: 28px;width: 92px;color: #01A4AE;">申请</div>
+          <img style="height: 100%;" src="/static/hatch_center.gif"/>
+        </div>
+        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <nav-bar class="nav"></nav-bar>
+      </el-col>
+
+      <el-col :span="6" :style="{height: layoutHeight+'px'}">
+        <card :option="cardTR" :info="activity" style="top:-50px"></card>
+        <card :option="cardBR" :info="guide" style="margin-top: 40px"></card>
+      </el-col>
+    </el-row>
+
+  </div>
+</div>
 </template>
 
 <script>
@@ -54,22 +58,22 @@ export default {
       headers: {access_token: window.localStorage.getItem('access_token')},
       playFlag: false,
       showMap: false,
-      showBox: false,
+      isShowVideo: false,
       dialogFormVisible: false,
       cardTL: {
-        title:'政策',
+        title: '政策',
         position: 'TL'
       },
       cardTR: {
-        title:'活动',
+        title: '活动',
         position: 'TR'
       },
       cardBL: {
-        title:'孵化器',
+        title: '孵化器',
         position: 'TL'
       },
       cardBR: {
-        title:'指南',
+        title: '指南',
         position: 'TR'
       },
       policy: [],
@@ -78,17 +82,9 @@ export default {
       guide: []
     }
   },
-  watch: {
-    clientHeight(newValue, oldValue) {
-      console.log(newValue)
-    }
-  },
-  created () {
-    console.info('---created---');
-  },
   methods: {
-    submitUpload() {
-      this.$refs.upload.submit();
+    submitUpload () {
+      this.$refs.upload.submit()
     },
     handleSuccess (res) {
       if (res.success) {
@@ -99,27 +95,26 @@ export default {
       }
     },
     handleError (res) {
-      console.info(res)
-      this.$message('上传异常');
+      this.$message('上传异常')
     },
-    animate(){
-      let vm = this;
-      vm.playFlag = true;
-      vm.showMap = true;
-      setTimeout(()=>{
-        vm.showBox = true;
-      },500)
+    animate () {
+      let me = this
+      this.playFlag = true
+      this.showMap = true
+      setTimeout(function () {
+        me.isShowVideo = !me.isShowVideo
+      }, 200)
     },
     shenQing () {
-      this.dialogFormVisible = true;
+      this.dialogFormVisible = true
     },
     beginLoadData () {
       this.$http.post('/itfincubationinfo/list')
-        .then((response) => {
-          if (response.data.success) {
-            this.doData(response.data.result)
+        .then((data) => {
+          if (data.success) {
+            this.doData(data.result)
           } else {
-            this.$message(response.data.message)
+            this.$message(data.message)
           }
         })
         .catch(function (error) {
@@ -130,49 +125,63 @@ export default {
       for (let index in data) {
         if (data[index].type === 'policy') {
           this.policy.push(data[index])
-        }else if (data[index].type === 'activity') {
+        } else if (data[index].type === 'activity') {
           this.activity.push(data[index])
-        }else if (data[index].type === 'incubator') {
+        } else if (data[index].type === 'incubator') {
           this.incubator.push(data[index])
-        }else if (data[index].type === 'guide') {
+        } else if (data[index].type === 'guide') {
           this.guide.push(data[index])
         }
       }
       this.$nextTick()
     }
   },
-  beforeCreate () {
-    console.info('---beforeCreate---');
-  },
-  beforeMount () {
-    console.info('---beforeMount---');
-    this.beginLoadData();
-  },
   mounted () {
     this.animate()
+    this.beginLoadData()
   },
-  render () {
-    console.info('---mounted---');
-    return {}
-  },
-  beforeUpdate () {
-    console.info('---beforeUpdate---');
-  },
-  updated () {
-    console.info('---updated---');
+  computed: {
+    layoutHeight(){
+      if(document.documentElement.clientHeight>800){
+        return 720
+      }else if(document.documentElement.clientHeight<700){
+        return 480
+      }else{
+        return 600
+      }
+    }
   }
 }
 </script>
 
+<!-- 首页样式 -->
 <style lang="scss" scoped>
-  .layout{
-    height: 100%;max-width: 1366px;min-width:1200px;margin: 0 auto;position: relative;
+  .index{
+    height:100%;
+    max-width: 1920px;
+    margin: 0 auto;
     img.anim{
-      width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
+      width:100%;
+      position: absolute;
+      left: 0;
+      transition: all .5s ease .5s;
+      -webkit-transition:all .5s ease .5s;
     }
-    .building{
-      width:95%;height:95%;opacity:0;margin: 15px auto;background:url('/static/bg_view.png') no-repeat center;
-      background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
+    .videoMapAnim{
+      opacity: 1 !important;
+    }
+    .videoMap{
+      width: 95%;
+      height: 93%;
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      opacity: 0;
+      transition: all .5s ease .5s;
+      -webkit-transition:all .5s ease .5s;
+    }
+    .nav{
+      position:absolute;bottom:-60px;
     }
     .animTop{
       top:0!important;
@@ -180,37 +189,19 @@ export default {
     .animBtm{
       bottom:0!important;
     }
-    .animMap{
-      opacity:1.0!important;
+    &_title{
+      font-size: 20px;
     }
-    .nav{
-      position:absolute;bottom:-60px;
+    .main-left{
+      position: relative;
+      top: -55px;
+      left: 40px;
+      height: 100%;
     }
-  }
-  .left{
-    b{
-      left:31px;
-    }
-    .box{
-      padding-left: 20%;
-    }
-  }
-  .right{
-    b{
-      right:31px;
-    }
-    .box{
-      background-image:url("/static/divTR.png");padding-left: 10%;padding-right: 15%;
-    }
-  }
-  .box{
-    width:60%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
-    font-weight: bold;text-align: left;margin:80px auto;position: relative;padding-top: 100px;padding-bottom:50px;font-size: 14px;
-    b{color:red;position: absolute;font-size: 16px; top:33px;}
-    .btn{
-      display: block;width:50%; height:36px; margin: 0 auto; line-height: 36px;text-align: center;
-      background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
-      text-decoration: none;color:#ccc;
+    .main-right{
+      position: relative;
+      top: -55px;
+      height: 100%;
     }
   }
 </style>
