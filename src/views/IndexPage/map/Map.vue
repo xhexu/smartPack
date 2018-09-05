@@ -36,29 +36,30 @@ export default {
     initBaiDuMap (option) {
       let map = new BMap.Map("indexditu")
       
-      map.centerAndZoom(new BMap.Point(option.longitude,option.latitude), 18)
+      map.centerAndZoom(new BMap.Point(option.longitude,option.latitude), 10)
       map.enableScrollWheelZoom(true)
       map.addTileLayer(new BMap.PanoramaCoverageLayer())
       map.setMapStyle({style : "dark"})
 
-      let opts = {
-        width: 250,
-        height: 80,
-        title: "数据点信息",
-        enableMessage: true
-      }
+     
       for(var i=0;i<option.data.length;i++){
         var marker = new BMap.Marker(new BMap.Point(option.data[i].point1,option.data[i].point2));  
         var content = option.data[i].address;
-        map.addOverlay(marker);               // 将标注添加到地图中
-        addClickHandler(content,marker);
+        map.addOverlay(marker);               
+        let opts = {
+          width: 250,
+          height: 80,
+          title: option.data.title,
+          enableMessage: true
+        }
+        addClickHandler(content,marker,opts);
       }
-      function addClickHandler(content,marker){
+      function addClickHandler(content,marker,opts){
         marker.addEventListener("mouseover",function(e){
-          openInfo(content,e)}
+          openInfo(content,e,opts)}
         )
       }
-      function openInfo(content,e){
+      function openInfo(content,e,opts){
         var p = e.target;
         var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat)
         var infoWindow = new BMap.InfoWindow(content,opts)  // 创建信息窗口对象
