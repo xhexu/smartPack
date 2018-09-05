@@ -147,12 +147,19 @@ export default {
           {
             type: 'category',
             axisTick: {show: false},
+            spliteLine: {
+              show: false
+            },
             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
           }
         ],
         yAxis: [
           {
-            type: 'value'
+            type: 'value',
+            show: false,
+            spliteLine: {
+              show: false
+            }
           }
         ],
         series: [
@@ -244,7 +251,7 @@ export default {
           color:white; font-size:14px;text-indent: 30px;width:95%;height:20px;line-height: 20px;
         }
         #chart{
-          position: absolute;left:5%;bottom:12%;height: 50%;width:80%;color:white;
+          position: absolute;left:5%;bottom:10%;height: 60%;width:90%;color:white;
         }
       }
       .btns{
