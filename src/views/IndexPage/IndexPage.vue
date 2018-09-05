@@ -1,13 +1,13 @@
 <template>
   <el-row>
     <el-col :span="6" style="height: 100%;">
-      <div class="tl">
-        <div style="position:absolute;left:13%;top:12%;height:393px;width:90%">
+      <div class="t tl">
+        <div style="position:absolute;left:13%;top:12%;height:90%;width:90%">
           <barCtl :option="option"></barCtl>
         </div>
       </div>
-      <div class="bl">
-        <div style="position:absolute;left:13%;top:12%;height:393px;width:90%">
+      <div class="t bl">
+        <div style="position:absolute;left:13%;top:2%;height:90%;width:90%">
           <barCbl :option="option"></barCbl>
         </div>
       </div>
@@ -23,14 +23,14 @@
 
     
     <el-col :span="6" style="height: 100%">
-      <div class="tr">
-        <div style="position:absolute;right:10%;top:12%;height:393px;width:90%">
+      <div class="t tr">
+        <div style="position:absolute;right:10%;top:12%;height:90%;width:90%">
           <barCtr :option="option"></barCtr>
         </div>
       </div>
 
-      <div class="br">
-        <div style="position:absolute;right:10%;top:12%;height:393px;width:90%">
+      <div class="t br">
+        <div style="position:absolute;right:10%;top:2%;height:90%;width:90%">
           <barCbr :option="option"></barCbr>
         </div>
       </div>
@@ -105,21 +105,28 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (min-width: 1400px) { 
-    
+    .map{
+      height:700px !important;
+    }
+    .t{
+      height:393px !important;
+      width: 360px !important;
+    }
 }
 .map{
   top:20px;
   position:relative;
   height:580px;
 }
+.t{
+  height:333px;
+  width: 300px;
+}
 .tl{
   background: transparent url('/static/divTL.png') no-repeat;
   background-size: 100% 100%;
   position: relative;
   top:-40px;
-  height:333px;
-  width: 300px;
-  max-width: 300px;
   margin: 0 auto;
 }
 .tr{
@@ -127,24 +134,18 @@ export default {
   background-size: contain;
   position: relative;
   top:-40px;
-  height:333px;
-  width: 300px;
   margin: 0 auto;
 }
 .bl{
   background: transparent url('/static/divBL.png') no-repeat;
   background-size: contain;
   position: relative;
-  height:333px;
-  width: 300px;
   margin: 0 auto;
 }
 .br{
   background: transparent url('/static/divBR.png') no-repeat;
   background-size: contain;
   position: relative;
-  height:333px;
-  width: 300px;
   margin: 0 auto;
 }
 .animTop{

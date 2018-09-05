@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;height:100%">
-    <div @click="openWindow" id="chart-bl" style="width: 100%" :style="{height:option.height+'px'}"></div>
+    <div class="blMap" @click="openWindow" id="chart-bl"></div>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart">
         <div id="bl-bigChart" style="width: 100%;height:100%"></div>
@@ -51,7 +51,7 @@ export default {
       let params = {
         parkCode:'e',
         type:'y',
-        time:item.time
+        time:item.time,
       }
       busHttp._QueryYoY(params,function(data){
         if(_.isObject(data)){
@@ -140,6 +140,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.blMap{
+  width: 100%;
+  height:100%;
+}
 .bigChart{
   position: fixed;
   width: 900px;

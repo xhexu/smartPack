@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;height:100%">
-    <div @click="openWindow" id="chart-br" style="width: 100%" :style="{height:option.height+'px'}"></div>
+    <div class="brMap" @click="openWindow" id="chart-br"></div>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart">
         <div id="br-bigChart" style="width: 100%;height:100%"></div>
@@ -144,6 +144,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.brMap{
+  width: 100%;
+  height:100%;
+}
 .bigChart{
   position: fixed;
   width: 900px;
