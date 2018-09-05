@@ -25,15 +25,13 @@
       </ul>
     </el-col>
     <el-col :span="15" class="right" :style="{height: layoutHeight+'px'}">
-      <el-carousel type="card" trigger="click" indicator-position="none" :autoplay="false" arrow="never"  :style="{height: layoutHeight-100+'px'}">
-        <el-carousel-item v-for="item in 1" :key="item"  :style="{width: layoutHeight-100+'px',height: layoutHeight-140+'px'}">
-          <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
-            <b>{{compData.enterpriseName}}</b>
-            <p>{{compData.business}}</p>
-            <div id="chart"></div>
-          </div>
-        </el-carousel-item>
-      </el-carousel>
+      <div class="infoBox">
+        <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
+          <b>{{compData.enterpriseName}}</b>
+          <p>{{compData.business}}</p>
+          <div id="chart"></div>
+        </div>
+      </div>
       <p class="btns">
         <span style="margin-right: 80px;"><span style="font-size: 40px;">{{index}}</span>F</span>
         <span style="color:white;font-size: 50px;margin-right:40px;cursor:pointer;" @click="indexI = indexI-1">&lsaquo;</span>
@@ -237,21 +235,16 @@ export default {
     }
     .right{
       position: relative;
-      .el-carousel{
-        .el-carousel__item {
-          background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%;opacity: 0;text-align: left;
-          b{
-            color:#01A4AE;font-size: 18px;height:40px; line-height: 40px;padding-left: 20px;width:90%;
-          }
-          p{
-            color:white; font-size:14px;text-indent: 30px;width:95%;height:20px;line-height: 20px;
-          }
-          #chart{
-            position: absolute;left:5%;bottom:12%;height: 250px;width:400px;color:white;
-          }
+      .infoBox {
+        background:url('/static/bg_manage_content.png') no-repeat center;background-size: 100% 100%;text-align: left;width:60%; height:80%;position: absolute;left:15%;
+        b{
+          color:#01A4AE;font-size: 18px;height:40px; line-height: 40px;padding-left: 20px;width:90%;
         }
-        .el-carousel__item.is-active {
-          opacity: 1.0;
+        p{
+          color:white; font-size:14px;text-indent: 30px;width:95%;height:20px;line-height: 20px;
+        }
+        #chart{
+          position: absolute;left:5%;bottom:12%;height: 50%;width:80%;color:white;
         }
       }
       .btns{
