@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="6" style="height: 100%;">
+    <el-col :span="6" style="height:100%">
       <div class="t tl">
         <div style="position:absolute;left:13%;top:12%;height:90%;width:90%">
           <barCtl :option="option"></barCtl>
@@ -12,7 +12,8 @@
         </div>
       </div>
     </el-col>
-    <el-col :span="12" class="map">
+
+    <el-col :span="12" class="map divHeight">
       <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
       <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
         <MapView :om="MapData"></MapView>
@@ -21,8 +22,7 @@
       <nav-bar class="nav"></nav-bar>
     </el-col>
 
-    
-    <el-col :span="6" style="height: 100%">
+    <el-col :span="6" class="divHeight">
       <div class="t tr">
         <div style="position:absolute;right:10%;top:12%;height:90%;width:90%">
           <barCtr :option="option"></barCtr>
@@ -105,7 +105,7 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (min-width: 1400px) { 
-    .map{
+    .divHeight{
       height:700px !important;
     }
     .t{
@@ -113,14 +113,16 @@ export default {
       width: 360px !important;
     }
 }
+.divHeight{
+  height:480px;
+}
 .map{
   top:20px;
   position:relative;
-  height:580px;
 }
 .t{
-  height:333px;
-  width: 300px;
+  height:300px;
+  width: 280px;
 }
 .tl{
   background: transparent url('/static/divTL.png') no-repeat;

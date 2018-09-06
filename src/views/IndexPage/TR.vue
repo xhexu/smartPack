@@ -200,14 +200,14 @@ export default {
 }
 .bigChart{
   position: fixed;
-  width: 900px;
-  height: 600px;
+  width: 700px;
+  height: 400px;
   margin-left: auto;
   margin-right: auto;
   top: 50%;
   left: 50%;
   z-index: 999;
-  margin: -300px 0 0 -450px;
+  margin: -200px 0 0 -350px;
   background-color:rgba(0,0,0,0.7);
   padding: 10px;
 }
@@ -219,5 +219,12 @@ export default {
   left:0;
   top:0;
   background-color: rgba(220, 213, 213, 0.7);
+}
+@media screen and (min-width: 1400px) { 
+    .bigChart{
+      width: 850px;
+      height: 600px;
+      margin: -300px 0 0 -400px;
+    }
 }
 </style>
