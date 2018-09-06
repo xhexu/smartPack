@@ -263,7 +263,7 @@ export default {
 .layout{
   height: 100%;min-width:1200px;margin: 0px auto;
   .back{
-    display: block;width:40px; height:40px; line-height: 40px;text-align: center; position: fixed; left:20px; top:20px;
+    display: block;width:80px; height:40px; line-height: 40px;text-align: center; position: fixed; left:20px; top:20px;
     background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
     text-decoration: none;color:#ccc;
   }

@@ -8,6 +8,8 @@ import buildingB from '@/views/parkManagement/buildingB'
 import Index from '@/views/index'
 import hatch from '@/views/parkHatch'
 import monitor from '@/views/parkMonitor'
+import monitorDetail from '@/views/parkMonitor/monitorDetail'
+import videoDetail from '@/views/parkMonitor/videoDetail'
 import Login from '@/views/Login/Login'
 import Register from '@/views/Login/Register'
 import ForgetPwd from '@/views/Login/ForgetPwd'
@@ -80,6 +82,15 @@ const router = new Router({
           path: '/monitor',
           name: '视频监控',
           component: monitor
+        },{
+          path: '/monitorDetail',
+          name: '视频监控',
+          component: monitorDetail
+        },
+        {
+          path: '/videoDetail',
+          name: '监控详情',
+          component: videoDetail
         }
       ]
     }

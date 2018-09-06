@@ -26,7 +26,7 @@
         <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
           <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;height: 28px;width: 92px;color: #01A4AE;">申请</div>
-          <img style="height: 100%;" src="/static/hatch_center.gif"/>
+          <img style="height: 80%;" src="/static/hatch_center.gif"/>
         </div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <nav-bar class="nav"></nav-bar>
@@ -48,7 +48,7 @@ import Card from './Card.vue'
 require('vue2-animate/dist/vue2-animate.min.css')
 
 export default {
-  name: 'IndexPage',
+  name: 'hatch',
   components: {
     navBar,
     Card
