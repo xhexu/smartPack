@@ -6,7 +6,6 @@
         <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div id="allMap"  :class="{animMap:showMap}"></div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <nav-bar class="nav"></nav-bar>
       </el-col>
       <el-col :span="6">&nbsp;</el-col>
     </el-row>
@@ -14,12 +13,10 @@
 </template>
 
 <script>
-import navBar from '../../components/navBar.vue'
 require('vue2-animate/dist/vue2-animate.min.css')
 
 export default {
   components: {
-    navBar
   },
   mounted () {
     this.animate()

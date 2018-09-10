@@ -29,7 +29,6 @@
           <img style="height: 80%;" src="/static/hatch_center.gif"/>
         </div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <nav-bar class="nav"></nav-bar>
       </el-col>
 
       <el-col :span="6" :style="{height: layoutHeight+'px'}">
@@ -43,14 +42,12 @@
 </template>
 
 <script>
-import navBar from '../../components/navBar.vue'
 import Card from './Card.vue'
 require('vue2-animate/dist/vue2-animate.min.css')
 
 export default {
   name: 'hatch',
   components: {
-    navBar,
     Card
   },
   data () {

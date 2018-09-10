@@ -16,10 +16,10 @@
     <el-col :span="12" class="map divHeight">
       <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
       <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
-        <MapView :om="MapData"></MapView>
+        <AMap></AMap>
       </div>
       <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-      <nav-bar class="nav"></nav-bar>
+      <!-- <nav-bar class="nav"></nav-bar> -->
     </el-col>
 
     <el-col :span="6" class="divHeight">
@@ -45,7 +45,7 @@ import barCtl from './TL.vue'
 import barCtr from './TR.vue'
 import barCbl from './BL.vue'
 import barCbr from './BR.vue'
-import MapView from './map/Map.vue'
+import AMap from './map/AMap.vue'
 
 export default {
   name: 'IndexPage',
@@ -54,7 +54,7 @@ export default {
     barCtr,
     barCbl,
     barCbr,
-    MapView,
+    AMap,
     navBar
   },
   data () {
@@ -170,8 +170,8 @@ img.anim{
   width: 95%;
   height: 93%;
   position: absolute;
-  top: 25px;
-  left: 25px;
+  top: 3%;
+  left: 2.5%;
   opacity: 0;
   transition: all .5s ease .5s;
   -webkit-transition:all .5s ease .5s;

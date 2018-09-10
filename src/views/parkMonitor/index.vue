@@ -17,23 +17,14 @@
       <el-col :span="2" :style="{height: layoutHeight+'px'}">
       </el-col>
     </el-row>
-    <el-row >
-      <el-col :span="12" :offset="6">
-        <div style="position: relative;width: 100%;margin: 0 auto;padding: 0 auto">
-          <nav-bar class="nav"></nav-bar>
-        </div>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
 <script>
-import navBar from '../../components/navBar.vue'
 
 export default {
   name: 'monitor',
   components: {
-    navBar
   },
   data () {
     return {

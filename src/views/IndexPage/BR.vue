@@ -95,7 +95,13 @@ export default {
           xAxis: {
               type: 'category',
               boundaryGap: false,
-              data: obj.axis
+              data: obj.axis,
+              axisLabel: {
+                  show: true,
+                  textStyle: {
+                      color: '#fff'
+                  }
+              }
           },
           yAxis: {
               type: 'value',
@@ -120,17 +126,50 @@ export default {
               {
                   name:'物业费',
                   type:'line',
-                  data:obj.property
+                  data:obj.property,
+                  itemStyle: {
+                    normal: {
+                      label: {
+                        show: true, //开启显示
+                        textStyle: { //数值样式
+                          color: '#fff',
+                          fontSize: 12
+                        }
+                      }
+                    }
+                  }
               },
               {
                   name:'租金',
                   type:'line',
-                  data:obj.rent
+                  data:obj.rent,
+                  itemStyle: {
+                    normal: {
+                      label: {
+                        show: true, //开启显示
+                        textStyle: { //数值样式
+                          color: '#fff',
+                          fontSize: 12
+                        }
+                      }
+                    }
+                  }
               },
               {
                   name:'出租率',
                   type:'line',
-                  data:obj.letting
+                  data:obj.letting,
+                  itemStyle: {
+                    normal: {
+                      label: {
+                        show: true, //开启显示
+                        textStyle: { //数值样式
+                          color: '#fff',
+                          fontSize: 12
+                        }
+                      }
+                    }
+                  }
               }
           ]
       }

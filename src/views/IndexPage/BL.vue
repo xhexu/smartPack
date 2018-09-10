@@ -95,8 +95,13 @@ export default {
           },
           xAxis: {
               type: 'category',
-              boundaryGap: false,
-              data: obj.axis
+              data: obj.axis,
+              axisLabel: {
+                  show: true,
+                  textStyle: {
+                      color: '#fff'
+                  }
+              }
           },
           yAxis: {
               type: 'value',
@@ -121,12 +126,34 @@ export default {
               {
                   name:'车流量',
                   type:'line',
-                  data:obj.traffic
+                  data:obj.traffic,
+                  itemStyle: {
+                    normal: {
+                      label: {
+                        show: true, //开启显示
+                        textStyle: { //数值样式
+                          color: '#fff',
+                          fontSize: 12
+                        }
+                      }
+                    }
+                  }
               },
               {
                   name:'停车费',
                   type:'line',
-                  data:obj.parking
+                  data:obj.parking,
+                  itemStyle: {
+                    normal: {
+                      label: {
+                        show: true, //开启显示
+                        textStyle: { //数值样式
+                          color: '#fff',
+                          fontSize: 12
+                        }
+                      }
+                    }
+                  }
               }
           ]
       }
