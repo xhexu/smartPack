@@ -1,14 +1,22 @@
 <template>
   <div class="layout">
     <el-row>
-      <el-col :span="6">&nbsp;</el-col>
-      <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
-        <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <div id="allMap"  :class="{animMap:showMap}"></div>
-        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <nav-bar class="nav"></nav-bar>
+      <el-col :span="2">&nbsp;</el-col>
+      <el-col :span="20" :style="{position: 'relative',height: layoutHeight+'px'}">
+        <!--<img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>-->
+        <div id="allMap"  :class="{animMap:showMap}">
+          <iframe height="100%" width="100%" src="http://www.360vrpano.com/index.php/Project/viewProject/id/28985.html"></iframe>
+        </div>
+        <!--<img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>-->
       </el-col>
-      <el-col :span="6">&nbsp;</el-col>
+      <el-col :span="2">&nbsp;</el-col>
+    </el-row>
+    <el-row >
+      <el-col :span="12" :offset="6">
+        <div style="position: relative;width: 100%;margin: 0 auto;padding: 0 auto">
+          <nav-bar class="nav"></nav-bar>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -23,7 +31,7 @@ export default {
   },
   mounted () {
     this.animate()
-    this.initMap()
+    // this.initMap()
   },
   data () {
     return {

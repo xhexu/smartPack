@@ -10,7 +10,9 @@
     </el-col>
     <el-col :span="1" :offset="1" class="center" :style="{height: layoutHeight-80+'px'}" style="position: relative">
       <ul :class="{marT: layoutHeight>599}" style="position: absolute;bottom: 50px">
-        <li :class="{active:index==4}" @click="itemClick(4)">4</li>
+        <li :class="{active:index==6}" @click="itemClick(6)">6</li>
+        <li :class="{active:index==5}" @click="itemClick(5)">5</li>
+        <li :class="{active:index==4}" @click="itemClick(4)">3A</li>
         <li :class="{active:index==3}" @click="itemClick(3)">3</li>
         <li :class="{active:index==2}" @click="itemClick(2)">2</li>
         <li :class="{active:index==1}" @click="itemClick(1)">1</li>

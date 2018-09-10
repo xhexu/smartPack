@@ -34,9 +34,10 @@
       <el-col :span="2" :style="{height: layoutHeight+'px'}">
       </el-col>
       <el-col :span="20" >
-        <div style="width: 25%;position: relative;float: left" v-for="item in 8">
-          <div style="margin: 20px 5px;" @click="login">
+        <div style="width: 25%;position: relative;float: left" v-for="(item,index ) in videoConfig">
+          <div style="margin: 20px 5px;" @click="loginHandel(index)">
             <img style="width: 100%"  src="../../assets/top_bar.png"/>
+            <div>{{item.title}}</div>
             <img style="width:100%;"  src="../../assets/building.gif"/>
             <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;"  src="../../assets/top_bar.png"/>
           </div>
@@ -58,6 +59,7 @@
 
 <script>
 import navBar from '../../components/navBar.vue'
+import videoConfig from '../../http/webVideoList'
 
 export default {
   name: 'monitorDetail',
@@ -69,15 +71,16 @@ export default {
       dataList: [],
       dialogFormVisible: false,
       pass: '',
-      name: ''
+      name: '',
+      videoConfig
     }
   },
   methods: {
     login () {
       this.dialogFormVisible = true
     },
-    loginHandel () {
-      this.$router.push({path: '/videoDetail', query: {name: this.name, pass: this.pass}})
+    loginHandel (index) {
+      this.$router.push({path: '/videoDetail', query: {index: index}})
     }
   },
   mounted () {

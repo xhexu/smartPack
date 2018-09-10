@@ -1,11 +1,10 @@
 <template>
   <div>
-  <div>
     <el-dialog title="申请文件" :visible.sync="dialogFormVisible">
       <el-upload
         class="upload-demo"
         ref="upload"
-        action="http://www.sesame.kim:8086/itfincubationinfo/save"
+        :action="fileUrl"
         :on-success="handleSuccess"
         :on-error="handleError"
         :headers="headers"
@@ -14,37 +13,35 @@
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">申请</el-button>
       </el-upload>
     </el-dialog>
-  </div>
-  <div class="index">
-    <!--内容区域-->
-    <el-row :gutter="20">
-      <el-col :span="6" :style="{height: layoutHeight+'px'}">
+  <div class="layout">
+    <el-row>
+      <el-col :span="6" class="left" :style="{height: layoutHeight+'px'}">
         <card :option="cardTL" :info="policy" style="top:-50px"></card>
         <card :option="cardBL" :info="incubator" style="margin-top: 40px"></card>
       </el-col>
       <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
         <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
-          <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;height: 28px;width: 92px;color: #01A4AE;">申请</div>
+        <div class="building"  :class="{animMap:showMap}">
+          <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;
+          height: 28px;width: 92px;color: #01A4AE;margin-top: 20px">申请</div>
           <img style="height: 80%;" src="/static/hatch_center.gif"/>
         </div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <nav-bar class="nav"></nav-bar>
       </el-col>
-
-      <el-col :span="6" :style="{height: layoutHeight+'px'}">
+      <el-col :span="6" class="right" :style="{height: layoutHeight+'px'}">
         <card :option="cardTR" :info="activity" style="top:-50px"></card>
         <card :option="cardBR" :info="guide" style="margin-top: 40px"></card>
       </el-col>
     </el-row>
-
   </div>
 </div>
 </template>
 
 <script>
 import navBar from '../../components/navBar.vue'
-import Card from './Card.vue'
+import Card from './Card'
+import http from '../../http/http'
 require('vue2-animate/dist/vue2-animate.min.css')
 
 export default {
@@ -54,11 +51,11 @@ export default {
     Card
   },
   data () {
-    return {
+    return {//http://www.sesame.kim:8086
+      fileUrl: `${http.defaults.baseURL}/itfincubationinfo/save`,
       headers: {access_token: window.localStorage.getItem('access_token')},
       playFlag: false,
       showMap: false,
-      isShowVideo: false,
       dialogFormVisible: false,
       cardTL: {
         title: '政策',
@@ -92,18 +89,17 @@ export default {
         this.dialogFormVisible = false
       } else {
         this.$message(res.message)
+        if (res.errorCode === '1001') {
+          this.$router.push({path: '/login'})
+        }
       }
     },
     handleError (res) {
       this.$message('上传异常')
     },
     animate () {
-      let me = this
       this.playFlag = true
       this.showMap = true
-      setTimeout(function () {
-        me.isShowVideo = !me.isShowVideo
-      }, 200)
     },
     shenQing () {
       this.dialogFormVisible = true
@@ -139,6 +135,7 @@ export default {
   mounted () {
     this.animate()
     this.beginLoadData()
+    this.fileUrl = `${http.defaults.baseURL}/itfincubationinfo/save`
   },
   computed: {
     layoutHeight(){
@@ -154,34 +151,17 @@ export default {
 }
 </script>
 
-<!-- 首页样式 -->
 <style lang="scss" scoped>
-  .index{
+  .layout{
     height:100%;
     max-width: 1920px;
     margin: 0 auto;
     img.anim{
-      width:100%;
-      position: absolute;
-      left: 0;
-      transition: all .5s ease .5s;
-      -webkit-transition:all .5s ease .5s;
+      width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
-    .videoMapAnim{
-      opacity: 1 !important;
-    }
-    .videoMap{
-      width: 95%;
-      height: 93%;
-      position: absolute;
-      top: 25px;
-      left: 25px;
-      opacity: 0;
-      transition: all .5s ease .5s;
-      -webkit-transition:all .5s ease .5s;
-    }
-    .nav{
-      position:absolute;bottom:-60px;
+    .building{
+      width:95%;height:95%;opacity:0;margin: 15px auto;background:url('/static/bg_view.png') no-repeat center;
+      background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
     }
     .animTop{
       top:0!important;
@@ -189,19 +169,37 @@ export default {
     .animBtm{
       bottom:0!important;
     }
-    &_title{
-      font-size: 20px;
+    .animMap{
+      opacity:1.0!important;
     }
-    .main-left{
-      position: relative;
-      top: -55px;
-      left: 40px;
-      height: 100%;
+    .nav{
+      position:absolute;bottom:-60px;
     }
-    .main-right{
-      position: relative;
-      top: -55px;
-      height: 100%;
+  }
+  .left{
+    b{
+      left:12%;
+    }
+    .box{
+      padding-left: 20%;
+    }
+  }
+  .right{
+    b{
+      right:12%;
+    }
+    .box{
+      background-image:url("/static/divTR.png");padding-left: 10%;padding-right: 15%;
+    }
+  }
+  .box{
+    width:45%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
+    font-weight: bold;text-align: left;margin:30% auto;position: relative;padding-top: 100px;padding-bottom:50px;font-size: 14px;
+    b{color:red;position: absolute;font-size: 16px; top:33px;}
+    .btn{
+      display: block;width:50%; height:36px; margin: 0px auto; line-height: 36px;text-align: center;
+      background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
+      text-decoration: none;color:#ccc;
     }
   }
 </style>
