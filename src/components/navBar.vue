@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     clickMenu (item) {
-      console.log(item)
       this.nowIndex = item.index
       this.$router.push({path: item.path, query: {index: item.index}})
     }

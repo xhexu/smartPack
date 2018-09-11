@@ -167,7 +167,7 @@ export default {
     }
   },
   mounted () {
-    this.sendHttpForCar({type:'d',time:'2018'},'chart-tl')
+    this.sendHttpForCar({type:'d',time:'2017'},'chart-tl')
   }
 }
 </script>
