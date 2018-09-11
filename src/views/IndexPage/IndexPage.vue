@@ -105,15 +105,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width: 1400px) { 
-    .divHeight{
-      height:700px !important;
-    }
-    .t{
-      height:393px !important;
-      width: 360px !important;
-    }
-}
+
 .index{
   height: 100%;
   min-width: 1200px;
@@ -134,14 +126,14 @@ export default {
   background: transparent url('/static/divTL.png') no-repeat;
   background-size: 100% 100%;
   position: relative;
-  top:-40px;
+  top:-60px;
   margin: 0 auto;
 }
 .tr{
   background: transparent url('/static/divTR.png') no-repeat;
   background-size: contain;
   position: relative;
-  top:-40px;
+  top:-60px;
   margin: 0 auto;
 }
 .bl{
@@ -149,12 +141,14 @@ export default {
   background-size: contain;
   position: relative;
   margin: 0 auto;
+  top:-40px;
 }
 .br{
   background: transparent url('/static/divBR.png') no-repeat;
   background-size: contain;
   position: relative;
   margin: 0 auto;
+  top:-40px;
 }
 .animTop{
   top:0!important;
@@ -184,5 +178,24 @@ img.anim{
 }
 .nav{
   position:absolute;bottom:-60px;
+}
+@media screen and (min-width: 1400px) { 
+    .divHeight{
+      height:700px !important;
+    }
+    .t{
+      height:393px !important;
+      width: 360px !important;
+    }
+    .bl{
+      top:50px;
+    }
+    .br{
+      top:50px;
+    }
+    .map{
+      position:relative;
+      top:50px;
+    }
 }
 </style>

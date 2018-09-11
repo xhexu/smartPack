@@ -1,8 +1,9 @@
 <template>
   <div style="width:100%;height:100%">
     <div class="tlMap" @click="openWindow" id="chart-tl" ></div>
+    <div class="noData" v-show="!isSuccess">暂无数据</div>
     <div class="bigBg" :class="{bgAnim:isShowWindow}" v-show="isShowWindow" @click="openWindow">
-      <div class="bigChart">
+      <div class="bigChart" @click.stop>
         <div id="tl-bigChart" style="width: 100%;height:100%"></div>
       </div>
     </div>
@@ -25,7 +26,8 @@ export default {
   },
   data () {
     return {
-      isShowWindow: false
+      isShowWindow: false,
+      isSuccess: false
     }
   },
   methods: {
@@ -55,13 +57,11 @@ export default {
       }
       busHttp._QueryParkCL(params,function(data){
         if(_.isObject(data)){//parking : 停车费,traffic : 车流量
+          me.isSuccess = true
           me.initMap(data,domId)
-        }else{
-          me.$message({
-            message: '车辆信息返回数据异常',
-            type: 'warning'
-          })
         }
+      },function(err){
+        me.isSuccess = false
       })
     },
     getOption (obj) {
@@ -176,6 +176,14 @@ export default {
 .tlMap{
   width: 100%;
   height:100%;
+}
+.noData{
+  position: absolute;
+  top: 50%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .bigChart{
   position: fixed;

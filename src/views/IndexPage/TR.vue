@@ -2,7 +2,7 @@
   <div style="width:100%;height:100%">
     <div class="trMap" @click="openWindow" id="chart-tr"></div>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
-      <div class="bigChart">
+      <div class="bigChart" @click.stop>
         <div id="tr-bigChart" style="width: 100%;height:100%"></div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export default {
     _QueryParkCL: function (params,onSuccess,onError) {
     	_http.post("/itfparkinfo/searchCL",params).then(res=>{
     		if(res.success){
-    			if(_.isArray(res.result)){
+    			if(_.isArray(res.result)&&res.result.length>0){
     				var obj = _.groupBy(res.result,'dataType')
     				var keys = _.keys(obj)
     				var data = {
@@ -31,13 +31,14 @@ export default {
     				})
     				onSuccess&&onSuccess(data)
     			}else{
-    				console.error('searchCL出参格式异常')
+    				onError&&onError()
     			}
     		}else{
     			console.error(res.message)
     		}
 		}).catch(err=>{
-			onError&&onError()
+            console.error(err)
+			onError&&onError(err)
 		})
     },
     /**

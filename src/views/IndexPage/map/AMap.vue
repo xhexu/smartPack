@@ -28,7 +28,7 @@ export default {
           rotation:65,
           viewMode:'3D',//开启3D视图,默认为关闭
           expandZoomRange:true,
-          zooms:[3,20],
+          zooms:[3,30],
           mapStyle: 'amap://styles/31f60891d7dfe06e604e11bafed3fe92'//设置地图的显示样式
       });
       
