@@ -1,18 +1,18 @@
 <template>
-  <el-row style="width:100%; margin:0 auto;">
-    <el-col :span="4" :class="{active: index==0}" @click="index=0">
+  <el-row style="width:50%; margin:0 auto;">
+    <el-col :span="4" :class="{active: index==0}" :click="clickMenu(0)">
       <router-link :to="{path:'/index',query:{index:0}}">经营分析</router-link>
     </el-col>
-    <el-col :span="4" :class="{active: index==1}" @click="index=1"  :offset="1">
+    <el-col :span="4" :class="{active: index==1}" :click="clickMenu(1)"  :offset="1">
       <router-link :to="{path:'/show',query:{index:1}}">园区展示</router-link>
     </el-col>
-    <el-col :span="4" :class="{active: index==2}" @click="index=2"  :offset="1">
+    <el-col :span="4" :class="{active: index==2}" :click="clickMenu(2)"  :offset="1">
       <router-link :to="{path:'/management',query:{index:2}}">园区管控</router-link>
     </el-col>
-    <el-col :span="4" :class="{active: index==3}" @click="index=3"  :offset="1">
+    <el-col :span="4" :class="{active: index==3}" :click="clickMenu(3)"  :offset="1">
       <router-link :to="{path:'/hatch',query:{index:3}}">孵化管理</router-link>
     </el-col>
-    <el-col :span="4"  :class="{active: index==4}" @click="index=4"  :offset="1">
+    <el-col :span="4"  :class="{active: index==4}" :click="clickMenu(4)"  :offset="1">
     <router-link :to="{path:'/monitor',query:{index:4}}">视频监控</router-link>
    <!-- <a  target="_blank" href="http://61.134.28.101:90" >
       <span>视频监控</span>
@@ -26,6 +26,12 @@ export default {
   data () {
     return {
       index: 0
+    }
+  },
+  methods: {
+    clickMenu (data) {
+      console.log(data)
+      this.index = data
     }
   },
   mounted () {
