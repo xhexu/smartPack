@@ -90,7 +90,6 @@ export default {
         console.error(e)
       }
       param.vm = this
-      console.info(param)
       this.video = videoUtil(param)
     }
   },

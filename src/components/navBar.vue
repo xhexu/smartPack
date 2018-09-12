@@ -42,7 +42,13 @@ export default {
     }
   },
   mounted () {
-    this.clickMenu(this.navList[0])
+    let index = this.$route && this.$route.query && this.$route.query.index ? this.$route.query.index : 0
+    if (index === 4) {
+      this.$router.push({path: '/monitorDetail'})
+      this.nowIndex = 4
+    } else {
+      this.clickMenu(this.navList[0])
+    }
   }
 }
 </script>

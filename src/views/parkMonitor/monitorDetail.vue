@@ -6,11 +6,11 @@
       <el-col :span="2" :style="{height: layoutHeight+'px'}">
       </el-col>
       <el-col :span="20" >
-        <div style="width: 25%;position: relative;float: left" v-for="(item,index ) in videoConfig">
+        <div style="width: 25%;position: relative;float: left" v-for="(item ) in videoConfig">
           <div style="margin: 20px 5px;" @click="loginHandel(item.sequence)">
             <img style="width: 100%"  src="../../assets/top_bar.png"/>
             <div style="color: #00fcff;">{{item.title}}</div>
-            <img style="width:100%;"  :src="item.imgUrl ? item.imgUrl: '/static/building.gif'"/>
+            <img style="width:100%;"  :src=" false &&item.imgUrl ? item.imgUrl: '/static/building.gif'"/>
             <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;"  src="../../assets/top_bar.png"/>
           </div>
         </div>
@@ -59,6 +59,7 @@ export default {
         console.info(error)
       })
   },
+
   computed: {
     layoutHeight(){
       if(document.documentElement.clientHeight>800){
