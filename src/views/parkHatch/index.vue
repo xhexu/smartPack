@@ -27,7 +27,6 @@
           <img style="height: 80%;" src="/static/hatch_center.gif"/>
         </div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <nav-bar class="nav"></nav-bar>
       </el-col>
       <el-col :span="6" class="right" :style="{height: layoutHeight+'px'}">
         <card :option="cardTR" :info="activity" style="top:-50px"></card>

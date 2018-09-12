@@ -1,32 +1,4 @@
 <template>
-<div>
-  <div class="loginForm">
-    <el-dialog width="25%" title="登录" :visible.sync="dialogFormVisible" class="douming">
-      <el-form w>
-        <el-form-item >
-          <el-row>
-            <el-col :offset="6" :span="12" style="max-width: 300px">
-              <el-input  type="text" v-model="name" placeholder="请输入账号"></el-input>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <el-form-item>
-          <el-row>
-            <el-col :offset="6" :span="12" style="text-align: center;max-width: 300px;padding-left: auto;padding-right: auto">
-              <el-input type="text" v-model="pass" placeholder="请输入密码"></el-input>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <el-form-item>
-          <el-row>
-            <el-col :offset="6" :span="12" style="max-width: 300px">
-              <el-button type="primary" @click="loginHandel">登录</el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
-  </div>
   <div class="index">
     <!--内容区域-->
     <el-row>
@@ -35,31 +7,22 @@
       </el-col>
       <el-col :span="20" >
         <div style="width: 25%;position: relative;float: left" v-for="(item,index ) in videoConfig">
-          <div style="margin: 20px 5px;" @click="loginHandel(index)">
+          <div style="margin: 20px 5px;" @click="loginHandel(item.sequence)">
             <img style="width: 100%"  src="../../assets/top_bar.png"/>
-            <div>{{item.title}}</div>
-            <img style="width:100%;"  src="../../assets/building.gif"/>
+            <div style="color: #00fcff;">{{item.title}}</div>
+            <img style="width:100%;"  :src="item.imgUrl ? item.imgUrl: '/static/building.gif'"/>
             <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;"  src="../../assets/top_bar.png"/>
           </div>
-           </div>
+        </div>
       </el-col>
       <el-col :span="2" :style="{height: layoutHeight+'px'}">
       </el-col>
     </el-row>
-    <el-row >
-      <el-col :span="12" :offset="6">
-        <div style="position: relative;width: 100%;margin: 0 auto;padding: 0 auto">
-          <nav-bar class="nav"></nav-bar>
-        </div>
-      </el-col>
-    </el-row>
   </div>
-</div>
 </template>
 
 <script>
 import navBar from '../../components/navBar.vue'
-import videoConfig from '../../http/webVideoList'
 
 export default {
   name: 'monitorDetail',
@@ -72,7 +35,7 @@ export default {
       dialogFormVisible: false,
       pass: '',
       name: '',
-      videoConfig
+      videoConfig: []
     }
   },
   methods: {
@@ -84,6 +47,17 @@ export default {
     }
   },
   mounted () {
+    this.$http.post('/itfvideo/list')
+      .then((data) => {
+        if (data.success) {
+          this.videoConfig = data.result
+        } else {
+          this.$message(data.message)
+        }
+      })
+      .catch(function (error) {
+        console.info(error)
+      })
   },
   computed: {
     layoutHeight(){
@@ -126,11 +100,11 @@ export default {
     position:absolute;bottom:-60px;
   }
   .back{
-    display: block;width:80px; height:40px; line-height: 40px;text-align: center; position: fixed; left:20px; top:20px;
+    display: block;width:110px; height:40px; line-height: 40px;text-align: center; position: fixed; left:20px; top:20px;
     background: url('../../assets/btn.png') no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
-    text-decoration: none;color:#ccc;
+    text-decoration: none;color:#00fcff;
   }
 }
 </style>

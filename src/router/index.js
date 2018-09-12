@@ -38,6 +38,11 @@ const router = new Router({
       component: ForgetPwd
     },
     {
+      path: '/videoDetail',
+      name: '监控详情',
+      component: videoDetail
+    },
+    {
       path: '/index',
       component: Index,
       children:[
@@ -86,11 +91,6 @@ const router = new Router({
           path: '/monitorDetail',
           name: '视频监控',
           component: monitorDetail
-        },
-        {
-          path: '/videoDetail',
-          name: '监控详情',
-          component: videoDetail
         }
       ]
     }

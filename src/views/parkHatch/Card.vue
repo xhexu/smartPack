@@ -10,7 +10,16 @@
       <div class="card-div" :class="cardDivClass" >
         <ul>
           <li v-for="item in info" style="width: 100%;" @click="handleClick(item)">
-            {{ item.title }}
+            <table style="width: 100%;">
+              <tr>
+                <td align="left" style="width: 65%">
+                  {{ item.title }}
+                </td>
+                <td align="right" style="width:35%;font-size: 15px">
+                  {{ getFormtTime(item.checkTime) }}
+                </td>
+              </tr>
+            </table>
           </li>
         </ul>
       </div>
@@ -53,12 +62,23 @@ export default {
   mounted () {
     this.dealChartOption()
     this.dealCardOption()
+    console.info(this.info)
   },
   methods: {
     handleClick (item) {
       this.dialogFormVisible = true
       this.htmlContent = item.content
       this.htmlTitle = item.title
+    },
+    getFormtTime (time) {
+      var date = new Date(time);
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;
+      m = m < 10 ? ('0' + m) : m;
+      var d = date.getDate();
+      d = d < 10 ? ('0' + d) : d;
+      console.info(y)
+      return y + '-' + m + '-' + d
     },
     dealChartOption () {
       if(_.isObject(this.chart)){

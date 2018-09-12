@@ -1,12 +1,54 @@
-import { getWebVideo, setWebVideo } from './webVideoList'
+window.downloadFile = function (sUrl) {
 
-const beforeLoginCheck = (error) => {
+  if (/(iP)/g.test(navigator.userAgent)) {
+    alert('Your device does not support files downloading. Please try again in desktop browser.');
+    return false;
+  }
+
+  if (window.downloadFile.isChrome || window.downloadFile.isSafari) {
+    var link = document.createElement('a');
+    link.href = sUrl;
+
+    if (link.download !== undefined) {
+      var fileName = sUrl.substring(sUrl.lastIndexOf('/') + 1, sUrl.length);
+      link.download = fileName;
+    }
+
+    if (document.createEvent) {
+      var e = document.createEvent('MouseEvents');
+      e.initEvent('click', true, true);
+      link.dispatchEvent(e);
+      return true;
+    }
+  }
+
+  // Force file download (whether supported by server).
+  if (sUrl.indexOf('?') === -1) {
+    sUrl += '?download';
+  }
+
+  window.open(sUrl, '_self');
+  return true;
+}
+
+window.downloadFile.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+window.downloadFile.isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+const beforeLoginCheck = (error, vm) => {
   if (WebVideoCtrl === undefined) {
     error("no js")
     return false
   }
   if (WebVideoCtrl.I_CheckPluginInstall() === -1) {
-    error("您还未安装过插件，双击开发包目录里的WebComponents.exe安装！");
+    error('您还未安装过插件，双击开发包目录里的WebComponents.exe安装！');
+    vm.$confirm('缺少插件(或浏览器不支持插件), 是否下载插件?', '提示', {
+      confirmButtonText: '下载',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      window.downloadFile('/static/WebComponents.exe')
+    }).catch(() => {
+      return false
+    });
     return false
   }
   return true
@@ -15,7 +57,7 @@ const winHandel = function (xml) {
   console.info(xml)
 }
 const init = function (webVideo, {divId}) {
-  document.getElementById(divId).innerHTML = ''
+  // document.getElementById(divId).innerHTML = ''
   webVideo.I_InitPlugin('100%', '100%', {
     cbSelWnd: winHandel,
     iWndowType: 4
@@ -85,7 +127,7 @@ const play = function (webVideo, {szIP, success, resolve, error, reject}) {
 
   webVideo.passageway.forEach((en, index) => {
     var oWndInfo = webVideo.I_GetWindowStatus(index)
-    if (oWndInfo != null){// 已经在播放了，先停止
+    if (oWndInfo != null) {// 已经在播放了，先停止
       webVideo.I_Stop(index)
     }
     webVideo.I_StartRealPlay(szIP, {
@@ -97,9 +139,8 @@ const play = function (webVideo, {szIP, success, resolve, error, reject}) {
   })
 }
 
-
-const getWebVideoHandel = ({szIP, iPort, szUserName, szPassword, success, error, divId}) => {
-  if (!beforeLoginCheck(error)) {
+const getWebVideoHandel = ({szIP, iPort, szUserName, szPassword, success, error, divId, vm}) => {
+  if (!beforeLoginCheck(error, vm)) {
     return
   }
   let webVideo = null
