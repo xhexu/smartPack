@@ -1,7 +1,7 @@
 <template>
   <div id="main">
-    <top-bar></top-bar>
-    <router-view></router-view>
+    <top-bar class="header"></top-bar>
+    <router-view class="content"></router-view>
     <div class="navBar">
       <nav-bar></nav-bar>
     </div>
@@ -22,11 +22,17 @@
   #main {
     height: 100%;
     background: url('../../static/bg.png');
+    .header{
+      width:100%;
+      height:13%;
+    }
+    .content{
+      width:100%;
+      height:75%;
+    }
     .navBar{
       width: 100%;
-      position: absolute;
-      bottom: 5%;
-      margin: 0 auto;
+      height:12%;
     }
   }
 </style>
