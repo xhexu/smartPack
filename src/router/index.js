@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IndexPage from '@/views/IndexPage/IndexPage'
+import IndexPage from '@/views/IndexPage/IndexPage2'
 import showPage from '@/views/parkShow/index'
 import managementPage from '@/views/parkManagement/index'
 import buildingA from '@/views/parkManagement/buildingA'
