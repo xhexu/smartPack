@@ -1,42 +1,43 @@
 <template>
-  <el-row>
-    <el-col :span="6" style="height:100%">
-      <div class="t tl">
-        <div style="position:absolute;left:13%;top:12%;height:90%;width:90%">
-          <barCtl :option="option"></barCtl>
+  <div class="index">
+    <el-row>
+      <el-col :span="6" style="height:100%">
+        <div class="t tl">
+          <div style="position:absolute;left:13%;top:12%;height:90%;width:90%">
+            <barCtl :option="option"></barCtl>
+          </div>
         </div>
-      </div>
-      <div class="t bl">
-        <div style="position:absolute;left:13%;top:2%;height:90%;width:90%">
-          <barCbl :option="option"></barCbl>
+        <div class="t bl">
+          <div style="position:absolute;left:13%;top:2%;height:90%;width:90%">
+            <barCbl :option="option"></barCbl>
+          </div>
         </div>
-      </div>
-    </el-col>
+      </el-col>
 
-    <el-col :span="12" class="map divHeight">
-      <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-      <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
-        <AMap></AMap>
-      </div>
-      <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-      <!-- <nav-bar class="nav"></nav-bar> -->
-    </el-col>
-
-    <el-col :span="6" class="divHeight">
-      <div class="t tr">
-        <div style="position:absolute;right:10%;top:12%;height:90%;width:90%">
-          <barCtr :option="option"></barCtr>
+      <el-col :span="12" class="map divHeight">
+        <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <div class="videoMap" :class="{videoMapAnim:isShowVideo}">
+          <AMap></AMap>
         </div>
-      </div>
+        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <!-- <nav-bar class="nav"></nav-bar> -->
+      </el-col>
 
-      <div class="t br">
-        <div style="position:absolute;right:10%;top:2%;height:90%;width:90%">
-          <barCbr :option="option"></barCbr>
+      <el-col :span="6" class="divHeight">
+        <div class="t tr">
+          <div style="position:absolute;right:10%;top:12%;height:90%;width:90%">
+            <barCtr :option="option"></barCtr>
+          </div>
         </div>
-      </div>
-    </el-col>
-  </el-row>
-  
+
+        <div class="t br">
+          <div style="position:absolute;right:10%;top:2%;height:90%;width:90%">
+            <barCbr :option="option"></barCbr>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -104,20 +105,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width: 1400px) { 
-    .divHeight{
-      height:700px !important;
-    }
-    .t{
-      height:393px !important;
-      width: 360px !important;
-    }
+
+.index{
+  height: 100%;
+  min-width: 1200px;
+  margin: 0 auto;
+  position: relative
 }
 .divHeight{
   height:480px;
 }
 .map{
-  top:20px;
   position:relative;
 }
 .t{
@@ -128,14 +126,14 @@ export default {
   background: transparent url('/static/divTL.png') no-repeat;
   background-size: 100% 100%;
   position: relative;
-  top:-40px;
+  top:-60px;
   margin: 0 auto;
 }
 .tr{
   background: transparent url('/static/divTR.png') no-repeat;
   background-size: contain;
   position: relative;
-  top:-40px;
+  top:-60px;
   margin: 0 auto;
 }
 .bl{
@@ -143,12 +141,14 @@ export default {
   background-size: contain;
   position: relative;
   margin: 0 auto;
+  top:-40px;
 }
 .br{
   background: transparent url('/static/divBR.png') no-repeat;
   background-size: contain;
   position: relative;
   margin: 0 auto;
+  top:-40px;
 }
 .animTop{
   top:0!important;
@@ -178,5 +178,24 @@ img.anim{
 }
 .nav{
   position:absolute;bottom:-60px;
+}
+@media screen and (min-width: 1400px) { 
+    .divHeight{
+      height:700px !important;
+    }
+    .t{
+      height:393px !important;
+      width: 360px !important;
+    }
+    .bl{
+      top:50px;
+    }
+    .br{
+      top:50px;
+    }
+    .map{
+      position:relative;
+      top:50px;
+    }
 }
 </style>

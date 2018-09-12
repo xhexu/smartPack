@@ -1,41 +1,48 @@
 <template>
   <el-row style="width:50%; margin:0 auto;">
-    <el-col :span="4" :class="{active: index==0}" :click="clickMenu(0)">
-      <router-link :to="{path:'/index',query:{index:0}}">经营分析</router-link>
+    <el-col :span="4" :offset="1" v-for="item in navList" :key="item.index" :class="{active: item.index==nowIndex}">
+      <div @click="clickMenu(item)">{{item.title}}</div>
     </el-col>
-    <el-col :span="4" :class="{active: index==1}" :click="clickMenu(1)"  :offset="1">
-      <router-link :to="{path:'/show',query:{index:1}}">园区展示</router-link>
-    </el-col>
-    <el-col :span="4" :class="{active: index==2}" :click="clickMenu(2)"  :offset="1">
-      <router-link :to="{path:'/management',query:{index:2}}">园区管控</router-link>
-    </el-col>
-    <el-col :span="4" :class="{active: index==3}" :click="clickMenu(3)"  :offset="1">
-      <router-link :to="{path:'/hatch',query:{index:3}}">孵化管理</router-link>
-    </el-col>
-    <el-col :span="4"  :class="{active: index==4}" :click="clickMenu(4)"  :offset="1">
-    <router-link :to="{path:'/monitor',query:{index:4}}">视频监控</router-link>
-   <!-- <a  target="_blank" href="http://61.134.28.101:90" >
-      <span>视频监控</span>
-    </a>-->
-  </el-col>
   </el-row>
 </template>
 
 <script>
 export default {
+  name: 'navBar',
   data () {
     return {
-      index: 0
+      nowIndex: 0,
+      navList: [{
+        title: '经营分析',
+        index: 0,
+        path:'/index'
+      },{
+        title: '园区展示',
+        index: 1,
+        path:'/show'
+      },{
+        title: '园区管控',
+        index: 2,
+        path:'/management'
+      },{
+        title: '孵化管理',
+        index: 3,
+        path:'/hatch'
+      },{
+        title: '视频监控',
+        index: 4,
+        path:'/monitor'
+      }]
     }
   },
   methods: {
-    clickMenu (data) {
-      console.log(data)
-      this.index = data
+    clickMenu (item) {
+      this.nowIndex = item.index
+      this.$router.push({path: item.path, query: {index: item.index}})
     }
   },
   mounted () {
-    this.index = this.$route.query.index
+    this.clickMenu(this.navList[0])
   }
 }
 </script>
@@ -44,7 +51,8 @@ export default {
   .el-col {
     background: transparent url('/static/btn.png') no-repeat;
     background-size: 100% 100%;
-    a {
+    cursor: pointer;
+    div {
       display: block;
       width: 100%;
       height: 40px;
@@ -59,8 +67,12 @@ export default {
   }
   .el-col.active{
     background-image: url("/static/btn_active.png");
-    a {
+    div {
       color: #bb4b00;
     }
   }
+  .el-col-offset-1{
+    margin-left: 2.8%;
+  }
+
 </style>
