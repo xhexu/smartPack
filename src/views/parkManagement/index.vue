@@ -56,12 +56,12 @@ export default {
     }
   },
   computed: {
-    layoutHeight(){
-      if(document.documentElement.clientHeight>800){
+    layoutHeight () {
+      if (document.documentElement.clientHeight>800){
         return 720
-      }else if(document.documentElement.clientHeight<700){
+      } else if (document.documentElement.clientHeight<700){
         return 480
-      }else{
+      } else {
         return 600
       }
     }
@@ -69,8 +69,10 @@ export default {
   methods: {
     animate () {
       let vm = this;
-      vm.playFlag = true;
-      vm.showMap = true;
+      setTimeout(()=>{
+        vm.playFlag = true;
+        vm.showMap = true;
+      },150)
       setTimeout(()=>{
         vm.showBox = true;
       },500)

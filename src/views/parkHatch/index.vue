@@ -97,8 +97,10 @@ export default {
       this.$message('上传异常')
     },
     animate () {
-      this.playFlag = true
-      this.showMap = true
+      setTimeout(()=>{
+        this.playFlag = true
+        this.showMap = true
+      },150)
     },
     shenQing () {
       this.dialogFormVisible = true
