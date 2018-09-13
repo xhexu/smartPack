@@ -4,7 +4,7 @@ import _ from 'underscore'
 
 export default {
     /**
-     * 查询园区车辆信息 (左上)
+     * 查询园区车辆信息:车流量，停车费
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]

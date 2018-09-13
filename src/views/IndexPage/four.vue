@@ -53,9 +53,7 @@ export default {
       let barEcharts = echarts.init(dom)
       let options = this.getOption(obj)
       barEcharts.setOption(options)
-      window.onresize = function(){
-        barEcharts.resize()
-      }
+      window.chartList.push(barEcharts) 
     },
     sendHttpForFee (domId) {
       let me = this
@@ -83,11 +81,8 @@ export default {
               color:'#00E4FF'
             }
         },
-        legend: {
-            data: ['line']
-        },
         polar: {
-            center: ['50%', '54%']
+            center: ['50%', '50%']
         },
         tooltip: {
             trigger: 'axis',

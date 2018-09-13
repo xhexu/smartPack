@@ -57,9 +57,7 @@ export default {
       let barEcharts = echarts.init(dom)
       let options = this.getOption(obj)
       barEcharts.setOption(options)
-      window.onresize = function(){
-        barEcharts.resize()
-      }
+      window.chartList.push(barEcharts) 
     },
     sendHttpForFee (domId) {
       let me = this

@@ -48,9 +48,7 @@ export default {
       let barEcharts = echarts.init(dom)
       let options = this.getOption(obj)
       barEcharts.setOption(options)
-      window.onresize = function(){
-        barEcharts.resize()
-      }
+      window.chartList.push(barEcharts)
     },
     sendHttpForFee (domId) {
       let me = this
@@ -85,12 +83,13 @@ export default {
               }
           },
           legend: {
-              data: ['出租率','租金金额(万)'],
+              data: ['收缴率','租金金额(万)'],
               top:'15%',
               left:'5%',
               textStyle: {
                 color: '#fff'
-              }
+              },
+              selectedMode:false
           },
           grid: {
               left: '1%',
@@ -122,7 +121,7 @@ export default {
               }
           },
           series : [{
-            name:'出租率',
+            name:'收缴率',
             type:'line',
             barWidth: '30%',
             data:obj.letting,

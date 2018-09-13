@@ -2,6 +2,7 @@
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
     <div class="trMap" @click="openWindow" id="chart-three"></div>
+    <div class="chart_tip" v-text="info"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
@@ -31,7 +32,8 @@ export default {
   },
   data () {
     return {
-      isShowWindow: false
+      isShowWindow: false,
+      info:'暂无数据'
     }
   },
   methods: {
@@ -48,23 +50,20 @@ export default {
       let barEcharts = echarts.init(dom)
       let options = this.getOption(obj)
       barEcharts.setOption(options)
-      window.onresize = function(){
-        barEcharts.resize()
-      }
+      window.chartList.push(barEcharts) 
     },
-    sendHttpForFee (domId) {
+    sendHttpForCar (item,domId) {
       let me = this
-      busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(data){
-        if(_.isObject(data)){
+      let params = {
+        parkCode:'e',
+        type:item.type,
+        time:item.time
+      }
+      busHttp._QueryParkCL(params,function(data){
+        if(_.isObject(data)){//parking : 停车费,traffic : 车流量
           me.initMap(data,domId)
-        }else{
-          me.$message({
-            message: '车辆信息返回数据异常',
-            type: 'warning'
-          })
         }
-      },function(error){
-
+      },function(err){
       })
     },
     getOption (obj) {
@@ -90,7 +89,8 @@ export default {
               left:'5%',
               textStyle: {
                 color: '#fff'
-              }
+              },
+              selectedMode:false
           },
           grid: {
               left: '1%',
@@ -122,10 +122,10 @@ export default {
               }
           },
           series : [{
-            name:'出租率',
+            name:'车流量',
             type:'line',
             barWidth: '30%',
-            data:obj.letting,
+            data:obj.traffic,
             itemStyle: {
               normal: {
                 color: '#fffc00',
@@ -140,10 +140,10 @@ export default {
               }
             }
           },{
-            name:'租金金额(万)',
-            type:'bar',
+            name:'停车费',
+            type:'line',
             barWidth: '30%',
-            data:obj.rent,
+            data:obj.parking,
             itemStyle: {
               normal: {
                 color:'#00E4FF',
@@ -162,7 +162,7 @@ export default {
     }
   },
   mounted () {
-    this.sendHttpForFee('chart-three')
+    this.sendHttpForCar({type:'d',time:'2018'},'chart-tl')
   }
 }
 </script>
@@ -171,6 +171,7 @@ export default {
 .chart{
   width:100%;
   height:200px;
+  position: relative;
 }
 .trMap{
   width: 100%;
@@ -196,6 +197,12 @@ export default {
   left:0;
   top:0;
   background-color: rgba(0,0,0, 0.7);
+}
+.chart_tip{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  color:#00E4FF;
 }
 @media screen and (min-width: 1400px) { 
     .bigChart{
