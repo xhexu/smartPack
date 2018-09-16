@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 
+
 axios.defaults.baseURL = 'http://www.sesame.kim:8086'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
@@ -22,7 +23,8 @@ axios.interceptors.response.use(function (response) {
 		console.error('请求失败',response)
 	}
 }, function (error) {
-	console.error('入参格式异常',error)
+	console.error(error)
+	return error;
 })
 
 export default axios

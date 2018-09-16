@@ -2,6 +2,7 @@
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
     <div class="trMap" @click="openWindow" id="chart-six"></div>
+    <div class="chart_tip" v-if="info" v-text="info"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
@@ -31,7 +32,8 @@ export default {
   },
   data () {
     return {
-      isShowWindow: false
+      isShowWindow: false,
+      info: ''
     }
   },
   methods: {
@@ -65,10 +67,13 @@ export default {
         if(_.isObject(data)){
           me.initMap(data,domId)
         }else{
-          me.$message({
-            message: '车辆信息返回数据异常',
-            type: 'warning'
-          })
+          me.info=  "暂无数据"
+          if(error){
+            me.$message({
+              message: error.message,
+              type: 'warning'
+            })
+          }
         }
       },function(error){
 
@@ -101,11 +106,11 @@ export default {
                     {value:10, name:'物流'},
                     {value:5, name:'其它'},
                     {value:15, name:'金融'},
-                    {value:25, name:'rose4'},
-                    {value:20, name:'rose5'},
-                    {value:35, name:'rose6'},
-                    {value:30, name:'rose7'},
-                    {value:40, name:'rose8'}
+                    {value:25, name:'商务'},
+                    {value:20, name:'信息科技'},
+                    {value:35, name:'医疗'},
+                    {value:30, name:'其它'},
+                    {value:40, name:'服务'}
                 ],
                 color:['#308AD5','#3063D5','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3','#3063D5']
             }
@@ -114,7 +119,6 @@ export default {
       if(obj.hasOwnProperty('series')){
         option.series[0].radius = obj.series.radius
       }
-      console.log(option.series)
       return option
     }
   },
@@ -145,6 +149,15 @@ export default {
   z-index: 999;
   margin: -225px 0 0 -350px;
   padding: 10px;
+  animation:bg_chart_in 1s;
+  animation: bg_chart_in 1s;
+  -moz-animation: bg_chart_in 1s; 
+  -webkit-animation: bg_chart_in 1s;  
+  -o-animation: bg_chart_in 1s;
+}
+@keyframes bg_chart_in{
+  0%{transform: scale(0.2);opacity: 0;}
+  100%{ transform: scale(1);opacity: 1;}
 }
 .bigBg{
   z-index:888;
@@ -154,6 +167,20 @@ export default {
   left:0;
   top:0;
   background-color: rgba(0,0,0, 0.7);
+  animation: bg_anim 1s;
+  -moz-animation: bg_anim 1s; 
+  -webkit-animation: bg_anim 1s;  
+  -o-animation: bg_anim 1s;
+}
+@keyframes bg_anim{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+.chart_tip{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  color:#00E4FF;
 }
 @media screen and (min-width: 1400px) { 
     .bigChart{

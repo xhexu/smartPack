@@ -2,14 +2,15 @@
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
     <div class="trMap" @click="openWindow" id="chart-four"></div>
+    <div class="chart_tip" v-if="false" v-text="info"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
-        <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
+        <img style="width: 100%;position: absolute;left: 0;top: 8px" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
           <div id="four-bigChart" style="width: 100%;height:100%"></div>
         </div>
-        <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
+        <img style="position: absolute;left: 0;bottom: 2px;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
       </div>
     </div>
   </div>
@@ -31,105 +32,96 @@ export default {
   },
   data () {
     return {
-      isShowWindow: false
+      isShowWindow: false,
+      info:'',
+      queryParams:{
+        parkCode:'e',
+        time:new Date().getFullYear()
+      }
     }
   },
   methods: {
     openWindow () {
       if(!this.isShowWindow){
         this.isShowWindow = !this.isShowWindow
-        let me = this
-        setTimeout(()=>{
-          me.initMap({},'four-bigChart')
-        },200)
-        
-        // this.sendHttpForFee('tr-bigChart')
+        this.sendHttpForLetting('four-bigChart',{
+            radius:160
+        })
       }else{
         this.isShowWindow = false
       }
     },
-    initMap (obj,domId) {
+    initMap (obj,domId,option) {
       let dom = document.getElementById(domId)
       let barEcharts = echarts.init(dom)
-      let options = this.getOption(obj)
+      let options = this.getOption(obj,option)
       barEcharts.setOption(options)
       window.chartList.push(barEcharts) 
     },
-    sendHttpForFee (domId) {
+    sendHttpForLetting (domId,option) {
       let me = this
-      busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(data){
+      busHttp._QueryLetting(me.queryParams,function(data){
         if(_.isObject(data)){
-          me.initMap(data,domId)
-        }else{
-          me.$message({
-            message: '车辆信息返回数据异常',
-            type: 'warning'
-          })
+          me.initMap(data,domId,option)
         }
       },function(error){
-
+          me.info = '暂无数据'
+          if(error){
+            me.$message({
+              message: error.message,
+              type: 'warning'
+            })
+          }
       })
     },
-    getOption (obj) {
-      
+    getOption (obj,option) {
       return {
         title : {
             text: '出租率',
             left:'5%',
-            top:'2%',
+            top:'5%',
             textStyle:{
               color:'#00E4FF'
             }
         },
-        polar: {
-            center: ['50%', '50%']
-        },
         tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross'
-            }
+            trigger: 'axis'
         },
-        angleAxis: {
-            type: 'value',
-            startAngle: 1,
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: '#fffc00'
-                }
-            }
-        },
-        radiusAxis: {
-            min: 0
-        },
-        series: [{
-            coordinateSystem: 'polar',
-            name: 'line',
-            type: 'line',
-            showSymbol: false,
-            itemStyle: {
-              normal: {
-                color: '#00E4FF',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#fff',
-                    fontSize: 12
-                  }
-                }
+        radar: [{
+          name: {
+            textStyle: {
+                color: '#fffc00',
+                borderRadius: 3,
+                padding: [3, 5]
+             }
+          },
+          indicator: (function (){
+              let res = [],maxValue = _.max(obj.letting)+100
+              for (var i = 1; i <= obj.axis.length; i++) {
+                  res.push({text:i+'月',max:maxValue});
               }
-            },
-            data:[11,2,3,4,5,6,7,8,9,10,11,12]
+              return res;
+          })(),
+          center: ['50%','50%'],
+          radius: option?option.radius:70
         }],
-        animationDuration: 2000
+        series: [{
+            type: 'radar',
+            lineStyle:{
+              color:'#00E4FF'
+            },
+            itemStyle:{
+              color:'#00E4FF'
+            },
+            data: [{
+              value:obj.letting
+            }]
+        }]
       }
     }
   },
   mounted () {
-    this.initMap({},'chart-four')
-    // this.sendHttpForFee('chart-tr')
+    this.sendHttpForLetting('chart-four')
   }
 }
 </script>
@@ -154,6 +146,11 @@ export default {
   z-index: 999;
   margin: -225px 0 0 -350px;
   padding: 10px;
+  animation:bg_chart_in 1s;
+}
+@keyframes bg_chart_in{
+  0%{transform: scale(0.2);opacity: 0;}
+  100%{ transform: scale(1);opacity: 1;}
 }
 .bigBg{
   z-index:888;
@@ -163,6 +160,20 @@ export default {
   left:0;
   top:0;
   background-color: rgba(0,0,0, 0.7);
+  animation: bg_anim 1s;
+  -moz-animation: bg_anim 1s; 
+  -webkit-animation: bg_anim 1s;  
+  -o-animation: bg_anim 1s;
+}
+@keyframes bg_anim{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+.chart_tip{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  color:#00E4FF;
 }
 @media screen and (min-width: 1400px) { 
     .bigChart{

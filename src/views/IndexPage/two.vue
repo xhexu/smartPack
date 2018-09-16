@@ -2,9 +2,14 @@
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
     <div class="trMap" @click="openWindow" id="chart-two"></div>
+    <div class="chart_tip" v-if="info" v-text="info"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
+        <div class="btns">
+          <div class="btns_left" @click="clickBtn('y')">同比</div>
+          <div class="btns_right" @click="clickBtn('q')">环比</div>  
+        </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
           <div id="two-bigChart" style="width: 100%;height:100%"></div>
@@ -31,46 +36,53 @@ export default {
   },
   data () {
     return {
-      isShowWindow: false
+      isShowWindow: false,
+      info:""
     }
   },
   methods: {
     openWindow () {
       if(!this.isShowWindow){
         this.isShowWindow = !this.isShowWindow
-        this.sendHttpForFee('two-bigChart')
+        this.sendHttpForFee('two-bigChart',{
+          title:{
+            text:'2018年度',
+            top: '6%'
+          }
+        })
       }else{
         this.isShowWindow = false
       }
     },
-    initMap (obj,domId) {
+    initMap (obj,domId,option) {
       let dom = document.getElementById(domId)
       let barEcharts = echarts.init(dom)
-      let options = this.getOption(obj)
+      let options = this.getOption(obj,option)
       barEcharts.setOption(options)
       window.chartList.push(barEcharts)
     },
-    sendHttpForFee (domId) {
+    sendHttpForFee (domId,option) {
       let me = this
       busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(data){
         if(_.isObject(data)){
-          me.initMap(data,domId)
-        }else{
-          me.$message({
-            message: '车辆信息返回数据异常',
-            type: 'warning'
-          })
+          me.initMap(data,domId,option)
         }
       },function(error){
-
+          me.info = "暂无数据"
+          if(error){
+            me.$message({
+              message: error.message,
+              type: 'warning'
+            })
+          }
       })
     },
-    getOption (obj) {
+    getOption (obj,option) {
       return {
           title: {
-              text: '物业费',
+              text: option?option.title.text:'物业费',
               left:'5%',
-              top:'2%',
+              top:option?option.title.top:'2%',
               textStyle:{
                 color:'#00E4FF'
               }
@@ -83,7 +95,7 @@ export default {
               }
           },
           legend: {
-              data: ['收缴率','租金金额(万)'],
+              data: ['收缴率','物业费金额(万)'],
               top:'15%',
               left:'5%',
               textStyle: {
@@ -139,7 +151,7 @@ export default {
               }
             }
           },{
-            name:'租金金额(万)',
+            name:'物业费金额(万)',
             type:'bar',
             barWidth: '30%',
             data:obj.rent,
@@ -170,6 +182,7 @@ export default {
 .chart{
   width:100%;
   height:200px;
+  position: relative;
 }
 .trMap{
   width: 100%;
@@ -186,6 +199,29 @@ export default {
   z-index: 999;
   margin: -225px 0 0 -350px;
   padding: 10px;
+  .btns{
+    position:absolute;
+    right: 50px;
+    top:30px;
+    z-index:1000;
+    div {
+      display: inline-block;
+      background-color: #00E4FF;
+      padding: 1px 10px;
+      font-size: 14px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  }
+  animation:bg_chart_in 1s;
+  animation: bg_chart_in 1s;
+  -moz-animation: bg_chart_in 1s; 
+  -webkit-animation: bg_chart_in 1s;  
+  -o-animation: bg_chart_in 1s;
+}
+@keyframes bg_chart_in{
+  0%{transform: scale(0.2);opacity: 0;}
+  100%{ transform: scale(1);opacity: 1;}
 }
 .bigBg{
   z-index:888;
@@ -195,6 +231,20 @@ export default {
   left:0;
   top:0;
   background-color: rgba(0,0,0, 0.7);
+  animation: bg_anim 1s;
+  -moz-animation: bg_anim 1s; 
+  -webkit-animation: bg_anim 1s;  
+  -o-animation: bg_anim 1s;
+}
+@keyframes bg_anim{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+.chart_tip{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  color:#00E4FF;
 }
 @media screen and (min-width: 1400px) { 
     .bigChart{

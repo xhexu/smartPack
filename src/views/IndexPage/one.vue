@@ -2,13 +2,13 @@
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
     <div class="trMap" @click="openWindow" id="chart-tr"></div>
+    <div class="chart_tip" v-if="info" v-text="info"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
-    <div class="chartBg" v-show="isShowWindow" @click="openWindow"></div>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
         <div class="btns">
-          <div class="btns_left">同比</div>
-          <div class="btns_right">环比</div>  
+          <div class="btns_left" @click="clickBtn('y')">同比</div>
+          <div class="btns_right" @click="clickBtn('q')">环比</div>  
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
@@ -36,7 +36,8 @@ export default {
   },
   data () {
     return {
-      isShowWindow: false
+      isShowWindow: false,
+      info:''
     }
   },
   methods: {
@@ -49,9 +50,17 @@ export default {
             top: '6%'
           }
         })
+        this.clickBtn('y')
       }else{
         this.isShowWindow = false
       }
+    },
+    clickBtn (flag) {
+      flag=='y'?(()=>{
+
+      })():(()=>{
+
+      })()
     },
     initMap (obj,domId,option) {
       let dom = document.getElementById(domId)
@@ -65,14 +74,15 @@ export default {
       busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(data){
         if(_.isObject(data)){
           me.initMap(data,domId,option)
-        }else{
+        }
+      },function(error){
+        me.info=  "暂无数据"
+        if(error){
           me.$message({
-            message: '车辆信息返回数据异常',
+            message: error.message,
             type: 'warning'
           })
         }
-      },function(error){
-
       })
     },
     getOption (obj,option) {
@@ -147,6 +157,18 @@ export default {
                   }
                 }
               }
+            },
+            markPoint:{
+              sysbolSize:"20",
+              itemStyle:{
+                normal:{
+                  borderColor: '#97cefa',
+                  borderWidth: 1,
+                  lable:{
+                    show: false
+                  }
+                }
+              }
             }
           },{
             name:'租金金额(万)',
@@ -180,6 +202,7 @@ export default {
 .chart{
   width:100%;
   height:200px;
+  position: relative;
 }
 .trMap{
   width: 100%;
@@ -204,14 +227,19 @@ export default {
     div {
       display: inline-block;
       background-color: #00E4FF;
-      padding: 1px 5px;
+      padding: 1px 10px;
       font-size: 14px;
       border-radius: 3px;
       cursor: pointer;
     }
   }
+  animation:bg_chart_in 1s;
+  animation: bg_chart_in 1s;
+  -moz-animation: bg_chart_in 1s; 
+  -webkit-animation: bg_chart_in 1s;  
+  -o-animation: bg_chart_in 1s;
 }
-.chartBg{
+.bigBg{
   z-index:888;
   position: fixed;
   width: 100%;
@@ -219,19 +247,24 @@ export default {
   left:0;
   top:0;
   background-color: rgba(0,0,0, 0.7);
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  -ms-filter: blur(3px);
-  filter: blur(3px);
+  animation: bg_anim 1s;
+  -moz-animation: bg_anim 1s; 
+  -webkit-animation: bg_anim 1s;  
+  -o-animation: bg_anim 1s;
 }
-.bigBg{
-  position: fixed;
+@keyframes bg_anim{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+.chart_tip{
+  position: absolute;
   width: 100%;
-  height: 100%;
-  left:0;
-  top:0;
-  z-index:889;
+  top: 50%;
+  color:#00E4FF;
+}
+@keyframes bg_chart_in{
+  0%{transform: scale(0.2);opacity: 0;}
+  100%{ transform: scale(1);opacity: 1;}
 }
 @media screen and (min-width: 1400px) { 
     .bigChart{

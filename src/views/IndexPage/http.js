@@ -4,7 +4,7 @@ import _ from 'underscore'
 
 export default {
     /**
-     * 查询园区车辆信息:车流量，停车费
+     * 查询园区:车流量，停车费
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]
@@ -12,15 +12,15 @@ export default {
      */
     _QueryParkCL: function (params,onSuccess,onError) {
     	_http.post("/itfparkinfo/searchCL",params).then(res=>{
+            var data = {
+                axis:[],
+                traffic:[],
+                parking:[]
+            }
     		if(res.success){
     			if(_.isArray(res.result)&&res.result.length>0){
     				var obj = _.groupBy(res.result,'dataType')
     				var keys = _.keys(obj)
-    				var data = {
-    					axis:[],
-    					traffic:[],
-    					parking:[]
-    				}
     				_.each(keys,function(key){
     					_.each(obj[key],function(v){
 	    					data[key].push(v.dataValue)
@@ -29,20 +29,50 @@ export default {
     				_.each(obj['traffic'],function(v){
     					data.axis.push(params.type == 'd'?v.dataTime.substr(5):v.dataTime)
     				})
-    				onSuccess&&onSuccess(data)
-    			}else{
-    				onError&&onError()
-    			}
-    		}else{
-    			console.error(res.message)
+                    onSuccess&&onSuccess(data)
+                    return
+    			}   
     		}
+            onError&&onError()
 		}).catch(err=>{
-            console.error(err)
 			onError&&onError(err)
 		})
     },
     /**
-     * 查询物业费，租金，出租率（右上）
+     * 查询出租率
+     * @param  {[type]} params    [description]
+     * @param  {[type]} onSuccess [description]
+     * @param  {[type]} onError   [description]
+     * @return {[type]}           [description]
+     */
+    _QueryLetting: function(params,onSuccess,onError){
+        _http.post("/itfparkinfo/searchWY",params).then(res=>{
+            var data = {
+                axis:[],
+                letting:[] //出租率
+            }
+            if(res.success){
+                if(_.isArray(res.result)){
+                    var obj = _.groupBy(res.result,'dataType')
+                    if(_.has(obj,"letting")){
+                        _.each(obj["letting"],function(v){
+                            data["letting"].push(v.dataValue)
+                        })
+                        _.each(obj['letting'],function(v){
+                            data.axis.push(v.dataTime)
+                        })
+                    }
+                    onSuccess&&onSuccess(data)
+                    return
+                }
+            }
+            onError&&onError(res)
+        }).catch(err=>{
+            onError&&onError(err)
+        })
+    },
+    /**
+     * 查询物业费金额，租金金额，出租率（右上）
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]
@@ -73,7 +103,7 @@ export default {
                     console.error('searchCL出参格式异常')
                 }
             }else{
-                console.error(res.message)
+                onError&&onError(err)
             }
         }).catch(err=>{
             onError&&onError()
