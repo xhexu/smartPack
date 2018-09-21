@@ -17,7 +17,8 @@ freeStopCount : 免费停车位（个）
 rentStopCount : 租赁停车位（个）
 ```
 - 最新的实体
-````id : 主键 uuid
+```
+id : 主键 uuid
 code : 企业编码
 enterpriseName : 企业名称
 addr : 通讯地址
