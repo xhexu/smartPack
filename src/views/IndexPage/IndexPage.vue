@@ -11,7 +11,7 @@
         <ChartThree></ChartThree>
       </el-col>
     </el-row>
-    <el-row style="height:50%">
+    <el-row style="height:50%;margin-top: 10px">
       <el-col :span='7' :offset="1" style="height:100%">
         <ChartFour></ChartFour>
       </el-col>

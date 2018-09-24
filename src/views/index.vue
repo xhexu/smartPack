@@ -33,6 +33,7 @@
     .navBar{
       width: 100%;
       height:12%;
+      display:flex;
     }
   }
 </style>

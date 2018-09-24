@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width:50%; margin:0 auto;">
+  <el-row style="width:50%; margin:0 auto;align-self: center;">
     <el-col :span="4" :offset="1" v-for="item in navList" :key="item.index" :class="{active: item.index==nowIndex}">
       <div @click="clickMenu(item)">{{item.title}}</div>
     </el-col>
