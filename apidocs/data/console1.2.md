@@ -15,10 +15,12 @@ time :时间参数, 年份,例如 2018   必填
 ```
 -- 参数说明
 1. dataTime :  月份
-2. dataType : 类型  有三个值
+2. dataType : 类型  有五个值
         property : 物业费
         rent : 租金
         letting : 出租率
+        rentArrearage : 租金欠费
+        propertyArrearage : 物业欠费
 3. dataValue : 数值
 
 -- 出参示例
