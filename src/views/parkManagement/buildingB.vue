@@ -310,7 +310,7 @@ export default {
         color:white; font-size:14px;text-indent: 30px;width:95%;height:20px;line-height: 20px;
       }
       #chart{
-        position: absolute;left:5%;bottom:10%;height: 60%;width:90%;color:white;
+        position: absolute;left:5%;bottom:10%;height: 45%;width:90%;color:white!important;
       }
     }
     .btns{
