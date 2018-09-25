@@ -31,6 +31,7 @@
 - 2.1 [查询园区详情](data/parkDetail.md)
 - 2.2 [经营分析-车辆](data/console1.1.md)
 - 2.3 [经营分析-物业费](data/console1.2.md)
+- 2.4 [行业分类-接口调试](http://www.sesame.kim:8086/swagger-ui.html#/itf-enter-info-controller/cyTypeDataUsingPOST)
 
 - 2.4 [车辆同比和环比js算法](cl.html)
 
