@@ -13,9 +13,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .anchorBL {
-    display: none;
-  }
   .layout{
     height: 100%;width:100%;
   }
