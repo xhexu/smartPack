@@ -7,8 +7,8 @@
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" v-show="isShowWindow" @click.stop>
         <div class="btns">
-          <div class="btns_left" @click="clickBtn('y')">同比</div>
-          <div class="btns_right" @click="clickBtn('q')">环比</div>  
+          <div v-bind:class="{'activeClass':isActive=='y'}" @click="clickBtn('y')">同比</div>
+          <div v-bind:class="{'activeClass':isActive=='q'}" @click="clickBtn('q')">环比</div>  
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
@@ -38,6 +38,7 @@ export default {
     return {
       isShowWindow: false,
       info:'',
+      isActive: 'y',
       queryParams:{
         parkCode:'e',
         type:'y',
@@ -46,22 +47,53 @@ export default {
     }
   },
   methods: {
+    errorEvent (error) {
+      this.info = "暂无数据"
+      if(error){
+        this.$message({
+          message: error.message,
+          type: 'warning'
+        })
+      }
+    },
     clickBtn (flag) {
+      let me = this
+      me.isActive = flag
+      me.queryParams = {
+        parkCode:'e',
+        type:'y',
+        time:new Date().getFullYear()
+      }
       flag=='y'?(()=>{
-
+        busHttp._QueryYoY("/itfparkinfo/searchCL",me.queryParams,(res)=>{
+          console.log(res)
+          me.initMap(res,"three-bigChart",{
+            title:{
+              text:'2018年度',
+              top: '6%'
+            }
+          })
+        },(error)=>{
+          me.errorEvent(error)
+        })
       })():(()=>{
-
+        busHttp._QueryQoQ("/itfparkinfo/searchCL",me.queryParams,(res)=>{
+          console.log(res)
+          me.initMap(res,"three-bigChart",{
+            title:{
+              text:'2018年度',
+              top: '6%'
+            }
+          })
+        },(error)=>{
+          me.errorEvent(error)
+        })
       })()
     },
     openWindow () {
-      if(!this.isShowWindow){
+      if(!this.isShowWindow&&!this.info){
         this.isShowWindow = !this.isShowWindow
-        this.sendHttpForCar('three-bigChart',{
-          title:{
-            text:'2018年度',
-            top: '6%'
-          }
-        })
+        this.clickBtn('y')
       }else{
         this.isShowWindow = false
       }
@@ -80,13 +112,7 @@ export default {
           me.initMap(data,domId,option)
         }
       },function(error){
-        me.info = "暂无数据"
-        if(error){
-          me.$message({
-            message: error.message,
-            type: 'warning'
-          })
-        }
+        me.errorEvent(error)
       })
     },
     getOption (obj,option) {
@@ -218,7 +244,8 @@ export default {
     z-index:1000;
     div {
       display: inline-block;
-      background-color: #00E4FF;
+      background-color:#7bbac7;
+      color:#000;
       padding: 1px 10px;
       font-size: 14px;
       border-radius: 3px;
@@ -230,6 +257,10 @@ export default {
   -moz-animation: bg_chart_in 1s; 
   -webkit-animation: bg_chart_in 1s;  
   -o-animation: bg_chart_in 1s;
+}
+.activeClass{
+  background-color: #00E4FF !important;
+  color:#fff !important;
 }
 @keyframes bg_chart_in{
   0%{transform: scale(0.2);opacity: 0;}

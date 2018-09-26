@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     openWindow () {
-      if(!this.isShowWindow){
+      if(!this.isShowWindow&&!this.info){
         this.isShowWindow = !this.isShowWindow
         this.sendHttpForFee('two-bigChart',{
           title:{

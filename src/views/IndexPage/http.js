@@ -4,6 +4,33 @@ import _ from 'underscore'
 
 export default {
     /**
+     * 产业分类
+     * @param  {[type]} params    [description]
+     * @param  {[type]} onSuccess [description]
+     * @param  {[type]} onError   [description]
+     * @return {[type]}           [description]
+     */
+    _QueryGLCS:function (params,onSuccess,onError) {
+        _http.post("/itfenterinfo/cyTypeData",params).then(res=>{
+            var data = []
+            if(res.success){
+                 if(res.result&&res.result.length>0){
+                    _.each(res.result,(v,i)=>{
+                        data.push({
+                            value:v.count,
+                            name:v.type+" "+v.rate+"%"
+                        })
+                    })
+                    onSuccess&&onSuccess(data)
+                    return
+                 }
+            }
+            onError&&onError(res)
+        }).catch(err=>{
+            onError&&onError(err)
+        })
+    },
+    /**
      * 查询园区:车流量，停车费
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
@@ -184,6 +211,8 @@ export default {
                     })
                     onSuccess&&onSuccess(data)
                 }
+            }else{
+                onError&&onError(res)
             }
         }).catch(err=>{
             onError&&onError()
@@ -191,27 +220,51 @@ export default {
     }, 
         
     /**
-     * 查询同比数据:车流量，物业费(左下)
+     * 查询同比数据
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]
      * @return {[type]}           [description]
      */
-    _QueryYoY: function(params,onSuccess,onError){
+    _QueryYoY: function(url,params,onSuccess,onError){
         var me = this
         var nowYearLst = {},lastYearLst = {}, resultObj = {}
-        me.queryLst("/itfparkinfo/searchCL",params,function(nowLst){
+        me.queryLst(url,params,function(nowLst){
             nowYearLst = nowLst
             resultObj.axis = nowLst.axis
             delete nowLst.axis
             params.time = +params.time-1
-            me.queryLst("/itfparkinfo/searchCL",params,function(lst){
+            me.queryLst(url,params,function(lst){
                 lastYearLst = lst
                 me._YoyALG(nowYearLst,lastYearLst,function(obj){
                     resultObj = _.extend(resultObj,obj)
                     onSuccess&&onSuccess(resultObj)
                 })
-            })
+            },onError)
+        },onError)
+    },
+    /**
+     * 查询环比（左下）
+     * @param  {[type]} params    [description]
+     * @param  {[type]} onSuccess [description]
+     * @param  {[type]} onError   [description]
+     * @return {[type]}           [description]
+     */
+    _QueryQoQ: function(url,params,onSuccess,onError){
+        var me = this
+        var nowYearLst = {},lastYearLst = {}, resultObj = {}
+        me.queryLst(url,params,function(nowLst){
+            nowYearLst = nowLst
+            resultObj.axis = nowLst.axis
+            delete nowLst.axis
+            params.time = +params.time-1
+            me.queryLst(url,params,function(lst){
+                lastYearLst = lst
+                me._QoQALG(nowYearLst,lastYearLst,function(obj){
+                    resultObj = _.extend(resultObj,obj)
+                    onSuccess&&onSuccess(resultObj)
+                })
+            },onError)
         },onError)
     },
     /**
@@ -237,31 +290,6 @@ export default {
                 })
             })
         },onError)
-    },
-    
-    /**
-     * 查询环比（左下）
-     * @param  {[type]} params    [description]
-     * @param  {[type]} onSuccess [description]
-     * @param  {[type]} onError   [description]
-     * @return {[type]}           [description]
-     */
-    _QueryQoQ: function(params,onSuccess,onError){
-        var me = this
-        var nowYearLst = {},lastYearLst = {}, resultObj = {}
-        me.queryLst("/itfparkinfo/searchCL",params,function(nowLst){
-            nowYearLst = nowLst
-            resultObj.axis = nowLst.axis
-            delete nowLst.axis
-            params.time = +params.time-1
-            me.queryLst("/itfparkinfo/searchCL",params,function(lst){
-                lastYearLst = lst
-                me._QoQALG(nowYearLst,lastYearLst,function(obj){
-                    resultObj = _.extend(resultObj,obj)
-                    onSuccess&&onSuccess(resultObj)
-                })
-            })
-        })
     },
 
     /**

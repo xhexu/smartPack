@@ -33,40 +33,37 @@ export default {
   data () {
     return {
       isShowWindow: false,
-      info: ''
+      info: '',
+      color:['#308AD5','#3063D5','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3','#3063D5','#308AD','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3']
     }
   },
   methods: {
     openWindow () {
-      if(!this.isShowWindow){
+      if(!this.isShowWindow&&!this.info){
         this.isShowWindow = !this.isShowWindow
-        let me = this
-        setTimeout(()=>{
-          me.initMap({
-            series:{
-              radius : [20, 110]
-            }
-          },'six-bigChart')
-        },200)
-        
-        // this.sendHttpForFee('tr-bigChart')
+        this.sendHttpForGLCS('six-bigChart',{
+          series:{
+            radius : [20, 110]
+          }
+        })
       }else{
         this.isShowWindow = false
       }
     },
-    initMap (obj,domId) {
+    initMap (obj,domId,option) {
       let dom = document.getElementById(domId)
       let barEcharts = echarts.init(dom)
-      let options = this.getOption(obj)
+      let options = this.getOption(obj,option)
       barEcharts.setOption(options)
       window.chartList.push(barEcharts) 
     },
-    sendHttpForFee (domId) {
+    sendHttpForGLCS (domId,option) {
       let me = this
-      busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(data){
-        if(_.isObject(data)){
-          me.initMap(data,domId)
-        }else{
+      busHttp._QueryGLCS({parkCode:'e'},function(data){
+        if(_.isArray(data)){
+          me.initMap(data,domId,option)
+        }
+      },function(error){
           me.info=  "暂无数据"
           if(error){
             me.$message({
@@ -74,13 +71,11 @@ export default {
               type: 'warning'
             })
           }
-        }
-      },function(error){
-
       })
     },
-    getOption (obj) {
-      
+    getOption (obj,options) {
+      var me = this
+      me.color.length = obj.length
       var option =  {
         title : {
             text: '产业分类',
@@ -102,29 +97,19 @@ export default {
                 radius : [10, 60],
                 center : ['50%', '50%'],
                 roseType : 'area',
-                data:[
-                    {value:10, name:'物流'},
-                    {value:5, name:'其它'},
-                    {value:15, name:'金融'},
-                    {value:25, name:'商务'},
-                    {value:20, name:'信息科技'},
-                    {value:35, name:'医疗'},
-                    {value:30, name:'其它'},
-                    {value:40, name:'服务'}
-                ],
-                color:['#308AD5','#3063D5','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3','#3063D5']
+                data:obj,
+                color:me.color
             }
         ]
       }
-      if(obj.hasOwnProperty('series')){
-        option.series[0].radius = obj.series.radius
+      if(options.hasOwnProperty('series')){
+        option.series[0].radius = options.series.radius
       }
       return option
     }
   },
   mounted () {
-    this.initMap({},'chart-six')
-    // this.sendHttpForFee('chart-tr')
+    this.sendHttpForGLCS('chart-six',{})
   }
 }
 </script>

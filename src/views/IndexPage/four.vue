@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     openWindow () {
-      if(!this.isShowWindow){
+      if(!this.isShowWindow&&!this.info){
         this.isShowWindow = !this.isShowWindow
         this.sendHttpForLetting('four-bigChart',{
             radius:160
