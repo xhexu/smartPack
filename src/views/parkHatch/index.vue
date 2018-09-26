@@ -15,20 +15,22 @@
     </el-dialog>
   <div class="layout">
     <el-row>
-      <el-col :span="6" class="left" :style="{height: layoutHeight+'px'}">
+      <el-col :span="8" class="left" :style="{height: layoutHeight+'px'}">
         <card :option="cardTL" :info="policy" style="top:-50px"></card>
         <card :option="cardBL" :info="incubator" style="margin-top: 40px"></card>
       </el-col>
-      <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
-        <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+      <el-col :span="8" style="padding-top: 5%;padding-bottom: 9%" :style="{position: 'relative',height: layoutHeight+'px'}">
+        <img style="position: relative" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div class="building"  :class="{animMap:showMap}">
           <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;
           height: 28px;width: 92px;color: #01A4AE;margin-top: 20px">申请</div>
-          <img style="height: 80%;" src="/static/hatch_center.gif"/>
+          <div style="height: 70%">
+            <img style="height: 100%;" src="/static/hatch_center.gif"/>
+          </div>
         </div>
-        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <img style="position: relative;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
       </el-col>
-      <el-col :span="6" class="right" :style="{height: layoutHeight+'px'}">
+      <el-col :span="8" class="right" :style="{height: layoutHeight+'px'}">
         <card :option="cardTR" :info="activity" style="top:-50px"></card>
         <card :option="cardBR" :info="guide" style="margin-top: 40px"></card>
       </el-col>
@@ -161,7 +163,7 @@ export default {
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
     .building{
-      width:95%;height:95%;opacity:0;margin: 15px auto;background:url('/static/bg_view.png') no-repeat center;
+      width:95%;height:95%;opacity:0;margin: 15px auto;
       background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
     }
     .animTop{
