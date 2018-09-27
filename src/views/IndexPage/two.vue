@@ -7,8 +7,8 @@
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
         <div class="btns">
-          <div class="btns_left" @click="clickBtn('y')">同比</div>
-          <div class="btns_right" @click="clickBtn('q')">环比</div>  
+          <div v-bind:class="{'activeClass':isActive=='y'}" @click="clickBtn('y')">同比</div>
+          <div v-bind:class="{'activeClass':isActive=='q'}" @click="clickBtn('q')">环比</div>  
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
@@ -37,19 +37,71 @@ export default {
   data () {
     return {
       isShowWindow: false,
-      info:""
+      info:"",
+      isActive: 'y',
+      dataObj:{
+        property :[],  //物业费
+        propertyArrearage :[]//物业欠费
+      },
+      queryParams:{
+        parkCode:'e',
+        time:new Date().getFullYear()
+      }
     }
   },
   methods: {
-    openWindow () {
-      if(!this.isShowWindow&&!this.info){
-        this.isShowWindow = !this.isShowWindow
-        this.sendHttpForFee('two-bigChart',{
-          title:{
-            text:'2018年度',
-            top: '6%'
-          }
+     initData () {
+      this.dataObj = {
+        rent:[],  //租金
+        rentArrearage:[]//租金欠费
+      },
+      this.queryParams = {
+        parkCode:'e',
+        time:new Date().getFullYear()
+      }
+    },
+     clickBtn (flag) {
+      let me = this
+      me.isActive = flag
+      me.initData()
+      flag=='y'?(()=>{
+        busHttp._QueryYoY("/itfparkinfo/searchWY",me.queryParams,(res)=>{
+          me.initMap(res,"two-bigChart",{
+            title:{
+              text:'2018年度',
+              top: '6%'
+            }
+          })
+        },(error)=>{
+          me.errorEvent(error)
         })
+      })():(()=>{
+        busHttp._QueryQoQ("/itfparkinfo/searchWY",me.queryParams,(res)=>{
+          me.initMap(res,"two-bigChart",{
+            title:{
+              text:'2018年度',
+              top: '6%'
+            }
+          })
+        },(error)=>{
+          me.errorEvent(error)
+        })
+      })()
+    },
+    errorEvent (error) {
+      this.info = "暂无数据"
+      if(error){
+        this.$message({
+          message: error.message,
+          type: 'warning'
+        })
+      }
+    },
+    openWindow () {
+      if(!this.isShowWindow){
+        this.isShowWindow = !this.isShowWindow
+        this.initData()
+        this.clickBtn('y')
       }else{
         this.isShowWindow = false
       }
@@ -59,11 +111,11 @@ export default {
       let barEcharts = echarts.init(dom)
       let options = this.getOption(obj,option)
       barEcharts.setOption(options)
-      window.chartList.push(barEcharts)
+      window.setChartList({key:domId,fn:barEcharts}) 
     },
     sendHttpForFee (domId,option) {
       let me = this
-      busHttp._QueryWY({parkCode:'e',time:new Date().getFullYear()},function(data){
+      busHttp._QueryRent(me.dataObj,me.queryParams,function(data){
         if(_.isObject(data)){
           me.initMap(data,domId,option)
         }
@@ -136,7 +188,7 @@ export default {
             name:'收缴率',
             type:'line',
             barWidth: '30%',
-            data:obj.letting,
+            data:obj.rate,
             itemStyle: {
               normal: {
                 color: '#fffc00',
@@ -146,7 +198,8 @@ export default {
                   textStyle: { //数值样式
                     color: '#fff',
                     fontSize: 12
-                  }
+                  },
+                  formatter:'{c}%'   
                 }
               }
             }
@@ -154,7 +207,7 @@ export default {
             name:'物业费金额(万)',
             type:'bar',
             barWidth: '30%',
-            data:obj.rent,
+            data:obj.property,
             itemStyle: {
               normal: {
                 color:'#00E4FF',
@@ -206,7 +259,8 @@ export default {
     z-index:1000;
     div {
       display: inline-block;
-      background-color: #00E4FF;
+      background-color:#7bbac7;
+      color:#000;
       padding: 1px 10px;
       font-size: 14px;
       border-radius: 3px;
@@ -222,6 +276,10 @@ export default {
 @keyframes bg_chart_in{
   0%{transform: scale(0.2);opacity: 0;}
   100%{ transform: scale(1);opacity: 1;}
+}
+.activeClass{
+  background-color: #00E4FF !important;
+  color:#fff !important;
 }
 .bigBg{
   z-index:888;
@@ -249,12 +307,12 @@ export default {
 @media screen and (min-width: 1400px) { 
     .bigChart{
       width: 850px;
-      height: 600px;
-      margin: -300px 0 0 -400px;
+      height: 500px;
+      margin: -250px 0 0 -400px;
     }
     .chart{
       width:100%;
-      height:350px;
+      height:300px;
     }
 }
 </style>

@@ -56,7 +56,7 @@ export default {
       let barEcharts = echarts.init(dom)
       let options = this.getOption(obj,option)
       barEcharts.setOption(options)
-      window.chartList.push(barEcharts) 
+      window.setChartList({key:domId,fn:barEcharts}) 
     },
     sendHttpForLetting (domId,option) {
       let me = this
@@ -178,12 +178,12 @@ export default {
 @media screen and (min-width: 1400px) { 
     .bigChart{
       width: 850px;
-      height: 600px;
-      margin: -300px 0 0 -400px;
+      height: 500px;
+      margin: -250px 0 0 -400px;
     }
     .chart{
       width:100%;
-      height:350px;
+      height:300px;
     }
 }
 </style>

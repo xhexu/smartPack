@@ -173,7 +173,7 @@ export default {
 @media screen and (min-width: 1400px) {
     .chart{
       width:100%;
-      height:400px;
+      height:350px;
     }
 }
 </style>

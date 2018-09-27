@@ -99,30 +99,28 @@ export default {
         })
     },
     /**
-     * 查询物业费金额，租金金额，出租率（右上）
+     * 查询租金，收缴率/查询物业，收缴率
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]
      * @return {[type]}           [description]
      */
-    _QueryWY: function(params,onSuccess,onError){
+    _QueryRent: function(data,params,onSuccess,onError){
+        let me = this
         _http.post("/itfparkinfo/searchWY",params).then(res=>{
             if(res.success){
                 if(_.isArray(res.result)){
                     var obj = _.groupBy(res.result,'dataType')
-                    var keys = _.keys(obj)
-                    var data = {
-                        axis:[],
-                        property:[], //物业费
-                        rent:[],  //租金
-                        letting:[] //出租率
-                    }
+                    let keys = _.keys(data)
                     _.each(keys,function(key){
                         _.each(obj[key],function(v){
                             data[key].push(v.dataValue)
                         })
                     })
-                    _.each(obj['property'],function(v){
+                    data.axis = []
+                    data.rate = []
+                    data.rate = me._CalcRate(data[keys[0]],data[keys[1]])
+                    _.each(obj['rent'],function(v){
                         data.axis.push(v.dataTime)
                     })
                     onSuccess&&onSuccess(data)
@@ -136,6 +134,20 @@ export default {
             onError&&onError()
         })
     },
+    /**
+     * 计算收缴率
+     * @param  {[type]} listA [description]
+     * @param  {[type]} ListB [description]
+     * @return {[type]}       [description]
+     */
+    _CalcRate: function(listA,listB){
+        let result = []
+        _.each(listB,(v,index)=>{
+            result.push((v/listA[index]).toFixed(1))
+        })
+        return result
+    },
+    
     //同比计算方法
     _YoyALG: function (nowYearLst,lastYearLst,onSuccess){
         var resultObj = {}
@@ -244,7 +256,7 @@ export default {
         },onError)
     },
     /**
-     * 查询环比（左下）
+     * 查询环比数据
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]
@@ -267,52 +279,7 @@ export default {
             },onError)
         },onError)
     },
-    /**
-     * 查询同比数据:出租率(右下)
-     * @param  {[type]} params    [description]
-     * @param  {[type]} onSuccess [description]
-     * @param  {[type]} onError   [description]
-     * @return {[type]}           [description]
-     */
-    _QueryYoYForWY: function(params,onSuccess,onError){
-        var me = this
-        var nowYearLst = {},lastYearLst = {}, resultObj = {}
-        me.queryLst("/itfparkinfo/searchWY",params,function(nowLst){
-            nowYearLst = nowLst
-            resultObj.axis = nowLst.axis
-            delete nowLst.axis
-            params.time = +params.time-1
-            me.queryLst("/itfparkinfo/searchWY",params,function(lst){
-                lastYearLst = lst
-                me._YoyALG(nowYearLst,lastYearLst,function(obj){
-                    resultObj = _.extend(resultObj,obj)
-                    onSuccess&&onSuccess(resultObj)
-                })
-            })
-        },onError)
-    },
+    
 
-    /**
-     * 查询环比:出租率,物业费（右下）
-     * @param  {[type]} params    [description]
-     * @param  {[type]} onSuccess [description]
-     * @param  {[type]} onError   [description]
-     * @return {[type]}           [description]
-     */
-    _QueryQoQForWY: function(params,onSuccess,onError){
-        var me = this, nowYearLst = {},lastYearLst = {}, resultObj = {}
-        me.queryLst("/itfparkinfo/searchWY",params,function(nowLst){
-            nowYearLst = nowLst
-            resultObj.axis = nowLst.axis
-            delete nowLst.axis
-            params.time = +params.time-1
-            me.queryLst("/itfparkinfo/searchWY",params,function(lst){
-                lastYearLst = lst
-                me._QoQALG(nowYearLst,lastYearLst,function(obj){
-                    resultObj = _.extend(resultObj,obj)
-                    onSuccess&&onSuccess(resultObj)
-                })
-            })
-        })
-    }
+    
 }
