@@ -1,4 +1,4 @@
-####  查询企业详情信息-包含图片  [#调试地址](http://www.sesame.kim:8086/swagger-ui.html#/itf-enter-info-controller/searchDetailUsingPOST)
+####  查询企业详情信息-包含图片  [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-enter-info-controller/searchDetailUsingPOST)
 
 1. url
 ```

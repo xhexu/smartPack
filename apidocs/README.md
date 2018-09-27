@@ -9,9 +9,9 @@
   result: null  // 结果, 一般是json格式的数据, 具体按实际接口来
 }
 ```
-- 测试服务器地址 : http://www.sesame.kim:8086
+- 测试服务器地址 : http://wpms.eworld-online.com
 - 后台测试账号 systemadmin/123456
-- swagger-ui 地址 : http://www.sesame.kim:8086/swagger-ui.html
+- swagger-ui 地址 : http://wpms.eworld-online.com/swagger-ui.html
 
 #### 实体信息
 -  [园区实体](data/park.md)
@@ -31,7 +31,7 @@
 - 2.1 [查询园区详情](data/parkDetail.md)
 - 2.2 [经营分析-车辆](data/console1.1.md)
 - 2.3 [经营分析-物业费](data/console1.2.md)
-- 2.4 [行业分类-接口调试](http://www.sesame.kim:8086/swagger-ui.html#/itf-enter-info-controller/cyTypeDataUsingPOST)
+- 2.4 [行业分类-接口调试](http://wpms.eworld-online.com/swagger-ui.html#/itf-enter-info-controller/cyTypeDataUsingPOST)
 
 - 2.4 [车辆同比和环比js算法](cl.html)
 
