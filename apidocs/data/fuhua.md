@@ -1,4 +1,4 @@
-#### 孵化信息获取 [#调试地址](http://www.sesame.kim:8086/swagger-ui.html#/itf-incubation-info-controller/listUsingPOST_1)
+#### 孵化信息获取 [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-incubation-info-controller/listUsingPOST_1)
 
 1. url
 ```

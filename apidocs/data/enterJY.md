@@ -1,4 +1,4 @@
-####  企业经营数据 [#调试地址](http://www.sesame.kim:8086/swagger-ui.html#/itf-enter-info-controller/searchJYUsingPOST)
+####  企业经营数据 [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-enter-info-controller/searchJYUsingPOST)
 
 1. url
 ```

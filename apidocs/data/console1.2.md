@@ -1,4 +1,4 @@
-#### 园区-经营分析--物业费  [#调试地址](http://www.sesame.kim:8086/swagger-ui.html#/itf-park-info-controller/searchWYUsingPOST)
+#### 园区-经营分析--物业费  [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-park-info-controller/searchWYUsingPOST)
 
 1. url
 ```
