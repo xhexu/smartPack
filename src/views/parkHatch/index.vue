@@ -13,7 +13,7 @@
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">申请</el-button>
       </el-upload>
     </el-dialog>
-  <div class="layout">
+  <div class="index">
     <el-row>
       <el-col :span="8" class="left" :style="{height: layoutHeight+'px'}">
         <card :option="cardTL" :info="policy" style="top:-50px"></card>
@@ -58,6 +58,7 @@ export default {
       playFlag: false,
       showMap: false,
       dialogFormVisible: false,
+      dialogFormVisible2:false,
       cardTL: {
         title: '政策',
         position: 'TL'
@@ -143,11 +144,11 @@ export default {
   computed: {
     layoutHeight(){
       if(document.documentElement.clientHeight>800){
-        return 720
+        return 700
       }else if(document.documentElement.clientHeight<700){
-        return 480
+        return 460
       }else{
-        return 600
+        return 580
       }
     }
   }
@@ -155,9 +156,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .layout{
+  .index{
     height:100%;
-    max-width: 1920px;
+    width: 100%;
     margin: 0 auto;
     img.anim{
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
@@ -174,9 +175,6 @@ export default {
     }
     .animMap{
       opacity:1.0!important;
-    }
-    .nav{
-      position:absolute;bottom:-60px;
     }
   }
   .left{

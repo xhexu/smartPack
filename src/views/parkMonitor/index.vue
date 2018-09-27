@@ -2,9 +2,7 @@
   <div class="index">
     <!--内容区域-->
     <el-row>
-      <el-col :span="2" :style="{height: layoutHeight+'px'}">
-      </el-col>
-      <el-col :span="20" >
+      <el-col :span="20" :offset="2" >
         <img style="width: 100%;" src="/static/monitor_bg.png" usemap="#planetmap"/>
         <map name="planetmap" id="planetmap">
           <area
@@ -13,8 +11,6 @@
             @click="login"
             alt="login" />
         </map>
-      </el-col>
-      <el-col :span="2" :style="{height: layoutHeight+'px'}">
       </el-col>
     </el-row>
   </div>
@@ -68,19 +64,12 @@ export default {
 
 <!-- 首页样式 -->
 <style lang="scss" scoped>
-  .loginForm {
-    .douming{
-      background: rgba(0, 0, 0, .5);
-    }
-  }
   .index{
     height:100%;
-    max-width: 1920px;
+    width: 100%;
     margin: 0 auto;
-    position: relative;
-    .nav{
-      width: 50%;
-      position:absolute;bottom:-60px;
-    }
+  }
+  .el-col-offset-1{
+    margin-left: 2.9%;
   }
 </style>

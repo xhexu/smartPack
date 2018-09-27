@@ -58,11 +58,11 @@ export default {
   computed: {
     layoutHeight () {
       if (document.documentElement.clientHeight>800){
-        return 720
+        return 700
       } else if (document.documentElement.clientHeight<700){
-        return 480
+        return 460
       } else {
-        return 600
+        return 580
       }
     }
   },
@@ -129,9 +129,6 @@ export default {
     }
     .animMap{
       opacity:1.0!important;
-    }
-    .nav{
-      position:absolute;bottom:-60px;
     }
   }
   .left{

@@ -2,27 +2,23 @@
   <div style="position: relative;width: 100%;height: 50%">
     <div>
       <el-dialog :title="htmlTitle" :visible.sync="dialogFormVisible">
-      <div v-html="htmlContent"></div>
+      <div style="max-width: 100%" v-html="htmlContent"></div>
       </el-dialog>
     </div>
     <div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
       <div class="card-title" :class="titleClass">{{title}}</div>
-      <div class="card-div" :class="cardDivClass" >
-        <ul>
-          <li v-for="item in info" style="width: 100%;" @click="handleClick(item)">
-            <table style="width: 100%;">
-              <tr>
-                <td align="left" style="width: 65%">
-                  {{ item.title }}
-                </td>
-                <td align="right" style="width:35%;font-size: 15px">
-                  {{ getFormtTime(item.checkTime) }}
-                </td>
-              </tr>
-            </table>
-          </li>
-        </ul>
-      </div>
+        <div  class="card-div nwwest-roll" style="overflow:hidden;clear:both;width: 90%;height: 80%"  :class="cardDivClass"  id="nwwest-roll">
+          <ul id="roll-ul" >
+            <li @mouseover="stopScroll" @mouseout="beginScroll" ref="rollul" v-for="item in info" style="width: 100%;padding-top: 5px" @click="handleClick(item)" :class="{anim:animate==true}">
+              <el-row :gutter="8">
+                <el-col :title=item.title :span="16" style="font-size: 14px" align="left">
+                 {{ item.title.substr(0,7) }}...
+                </el-col>
+                <el-col :span="8" style="font-size: 12px"  align="center">{{ getFormtTime(item.checkTime) }}</el-col>
+              </el-row>
+            </li>
+          </ul>
+        </div>
     </div>
   </div>
 </template>
@@ -47,6 +43,7 @@ export default {
   },
   data () {
     return {
+      animate: true,
       showItemDiv: false,
       cardDivClass: '',
       itemClass: '',
@@ -56,13 +53,14 @@ export default {
       title: '-----',
       dialogFormVisible: false,
       htmlContent: '',
-      htmlTitle: ''
+      htmlTitle: '',
+      canScroll: true
     }
   },
   mounted () {
     this.dealChartOption()
     this.dealCardOption()
-    console.info(this.info)
+    setInterval(this.scroll, 2000)
   },
   methods: {
     handleClick (item) {
@@ -77,7 +75,6 @@ export default {
       m = m < 10 ? ('0' + m) : m;
       var d = date.getDate();
       d = d < 10 ? ('0' + d) : d;
-      console.info(y)
       return y + '-' + m + '-' + d
     },
     dealChartOption () {
@@ -113,7 +110,30 @@ export default {
       }else{
         console.error('卡片入参异常')
       }
+    },
+    scroll(){
+      let con1 = this.$refs.rollul
+      if(con1==null || con1.length==0 || !this.canScroll){
+        return
+      }
+      con1[0].style.marginTop='30px';
+      this.animate=!this.animate
+      var that = this; // 在异步函数中会出现this的偏移问题，此处一定要先保存好this的指向
+      setTimeout(function(){
+        that.info.push(that.info[0]);
+        that.info.shift();
+        con1[0].style.marginTop='0px';
+        that.animate=!that.animate; // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
+      },0)
+    },
+    stopScroll(){
+      this.canScroll=false
+    },
+    beginScroll(){
+      this.canScroll=true
+      // setInterval(this.scroll, 2000)
     }
+
   }
 
 }
@@ -121,6 +141,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  img {
+    max-width: 100%;
+  }
 .card{
   position: relative;
       background-repeat: no-repeat;
@@ -174,5 +197,18 @@ export default {
         padding-top: 10px;
         background:transparent url('/static/hatch_but_bg.png') no-repeat center;
       }
+  .newest-bill .nwwest-roll {
+    padding-left: 15px;
+    height: 210px;
+    margin: 10px auto;
+    overflow: hidden;
+    transition: all 0.5s;
+  }
+  .newest-bill .nwwest-roll li{
+    height: 35px;
+    line-height: 35px;}
+  .anim{
+    transition: all 0.5s;}
+
 }
 </style>
