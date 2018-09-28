@@ -27,8 +27,10 @@
   <el-col :span="15" class="right" :style="{height: layoutHeight+'px'}">
     <div class="infoBox">
       <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
-        <b>{{compData.enterpriseName}}</b>
-        <p>{{compData.enterpriseIntro}}</p>
+        <div id="info_show_id" style="position: relative;height: 30%;width: 100%;overflow-x: hidden;overflow-y: scroll;">
+          <b>{{compData.enterpriseName}}</b>
+          <p>{{compData.enterpriseIntro}}</p>
+        </div>
         <div id="chart"></div>
       </div>
     </div>
@@ -200,7 +202,7 @@ export default {
       let option = {
         color: ['#11eef9', '#f9f211'],
         legend: {
-          data: ['营业额', '纳税额']
+          data: [{name: '营业额', textStyle: {color: '#11eef9'}}, {name: '纳税额', textStyle: {color: '#f9f211'}}]
         },
         xAxis: [
           {
@@ -209,7 +211,9 @@ export default {
             spliteLine: {
               show: false
             },
-            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+            data: [{value: '1月', textStyle: {color: '#11eef9'}}, {value: '2月', textStyle: {color: '#11eef9'}},{value: '3月', textStyle: {color: '#11eef9'}},{value: '4月', textStyle: {color: '#11eef9'}},
+              {value: '5月', textStyle: {color: '#11eef9'}},{value: '6月', textStyle: {color: '#11eef9'}},{value: '7月', textStyle: {color: '#11eef9'}},{value: '8月', textStyle: {color: '#11eef9'}},
+              {value: '9月', textStyle: {color: '#11eef9'}},{value: '10月', textStyle: {color: '#11eef9'}},{value: '11月', textStyle: {color: '#11eef9'}},{value: '12月', textStyle: {color: '#11eef9'}}].slice(0, this.nsyData.length)
           }
         ],
         yAxis: [
@@ -260,6 +264,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  #info_show_id::-webkit-scrollbar { width: 0 !important }
+  #info_show_id{ -ms-overflow-style: none; }
+  #info_show_id{ overflow: -moz-scrollbars-none; }
 .layout{
   height: 100%;min-width:1200px;margin: 0px auto;
   .back{
