@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 
 
-axios.defaults.baseURL = 'http://www.sesame.kim:8086'
+axios.defaults.baseURL = 'http://101.132.179.45:8086'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 axios.defaults.timeout = 5000

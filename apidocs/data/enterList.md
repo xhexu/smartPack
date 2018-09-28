@@ -1,4 +1,4 @@
-####  查询所有的企业信息  [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-enter-info-controller/listUsingPOST)
+####  查询所有的企业信息  [#调试地址](http://101.132.179.45:8086/swagger-ui.html#/itf-enter-info-controller/listUsingPOST)
 
 1. url
 ```
