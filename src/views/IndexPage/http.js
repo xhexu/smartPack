@@ -164,7 +164,7 @@ export default {
                 })
                 if(obj){
                     valueB = obj.dataValue
-                    let value = ((valueA-valueB)/valueB).toFixed(2)
+                    let value = ((valueA-valueB)/valueA).toFixed(2)
                     resultObj[key].push(+value)
                 }
             })
@@ -191,7 +191,7 @@ export default {
                 }else{
                     valueB = lstB[index-1].dataValue
                 }
-                let value = ((valueA-valueB)/valueB).toFixed(3)
+                let value = ((valueA-valueB)/valueA).toFixed(3)
                 resultObj[key].push(+value)
             })
         })
@@ -256,6 +256,37 @@ export default {
         },onError)
     },
     /**
+     * 查询同比：租金/物业费同环比
+     * @param  {[type]} url       [description]
+     * @param  {[type]} params    [description]
+     * @param  {[type]} onSuccess [description]
+     * @param  {[type]} onError   [description]
+     * @return {[type]}           [description]
+     */
+    _QueryYoYForRent: function(data,url,params,onSuccess,onError){
+        var me = this
+        var nowYearLst = {},lastYearLst = {}, resultObj = {}
+        me.queryLst(url,params,function(nowLst){
+            let keys = _.keys(data)
+            _.each(keys,(key)=>{
+                nowYearLst[key] = nowLst[key]
+            })
+            resultObj.axis = nowLst.axis
+            params.time = +params.time-1
+            me.queryLst(url,params,function(lst){
+                _.each(keys,(key)=>{
+                    lastYearLst[key] = lst[key]
+                })
+                me._YoyALG(nowYearLst,lastYearLst,function(obj){
+                    resultObj = _.extend(resultObj,obj)
+                    console.log(resultObj)
+                    onSuccess&&onSuccess(resultObj)
+                })
+            },onError)
+        },onError)
+    },
+
+    /**
      * 查询环比数据
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
@@ -279,7 +310,33 @@ export default {
             },onError)
         },onError)
     },
-    
-
-    
+    /**
+     * 查询环比数据：租金/物业费同环比
+     * @param  {[type]} params    [description]
+     * @param  {[type]} onSuccess [description]
+     * @param  {[type]} onError   [description]
+     * @return {[type]}           [description]
+     */
+    _QueryQoQForRent: function(data,url,params,onSuccess,onError){
+        var me = this
+        var nowYearLst = {},lastYearLst = {}, resultObj = {}
+        me.queryLst(url,params,function(nowLst){
+            let keys = _.keys(data)
+            _.each(keys,(key)=>{
+                nowYearLst[key] = nowLst[key]
+            })
+            resultObj.axis = nowLst.axis
+            params.time = +params.time-1
+            me.queryLst(url,params,function(lst){
+                _.each(keys,(key)=>{
+                    lastYearLst[key] = lst[key]
+                })
+                me._QoQALG(nowYearLst,lastYearLst,function(obj){
+                    resultObj = _.extend(resultObj,obj)
+                    console.log(resultObj)
+                    onSuccess&&onSuccess(resultObj)
+                })
+            },onError)
+        },onError)
+    }
 }

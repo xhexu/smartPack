@@ -110,8 +110,19 @@ export default {
             lineStyle:{
               color:'#00E4FF'
             },
-            itemStyle:{
-              color:'#00E4FF'
+            label: {
+              show: true, //开启显示
+              position: 'inside', //在上方显示
+              textStyle: { //数值样式
+                color: '#00E4FF',
+                fontSize: 12
+              },
+              formatter: '{c}%'
+            },
+            itemStyle: {
+              normal: {
+                color:'#fffc00'
+              }
             },
             data: [{
               value:obj.letting

@@ -83,24 +83,33 @@ export default {
       me.isActive = flag
       me.initData()
       flag=='y'?(()=>{
-        busHttp._QueryYoY("/itfparkinfo/searchWY",me.queryParams,(res)=>{
-
+        busHttp._QueryYoYForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
           me.initMap(res,"tr-bigChart",{
             title:{
               text:'2018年度',
               top: '6%'
-            }
+            },
+            series:[{
+              type:'line'
+            },{
+              type:'line'
+            }]
           })
         },(error)=>{
           me.errorEvent(error)
         })
       })():(()=>{
-        busHttp._QueryQoQ("/itfparkinfo/searchWY",me.queryParams,(res)=>{
+        busHttp._QueryQoQForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
           me.initMap(res,"tr-bigChart",{
             title:{
               text:'2018年度',
               top: '6%'
-            }
+            },
+            series:[{
+              type:'line'
+            },{
+              type:'line'
+            }]
           })
         },(error)=>{
           me.errorEvent(error)
@@ -189,7 +198,7 @@ export default {
             name:'收缴率',
             type:'line',
             barWidth: '30%',
-            data:obj.rate,
+            data:obj.rate||obj.rentArrearage,
             itemStyle: {
               normal: {
                 color: '#fffc00',
@@ -217,7 +226,7 @@ export default {
             }
           },{
             name:'租金金额(万)',
-            type:'bar',
+            type:option?option.series[1].type:'bar',
             barWidth: '30%',
             data:obj.rent,
             itemStyle: {
