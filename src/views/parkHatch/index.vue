@@ -52,7 +52,7 @@ export default {
     Card
   },
   data () {
-    return {//http://www.sesame.kim:8086
+    return {//http://101.132.179.45:8086
       fileUrl: `${http.defaults.baseURL}/itfincubationinfo/save`,
       headers: {access_token: window.localStorage.getItem('access_token')},
       playFlag: false,
