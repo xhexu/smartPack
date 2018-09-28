@@ -143,7 +143,7 @@ export default {
     _CalcRate: function(listA,listB){
         let result = []
         _.each(listB,(v,index)=>{
-            result.push((v/listA[index]).toFixed(1))
+            result.push((v/(listA[index]+v)).toFixed(1))
         })
         return result
     },
