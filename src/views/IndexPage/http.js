@@ -123,6 +123,7 @@ export default {
                     _.each(obj['rent'],function(v){
                         data.axis.push(v.dataTime)
                     })
+                    console.log(data)
                     onSuccess&&onSuccess(data)
                 }else{
                     console.error('searchCL出参格式异常')
@@ -135,15 +136,15 @@ export default {
         })
     },
     /**
-     * 计算收缴率
+     * 计算收缴率1
      * @param  {[type]} listA [description]
      * @param  {[type]} ListB [description]
      * @return {[type]}       [description]
      */
     _CalcRate: function(listA,listB){
         let result = []
-        _.each(listB,(v,index)=>{
-            result.push((v/(listA[index]+v)).toFixed(1))
+        _.each(listA,(v,index)=>{
+            result.push(Math.round(v/(listB[index]+v)*100))
         })
         return result
     },

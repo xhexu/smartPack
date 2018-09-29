@@ -170,12 +170,18 @@ export default {
               bottom: '3%',
               containLabel: true
           },
-          yAxis: {
+          yAxis: [{
               type: 'value',
               show: false,
               boundaryGap: [0, 1]
-          },
-          xAxis: {
+          },{
+              type: 'value',
+              show: false,
+              boundaryGap: [0.2, 0.2],
+              max: 100,
+              min: 0
+          }],
+          xAxis: [{
               type: 'category',
               data : obj.axis,
               axisTick: {
@@ -193,23 +199,44 @@ export default {
                       color: '#fff'
                   }
               }
-          },
+          },{
+              type: 'category',
+              data : obj.axis,
+              axisTick: {
+                  show: false
+              },
+              axisLine: {
+                  show: false
+              },
+              splitLine: {
+                  show: false
+              },
+              axisLabel: {
+                  show: false,
+                  textStyle: {
+                      color: '#fff'
+                  }
+              }
+          }],
           series : [{
             name:'收缴率',
             type:'line',
             barWidth: '30%',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
             data:obj.rate||obj.rentArrearage,
             itemStyle: {
               normal: {
                 color: '#fffc00',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#fff',
-                    fontSize: 12
-                  },
-                  formatter:'{c}%'                }
+                  label: {
+                    show: true, //开启显示
+                    position: 'top', //在上方显示
+                    textStyle: { //数值样式
+                      color: '#fffc00',
+                      fontSize: 12
+                    },
+                    formatter:'{c}%'            
+                }
               }
             },
             markPoint:{
@@ -225,7 +252,7 @@ export default {
               }
             }
           },{
-            name:'租金金额(万)',
+            name:'租金金额(元)',
             type:option?option.series[1].type:'bar',
             barWidth: '30%',
             data:obj.rent,
@@ -236,7 +263,7 @@ export default {
                   show: true, //开启显示
                   position: 'top', //在上方显示
                   textStyle: { //数值样式
-                    color: '#fff',
+                    color: '#00E4FF',
                     fontSize: 12
                   }
                 }
