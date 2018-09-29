@@ -180,7 +180,7 @@ export default {
                   show: true, //开启显示
                   position: 'top', //在上方显示
                   textStyle: { //数值样式
-                    color: '#fff',
+                    color: '#fffc00',
                     fontSize: 12
                   }
                 }
@@ -198,7 +198,7 @@ export default {
                   show: true, //开启显示
                   position: 'top', //在上方显示
                   textStyle: { //数值样式
-                    color: '#fff',
+                    color: '#00E4FF',
                     fontSize: 12
                   }
                 }
