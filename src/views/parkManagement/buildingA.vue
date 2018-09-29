@@ -132,11 +132,10 @@ export default {
         }
         this.compData = this.floorData[this.indexI]
       }
-      this.$http.post('/itfenterinfo/searchDetail', {code: this.compData.code})
+      this.$http.post('/itfenterinfo/searchDetail', {...this.compData})
         .then((data) => {
           if (data.success) {
             const resData = data.result
-            console.info(resData)
             this.compData = resData
           } else {
             this.$message(data.message)
@@ -146,7 +145,7 @@ export default {
           console.info(error)
         })
 
-      this.$http.post('/itfenterinfo/searchJY', {code: this.compData.code, time: new Date().getFullYear()})
+      this.$http.post('/itfenterinfo/searchJY', {...this.compData, time: new Date().getFullYear()})
         .then((data) => {
           if (data.success) {
             const resData = data.result

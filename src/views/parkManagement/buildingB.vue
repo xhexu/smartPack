@@ -138,7 +138,7 @@ export default {
         }
         this.compData = this.floorData[this.indexI]
       }
-      this.$http.post('/itfenterinfo/searchDetail', {code: this.compData.code})
+      this.$http.post('/itfenterinfo/searchDetail', {...this.compData})
         .then((data) => {
           if (data.success) {
             const resData = data.result
