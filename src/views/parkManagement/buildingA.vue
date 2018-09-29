@@ -132,11 +132,10 @@ export default {
         }
         this.compData = this.floorData[this.indexI]
       }
-      this.$http.post('/itfenterinfo/searchDetail', {code: this.compData.code})
+      this.$http.post('/itfenterinfo/searchDetail', {...this.compData})
         .then((data) => {
           if (data.success) {
             const resData = data.result
-            console.info(resData)
             this.compData = resData
           } else {
             this.$message(data.message)
@@ -146,7 +145,7 @@ export default {
           console.info(error)
         })
 
-      this.$http.post('/itfenterinfo/searchJY', {code: this.compData.code, time: new Date().getFullYear()})
+      this.$http.post('/itfenterinfo/searchJY', {...this.compData, time: new Date().getFullYear()})
         .then((data) => {
           if (data.success) {
             const resData = data.result
@@ -198,7 +197,13 @@ export default {
       let option = {
         color: ['#11eef9', '#f9f211'],
         legend: {
-          data: [{name: '营业额', textStyle: {color: '#11eef9'}}, {name: '纳税额', textStyle: {color: '#f9f211'}}]
+          data: [{name: '营业额(万)', textStyle: {color: '#11eef9'}}, {name: '纳税额(万)', textStyle: {color: '#f9f211'}}]
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
         },
         xAxis: [
           {
@@ -223,17 +228,49 @@ export default {
         ],
         series: [
           {
-            name: '营业额',
+            name: '营业额(万)',
             type: 'bar',
             barGap: 0,
-            label: 'top',
-            data: this.yyeData
+            data: this.yyeData,
+            label: {
+              show: true, //开启显示
+              position: 'top', //在上方显示
+              textStyle: { //数值样式
+                color: '#11eef9',
+                fontSize: 12
+              },
+              formatter: function (obj) {
+                let value =  obj.value
+                value = Math.round(parseFloat(value) * 10) / 10;
+
+                if (value.toString().indexOf(".") < 0) {
+                  value = value.toString() + ".0";
+                }
+                return value;
+              }
+            }
           },
           {
-            name: '纳税额',
+            name: '纳税额(万)',
             type: 'bar',
-            label: 'top',
-            data: this.nsyData
+            data: this.nsyData,
+            label: {
+              show: true, //开启显示
+              position: 'top', //在上方显示
+              textStyle: { //数值样式
+                color: '#f9f211',
+                fontSize: 12
+              },
+              formatter: function (obj) {
+                let value =  obj.value
+                value = Math.round(parseFloat(value) * 10) / 10;
+
+                if (value.toString().indexOf(".") < 0) {
+                  value = value.toString() + ".0";
+                }
+                return value;
+              }
+            }
           }
         ]
       }
