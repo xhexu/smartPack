@@ -68,7 +68,15 @@ export default {
       }
     },
     showChart(){
-      return this.yyeData.length>0 || this.nsyData.length>0
+      let sum1 = 0;
+      let sum2 = 0;
+      this.yyeData.forEach((item)=>{
+        sum1 = sum1 + item;
+      })
+      this.nsyData.forEach((item)=>{
+        sum2 = sum2 + item;
+      })
+      return (this.yyeData.length>0 || this.nsyData.length>0) && (sum1 > 0 || sum2 > 0)
     }
   },
   data () {
