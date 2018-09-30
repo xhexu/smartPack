@@ -157,7 +157,7 @@ export default {
               }
           },
           legend: {
-              data: ['收缴率','租金金额(万)'],
+              data: ['收缴率','租金金额(元)'],
               top:'15%',
               left:'5%',
               textStyle: {
