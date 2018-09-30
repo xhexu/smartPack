@@ -21,7 +21,7 @@
     <el-col :span="15" class="right" :style="{height: layoutHeight+'px'}">
       <div class="infoBox">
         <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
-          <div id="info_show_id" style="position: relative;height: 30%;width: 100%;overflow-x: hidden;overflow-y: scroll;">
+          <div id="info_show_id" style="position: relative;height: 45%;width: 100%;overflow-x: hidden;overflow-y: scroll;">
             <b>{{compData.enterpriseName}}</b>
             <p>{{compData.enterpriseIntro}}</p>
           </div>
