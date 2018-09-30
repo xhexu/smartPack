@@ -31,7 +31,7 @@
           <b>{{compData.enterpriseName}}</b>
           <p>{{compData.enterpriseIntro}}</p>
         </div>
-        <div id="chart"></div>
+        <div id="chart" v-show="showChart"></div>
       </div>
     </div>
     <p class="btns">
@@ -66,6 +66,9 @@ export default {
       } else {
         return 600
       }
+    },
+    showChart(){
+      return this.yyeData.length>0 || this.nsyData.length>0
     }
   },
   data () {
@@ -281,6 +284,9 @@ export default {
       }
       // 使用刚指定的配置项和数据显示图表。
       this.myChart.setOption(option);
+      this.$nextTick(()=>{
+        this.myChart.resize()
+      })
     },
     initData(){
       this.$http.post('/itfenterinfo/list',{floor: 'B', parkCode: 'e'})
