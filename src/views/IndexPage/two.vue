@@ -12,7 +12,7 @@
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
-          <div id="two-bigChart" style="width: 100%;height:100%"></div>
+          <div id="bChart-two" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
       </div>
@@ -38,7 +38,7 @@ export default {
     return {
       isShowWindow: false,
       info:"",
-      isActive: 'y',
+      isActive: '',
       dataObj:{
         property :[],  //物业费
         propertyArrearage :[]//物业欠费
@@ -51,6 +51,7 @@ export default {
   },
   methods: {
      initData () {
+      this.isActive = ''
       this.dataObj = {
         property :[],  //物业费
         propertyArrearage :[]//物业欠费
@@ -62,11 +63,11 @@ export default {
     },
      clickBtn (flag) {
       let me = this
-      me.isActive = flag
       me.initData()
+      me.isActive = flag
       flag=='y'?(()=>{
         busHttp._QueryYoYForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
-          me.initMap(res,"two-bigChart",{
+          me.initMap(res,"bChart-two",{
             title:{
               text:'2018年度',
               top: '6%'
@@ -74,24 +75,33 @@ export default {
             series:[{
               type:'line'
             },{
-              type:'line'
-            }]
+              type:'line',
+              formatter:'{c}%'
+            }],
+            yAxis:{
+              boundaryGap:[0,1]
+            }
           })
         },(error)=>{
           me.errorEvent(error)
         })
       })():(()=>{
         busHttp._QueryQoQForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
-          me.initMap(res,"two-bigChart",{
+          me.initMap(res,"bChart-two",{
             title:{
               text:'2018年度',
               top: '6%'
             },
             series:[{
-              type:'line'
+              type:'line',
+              formatter:'{c}%'
             },{
-              type:'line'
-            }]
+              type:'line',
+              formatter:'{c}%'
+            }],
+            yAxis:{
+              boundaryGap:[0,1]
+            }
           })
         },(error)=>{
           me.errorEvent(error)
@@ -111,7 +121,17 @@ export default {
       if(!this.isShowWindow){
         this.isShowWindow = !this.isShowWindow
         this.initData()
-        this.clickBtn('y')
+        this.sendHttpForFee('bChart-two',{
+          title:{
+            text:'2018年度',
+            top: '6%'
+          },
+          series:[{
+            type:'line'
+          },{
+            type:'bar'
+          }]
+        })
       }else{
         this.isShowWindow = false
       }
@@ -140,9 +160,9 @@ export default {
       })
     },
     getOption (obj,option) {
-      return {
+      let op = {
           title: {
-              text: option?option.title.text:'物业费',
+              text: option?option.title.text:'物业费信息',
               left:'5%',
               top:option?option.title.top:'2%',
               textStyle:{
@@ -157,7 +177,7 @@ export default {
               }
           },
           legend: {
-              data: ['收缴率','物业费金额(元)'],
+              data: ['收缴率','物业费金额(万元)'],
               top:'15%',
               left:'5%',
               textStyle: {
@@ -177,7 +197,7 @@ export default {
           },{
               type: 'value',
               show: false,
-              boundaryGap: [0, 1]
+              boundaryGap: [0, 0.5]
           }],
           xAxis: [{
               type: 'category',
@@ -222,7 +242,7 @@ export default {
             barWidth: '30%',
             xAxisIndex: 1,
             yAxisIndex: 1,
-            data:obj.rate||obj.propertyArrearage,
+            data:obj.rate,
             itemStyle: {
               normal: {
                 color: '#fffc00',
@@ -238,7 +258,7 @@ export default {
               }
             }
           },{
-            name:'物业费金额(元)',
+            name:'物业费金额(万元)',
             type:option?option.series[1].type:'bar',
             barWidth: '30%',
             data:obj.property,
@@ -251,12 +271,17 @@ export default {
                   textStyle: { //数值样式
                     color: '#00E4FF',
                     fontSize: 12
-                  }
+                  },
+                  formatter:option?option.series[1].formatter:'{c}'   
                 }
               }
             }
           }]
       }
+      if(option&&_.has(option,"yAxis")){
+        op.yAxis[1].boundaryGap = option.yAxis.boundaryGap
+      }
+      return op
     }
   },
   mounted () {

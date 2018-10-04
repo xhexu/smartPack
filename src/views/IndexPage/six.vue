@@ -8,7 +8,7 @@
       <div class="bigChart" @click.stop>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
-          <div id="six-bigChart" style="width: 100%;height:100%"></div>
+          <div id="bChart-six" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
       </div>
@@ -41,9 +41,9 @@ export default {
     openWindow () {
       if(!this.isShowWindow&&!this.info){
         this.isShowWindow = !this.isShowWindow
-        this.sendHttpForGLCS('six-bigChart',{
+        this.sendHttpForGLCS('bChart-six',{
           series:{
-            radius : [20, 110]
+            radius : [20, 150]
           }
         })
       }else{

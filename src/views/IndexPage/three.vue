@@ -12,7 +12,7 @@
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
-          <div id="three-bigChart" style="width: 100%;height:100%"></div>
+          <div id="bChart-three" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
       </div>
@@ -38,7 +38,7 @@ export default {
     return {
       isShowWindow: false,
       info:'',
-      isActive: 'y',
+      isActive: '',
       queryParams:{
         parkCode:'e',
         type:'y',
@@ -66,22 +66,24 @@ export default {
       }
       flag=='y'?(()=>{
         busHttp._QueryYoY("/itfparkinfo/searchCL",me.queryParams,(res)=>{
-          me.initMap(res,"three-bigChart",{
+          me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
               top: '6%'
-            }
+            },
+            formatter:'{c}%' 
           })
         },(error)=>{
           me.errorEvent(error)
         })
       })():(()=>{
         busHttp._QueryQoQ("/itfparkinfo/searchCL",me.queryParams,(res)=>{
-          me.initMap(res,"three-bigChart",{
+          me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
               top: '6%'
-            }
+            },
+            formatter:'{c}%' 
           })
         },(error)=>{
           me.errorEvent(error)
@@ -90,8 +92,9 @@ export default {
     },
     openWindow () {
       if(!this.isShowWindow&&!this.info){
+        this.isActive = ''
         this.isShowWindow = !this.isShowWindow
-        this.clickBtn('y')
+        this.sendHttpForCar('bChart-three')
       }else{
         this.isShowWindow = false
       }
@@ -182,7 +185,8 @@ export default {
                   textStyle: { //数值样式
                     color: '#fffc00',
                     fontSize: 12
-                  }
+                  },
+                  formatter:option?option.formatter:'{c}' 
                 }
               }
             }
@@ -200,7 +204,8 @@ export default {
                   textStyle: { //数值样式
                     color: '#00E4FF',
                     fontSize: 12
-                  }
+                  },
+                  formatter:option?option.formatter:'{c}' 
                 }
               }
             }

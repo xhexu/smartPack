@@ -1,7 +1,7 @@
 <template>
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
-    <div class="trMap" @click="openWindow" id="chart-tr"></div>
+    <div class="trMap" @click="openWindow" id="chart-one"></div>
     <div class="chart_tip" v-if="info" v-text="info"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
@@ -12,7 +12,7 @@
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
-          <div id="tr-bigChart" style="width: 100%;height:100%"></div>
+          <div id="bChart-one" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
       </div>
@@ -37,7 +37,7 @@ export default {
   data () {
     return {
       isShowWindow: false,
-      isActive: 'y',
+      isActive: '',
       info:'',
       dataObj:{
         rent:[],  //租金
@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     initData () {
+      this.isActive = ''
       this.dataObj = {
         rent:[],  //租金
         rentArrearage:[]//租金欠费
@@ -73,26 +74,38 @@ export default {
       if(!this.isShowWindow){
         this.isShowWindow = !this.isShowWindow
         this.initData()
-        this.clickBtn('y')
+        this.sendHttpForRent('bChart-one',{
+          title:{
+            text:'2018年度',
+            top: '6%'
+          },
+          series:[{
+            type:'line'
+          },{
+            type:'bar'
+          }]
+        })
       }else{
         this.isShowWindow = false
       }
     },
     clickBtn (flag) {
       let me = this
-      me.isActive = flag
       me.initData()
+      me.isActive = flag
       flag=='y'?(()=>{
         busHttp._QueryYoYForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
-          me.initMap(res,"tr-bigChart",{
+          me.initMap(res,"bChart-one",{
             title:{
               text:'2018年度',
               top: '6%'
             },
             series:[{
-              type:'line'
+              type:'line',
+              formatter:'{c}%'
             },{
-              type:'line'
+              type:'line',
+              formatter:'{c}%'
             }]
           })
         },(error)=>{
@@ -100,15 +113,17 @@ export default {
         })
       })():(()=>{
         busHttp._QueryQoQForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
-          me.initMap(res,"tr-bigChart",{
+          me.initMap(res,"bChart-one",{
             title:{
               text:'2018年度',
               top: '6%'
             },
             series:[{
-              type:'line'
+              type:'line',
+              formatter:'{c}%'
             },{
-              type:'line'
+              type:'line',
+              formatter:'{c}%'
             }]
           })
         },(error)=>{
@@ -157,7 +172,7 @@ export default {
               }
           },
           legend: {
-              data: ['收缴率','租金金额(元)'],
+              data: ['收缴率','租金金额(万元)'],
               top:'15%',
               left:'5%',
               textStyle: {
@@ -177,9 +192,7 @@ export default {
           },{
               type: 'value',
               show: false,
-              boundaryGap: [0.2, 0.2],
-              max: 100,
-              min: 0
+              boundaryGap: [0, 0.5]
           }],
           xAxis: [{
               type: 'category',
@@ -224,7 +237,7 @@ export default {
             barWidth: '30%',
             xAxisIndex: 1,
             yAxisIndex: 1,
-            data:obj.rate||obj.rentArrearage,
+            data:obj.rate,
             itemStyle: {
               normal: {
                 color: '#fffc00',
@@ -252,7 +265,7 @@ export default {
               }
             }
           },{
-            name:'租金金额(元)',
+            name:'租金金额(万元)',
             type:option?option.series[1].type:'bar',
             barWidth: '30%',
             data:obj.rent,
@@ -265,7 +278,8 @@ export default {
                   textStyle: { //数值样式
                     color: '#00E4FF',
                     fontSize: 12
-                  }
+                  },
+                  formatter:option?option.series[1].formatter:'{c}'    
                 }
               }
             }
@@ -274,7 +288,7 @@ export default {
     }
   },
   mounted () {
-    this.sendHttpForRent('chart-tr')
+    this.sendHttpForRent('chart-one')
   }
 }
 </script>
