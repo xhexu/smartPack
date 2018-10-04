@@ -341,11 +341,13 @@ export default {
                 nowYearLst[key] = nowLst[key]
             })
             resultObj.axis = nowLst.axis
+            nowYearLst.rate = me._CalcRateTwo(nowLst[keys[0]],nowLst[keys[1]])
             params.time = +params.time-1
             me.queryLst(url,params,function(lst){
                 _.each(keys,(key)=>{
                     lastYearLst[key] = lst[key]
                 })
+                lastYearLst.rate = me._CalcRateTwo(lst[keys[0]],lst[keys[1]])
                 me._QoQALG(nowYearLst,lastYearLst,function(obj){
                     resultObj = _.extend(resultObj,obj)
                     onSuccess&&onSuccess(resultObj)
