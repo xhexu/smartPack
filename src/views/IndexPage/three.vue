@@ -177,37 +177,29 @@ export default {
             barWidth: '30%',
             data:obj.traffic,
             itemStyle: {
-              normal: {
-                color: '#fffc00',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#fffc00',
-                    fontSize: 12
-                  },
-                  formatter:option?option.formatter:'{c}' 
-                }
-              }
+              color: '#fffc00'
+            },
+            label: {
+              show: true, //开启显示
+              position: 'bottom', //在上方显示
+              color: '#fffc00',
+              fontSize: 12,
+              formatter:option?option.formatter:'{c}' 
             }
           },{
             name:'停车费',
             type:'line',
             barWidth: '30%',
             data:obj.parking,
+            label: {
+              show: true, //开启显示
+              position: 'top', //在上方显示
+              color: '#00E4FF',
+              fontSize: 12,
+              formatter:option?option.formatter:'{c}' 
+            },
             itemStyle: {
-              normal: {
-                color:'#00E4FF',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#00E4FF',
-                    fontSize: 12
-                  },
-                  formatter:option?option.formatter:'{c}' 
-                }
-              }
+              color:'#00E4FF'
             }
           }]
       }

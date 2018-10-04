@@ -96,14 +96,28 @@ export default {
              }
           },
           indicator: (function (){
-              let res = [],maxValue = _.max(obj.letting)+100
+              let res = [],maxValue = _.max(obj.letting)+10
               for (var i = 1; i <= obj.axis.length; i++) {
                   res.push({text:i+'月',max:maxValue});
               }
               return res;
           })(),
           center: ['50%','50%'],
-          radius: option?option.radius:70
+          radius: option?option.radius:70,
+          axisLine:{
+            show: false
+          },
+          splitArea:{
+            areaStyle:{
+              color:'#000'
+            }
+          },
+          splitLine:{
+            show: true,
+            lineStyle:{
+              opacity:0.4
+            }
+          }
         }],
         series: [{
             type: 'radar',
@@ -111,18 +125,23 @@ export default {
               color:'#00E4FF'
             },
             label: {
-              show: true, //开启显示
-              position: 'inside', //在上方显示
-              textStyle: { //数值样式
-                color: '#00E4FF',
-                fontSize: 12
-              },
-              formatter: '{c}%'
+              show: true,
+              position: 'inside',
+              color: '#000',
+              fontSize: 12,
+              formatter: '{c}%',
+              backgroundColor:'#00E4FF',
+              opacity:0.5,
+              borderRadius:3,
+              padding:[1,2],
+              distance:10
+            },
+            lineStyle:{
+              color:'#00E4FF',
+              width:1
             },
             itemStyle: {
-              normal: {
-                color:'#fffc00'
-              }
+              color:'#fffc00'
             },
             data: [{
               value:obj.letting

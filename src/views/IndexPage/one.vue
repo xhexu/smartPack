@@ -80,7 +80,9 @@ export default {
             top: '6%'
           },
           series:[{
-            type:'line'
+            type:'line',
+            backgroundColor:'#fffc00',
+            color:'#000'
           },{
             type:'bar'
           }]
@@ -102,11 +104,16 @@ export default {
             },
             series:[{
               type:'line',
-              formatter:'{c}%'
+              formatter:'{c}%',
+              backgroundColor:'rgba(0,0,0,0)',
+              color:'#fffc00'
             },{
               type:'line',
               formatter:'{c}%'
-            }]
+            }],
+            yAxis:{
+              boundaryGap:[0,1]
+            }
           })
         },(error)=>{
           me.errorEvent(error)
@@ -120,11 +127,15 @@ export default {
             },
             series:[{
               type:'line',
-              formatter:'{c}%'
+              formatter:'{c}%',
+              backgroundColor:'rgba(0,0,0,0)'
             },{
               type:'line',
               formatter:'{c}%'
-            }]
+            }],
+            yAxis:{
+              boundaryGap:[0,1]
+            }
           })
         },(error)=>{
           me.errorEvent(error)
@@ -155,7 +166,7 @@ export default {
       })
     },
     getOption (obj,option) {
-      return {
+      let op = {
           title: {
               text: option?option.title.text:'租金信息',
               left:'5%',
@@ -192,7 +203,7 @@ export default {
           },{
               type: 'value',
               show: false,
-              boundaryGap: [0, 0.5]
+              boundaryGap: [0, 0.2]
           }],
           xAxis: [{
               type: 'category',
@@ -239,30 +250,17 @@ export default {
             yAxisIndex: 1,
             data:obj.rate,
             itemStyle: {
-              normal: {
-                color: '#fffc00',
-                  label: {
-                    show: true, //开启显示
-                    position: 'top', //在上方显示
-                    textStyle: { //数值样式
-                      color: '#fffc00',
-                      fontSize: 12
-                    },
-                    formatter:'{c}%'            
-                }
-              }
+              color: '#fffc00'
             },
-            markPoint:{
-              sysbolSize:"20",
-              itemStyle:{
-                normal:{
-                  borderColor: '#97cefa',
-                  borderWidth: 1,
-                  lable:{
-                    show: false
-                  }
-                }
-              }
+            label: {
+              show: true, //开启显示
+              position: 'top', //在上方显示
+              color: option?option.series[0].color:'#000',
+              fontSize: 12,
+              padding:[2,2],
+              formatter:'{c}%',
+              backgroundColor:option?option.series[0].backgroundColor:'#fffc00',
+              borderRadius:3          
             }
           },{
             name:'租金金额(万元)',
@@ -270,21 +268,21 @@ export default {
             barWidth: '30%',
             data:obj.rent,
             itemStyle: {
-              normal: {
-                color:'#00E4FF',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#00E4FF',
-                    fontSize: 12
-                  },
-                  formatter:option?option.series[1].formatter:'{c}'    
-                }
-              }
+              color:'#00E4FF'
+            },
+            label: {
+              show: true, //开启显示
+              position: 'top', //在上方显示
+              color: '#00E4FF',
+              fontSize: 12,
+              formatter:option?option.series[1].formatter:'{c}'    
             }
           }]
       }
+      if(option&&_.has(option,"yAxis")){
+        op.yAxis[1].boundaryGap = option.yAxis.boundaryGap
+      }
+      return op
     }
   },
   mounted () {

@@ -73,7 +73,9 @@ export default {
               top: '6%'
             },
             series:[{
-              type:'line'
+              type:'line',
+              backgroundColor:'rgba(0,0,0,0)',
+              color:'#fffc00'
             },{
               type:'line',
               formatter:'{c}%'
@@ -127,7 +129,9 @@ export default {
             top: '6%'
           },
           series:[{
-            type:'line'
+            type:'line',
+            backgroundColor:'#fffc00',
+            color:'#000'
           },{
             type:'bar'
           }]
@@ -197,7 +201,7 @@ export default {
           },{
               type: 'value',
               show: false,
-              boundaryGap: [0, 0.5]
+              boundaryGap: [0, 0.2]
           }],
           xAxis: [{
               type: 'category',
@@ -244,18 +248,17 @@ export default {
             yAxisIndex: 1,
             data:obj.rate,
             itemStyle: {
-              normal: {
-                color: '#fffc00',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#fffc00',
-                    fontSize: 12
-                  },
-                  formatter:'{c}%'   
-                }
-              }
+              color: '#fffc00'
+            },
+            label: {
+              show: true, //开启显示
+              position: 'top', //在上方显示
+              color: option?option.series[0].color:'#000',
+              fontSize: 12,
+              padding:[2,2],
+              formatter:'{c}%',
+              backgroundColor:option?option.series[0].backgroundColor:'#fffc00',
+              borderRadius:3     
             }
           },{
             name:'物业费金额(万元)',

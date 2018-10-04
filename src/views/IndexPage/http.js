@@ -282,10 +282,10 @@ export default {
                     lastYearLst[key] = lst[key]
                 })
                 lastYearLst.rate = me._CalcRateTwo(lst[keys[0]],lst[keys[1]])
-                console.log(nowYearLst,lastYearLst)
+                // console.log(nowYearLst,lastYearLst)
                 me._YoyALG(nowYearLst,lastYearLst,function(obj){
                     resultObj = _.extend(resultObj,obj)
-                    console.log("同比",resultObj)
+                    // console.log("同比",resultObj)
                     onSuccess&&onSuccess(resultObj)
                 })
             },onError)
@@ -352,7 +352,7 @@ export default {
                 lastYearLst.rate = me._CalcRateTwo(lst[keys[0]],lst[keys[1]])
                 me._QoQALG(nowYearLst,lastYearLst,function(obj){
                     resultObj = _.extend(resultObj,obj)
-                    console.log("环比",resultObj)
+                    // console.log("环比",resultObj)
                     onSuccess&&onSuccess(resultObj)
                 })
             },onError)
