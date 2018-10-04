@@ -135,7 +135,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0)',
           tooltip: {
               trigger: 'axis',
-              formatter:option?option.tooltip.formatter:'{a0}:{c0}<br/>{a1}:{c1}%',
+              formatter:option?option.tooltip.formatter:'{a0}:{c0}<br/>{a1}:{c1}',
               axisPointer: {
                   type: 'shadow'
               }
