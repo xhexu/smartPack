@@ -77,15 +77,15 @@ export default {
     getOption (obj,option) {
       return {
         title : {
-            text: '出租率',
-            left:'5%',
-            top:'5%',
-            textStyle:{
-              color:'#00E4FF'
-            }
+          text: '出租率',
+          left:'5%',
+          top:'5%',
+          textStyle:{
+            color:'#00E4FF'
+          }
         },
         tooltip: {
-            trigger: 'axis'
+          formatter: '{b}'
         },
         radar: [{
           name: {
@@ -121,6 +121,7 @@ export default {
         }],
         series: [{
             type: 'radar',
+            name:'出租率',
             lineStyle:{
               color:'#00E4FF'
             },

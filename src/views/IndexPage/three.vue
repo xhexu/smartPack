@@ -71,7 +71,10 @@ export default {
               text:'2018年度',
               top: '6%'
             },
-            formatter:'{c}%' 
+            formatter:'{c}%',
+            tooltip:{
+              formatter:'{a0}:{c0}%<br/>{a1}:{c1}%'
+            }
           })
         },(error)=>{
           me.errorEvent(error)
@@ -83,7 +86,10 @@ export default {
               text:'2018年度',
               top: '6%'
             },
-            formatter:'{c}%' 
+            formatter:'{c}%',
+            tooltip:{
+              formatter:'{a0}:{c0}%<br/>{a1}:{c1}%'
+            }
           })
         },(error)=>{
           me.errorEvent(error)
@@ -129,6 +135,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0)',
           tooltip: {
               trigger: 'axis',
+              formatter:option?option.tooltip.formatter:'{a0}:{c0}<br/>{a1}:{c1}%',
               axisPointer: {
                   type: 'shadow'
               }
@@ -150,7 +157,7 @@ export default {
           yAxis: {
               type: 'value',
               show: false,
-              boundaryGap: [0, 1]
+              boundaryGap: [0.5, 1]
           },
           xAxis: {
               type: 'category',

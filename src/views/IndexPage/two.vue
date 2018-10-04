@@ -82,6 +82,9 @@ export default {
             }],
             yAxis:{
               boundaryGap:[0,1]
+            },
+            tooltip:{
+              formatter:'{a0}:{c0}%<br/>{a1}:{c1}%'
             }
           })
         },(error)=>{
@@ -103,6 +106,9 @@ export default {
             }],
             yAxis:{
               boundaryGap:[0,1]
+            },
+            tooltip:{
+              formatter:'{a0}:{c0}%<br/>{a1}:{c1}%'
             }
           })
         },(error)=>{
@@ -134,7 +140,10 @@ export default {
             color:'#000'
           },{
             type:'bar'
-          }]
+          }],
+          tooltip:{
+            formatter:'{a0}:{c0}<br/>{a1}:{c1}%'
+          }
         })
       }else{
         this.isShowWindow = false
@@ -176,6 +185,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0)',
           tooltip: {
               trigger: 'axis',
+              formatter:option?option.tooltip.formatter:'{a0}:{c0}<br/>{a1}:{c1}%',
               axisPointer: {
                   type: 'shadow'
               }
