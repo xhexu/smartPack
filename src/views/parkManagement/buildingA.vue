@@ -21,11 +21,11 @@
     <el-col :span="15" class="right" :style="{height: layoutHeight+'px'}">
       <div class="infoBox">
         <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
-          <div id="info_show_id" style="position: relative;height: 30%;width: 100%;overflow-x: hidden;overflow-y: scroll;">
+          <div id="info_show_id" style="position: relative;height: 45%;width: 100%;overflow-x: hidden;overflow-y: scroll;">
             <b>{{compData.enterpriseName}}</b>
             <p>{{compData.enterpriseIntro}}</p>
           </div>
-          <div id="chart"></div>
+          <div id="chart" v-show="showChart"></div>
         </div>
       </div>
       <p class="btns">
@@ -60,6 +60,17 @@ export default {
       } else {
         return 600
       }
+    },
+    showChart(){
+      let sum1 = 0;
+      let sum2 = 0;
+      this.yyeData.forEach((item)=>{
+        sum1 = sum1 + item;
+      })
+      this.nsyData.forEach((item)=>{
+        sum2 = sum2 + item;
+      })
+      return (this.yyeData.length>0 || this.nsyData.length>0) && (sum1 > 0 || sum2 > 0)
     }
   },
   data () {
@@ -276,6 +287,9 @@ export default {
       }
       // 使用刚指定的配置项和数据显示图表。
       this.myChart.setOption(option);
+      this.$nextTick(()=>{
+        this.myChart.resize()
+      })
     },
     initData(){
       this.$http.post('/itfenterinfo/list',{floor: 'A', parkCode: 'e'})

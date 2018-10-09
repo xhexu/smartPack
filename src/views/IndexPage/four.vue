@@ -8,7 +8,7 @@
       <div class="bigChart" @click.stop>
         <img style="width: 100%;position: absolute;left: 0;top: 8px" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
-          <div id="four-bigChart" style="width: 100%;height:100%"></div>
+          <div id="bChart-four" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 2px;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
       </div>
@@ -44,7 +44,7 @@ export default {
     openWindow () {
       if(!this.isShowWindow&&!this.info){
         this.isShowWindow = !this.isShowWindow
-        this.sendHttpForLetting('four-bigChart',{
+        this.sendHttpForLetting('bChart-four',{
             radius:160
         })
       }else{
@@ -77,15 +77,15 @@ export default {
     getOption (obj,option) {
       return {
         title : {
-            text: '出租率',
-            left:'5%',
-            top:'5%',
-            textStyle:{
-              color:'#00E4FF'
-            }
+          text: '出租率',
+          left:'5%',
+          top:'5%',
+          textStyle:{
+            color:'#00E4FF'
+          }
         },
         tooltip: {
-            trigger: 'axis'
+          formatter: '{b}'
         },
         radar: [{
           name: {
@@ -96,33 +96,53 @@ export default {
              }
           },
           indicator: (function (){
-              let res = [],maxValue = _.max(obj.letting)+100
+              let res = [],maxValue = _.max(obj.letting)+10
               for (var i = 1; i <= obj.axis.length; i++) {
                   res.push({text:i+'月',max:maxValue});
               }
               return res;
           })(),
           center: ['50%','50%'],
-          radius: option?option.radius:70
+          radius: option?option.radius:70,
+          axisLine:{
+            show: false
+          },
+          splitArea:{
+            areaStyle:{
+              color:'#000'
+            }
+          },
+          splitLine:{
+            show: true,
+            lineStyle:{
+              opacity:0.4
+            }
+          }
         }],
         series: [{
             type: 'radar',
+            name:'出租率',
             lineStyle:{
               color:'#00E4FF'
             },
             label: {
-              show: true, //开启显示
-              position: 'inside', //在上方显示
-              textStyle: { //数值样式
-                color: '#00E4FF',
-                fontSize: 12
-              },
-              formatter: '{c}%'
+              show: true,
+              position: 'inside',
+              color: '#000',
+              fontSize: 12,
+              formatter: '{c}%',
+              backgroundColor:'#00E4FF',
+              opacity:0.5,
+              borderRadius:3,
+              padding:[1,2],
+              distance:10
+            },
+            lineStyle:{
+              color:'#00E4FF',
+              width:1
             },
             itemStyle: {
-              normal: {
-                color:'#fffc00'
-              }
+              color:'#fffc00'
             },
             data: [{
               value:obj.letting

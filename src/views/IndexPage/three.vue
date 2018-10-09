@@ -12,7 +12,7 @@
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
         <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
-          <div id="three-bigChart" style="width: 100%;height:100%"></div>
+          <div id="bChart-three" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
       </div>
@@ -38,7 +38,7 @@ export default {
     return {
       isShowWindow: false,
       info:'',
-      isActive: 'y',
+      isActive: '',
       queryParams:{
         parkCode:'e',
         type:'y',
@@ -66,10 +66,14 @@ export default {
       }
       flag=='y'?(()=>{
         busHttp._QueryYoY("/itfparkinfo/searchCL",me.queryParams,(res)=>{
-          me.initMap(res,"three-bigChart",{
+          me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
               top: '6%'
+            },
+            formatter:'{c}%',
+            tooltip:{
+              formatter:'{a0}:{c0}%<br/>{a1}:{c1}%'
             }
           })
         },(error)=>{
@@ -77,10 +81,14 @@ export default {
         })
       })():(()=>{
         busHttp._QueryQoQ("/itfparkinfo/searchCL",me.queryParams,(res)=>{
-          me.initMap(res,"three-bigChart",{
+          me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
               top: '6%'
+            },
+            formatter:'{c}%',
+            tooltip:{
+              formatter:'{a0}:{c0}%<br/>{a1}:{c1}%'
             }
           })
         },(error)=>{
@@ -90,8 +98,9 @@ export default {
     },
     openWindow () {
       if(!this.isShowWindow&&!this.info){
+        this.isActive = ''
         this.isShowWindow = !this.isShowWindow
-        this.clickBtn('y')
+        this.sendHttpForCar('bChart-three')
       }else{
         this.isShowWindow = false
       }
@@ -126,6 +135,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0)',
           tooltip: {
               trigger: 'axis',
+              formatter:option?option.tooltip.formatter:'{a0}:{c0}<br/>{a1}:{c1}',
               axisPointer: {
                   type: 'shadow'
               }
@@ -147,7 +157,7 @@ export default {
           yAxis: {
               type: 'value',
               show: false,
-              boundaryGap: [0, 1]
+              boundaryGap: [0.5, 1]
           },
           xAxis: {
               type: 'category',
@@ -174,35 +184,29 @@ export default {
             barWidth: '30%',
             data:obj.traffic,
             itemStyle: {
-              normal: {
-                color: '#fffc00',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#fff',
-                    fontSize: 12
-                  }
-                }
-              }
+              color: '#fffc00'
+            },
+            label: {
+              show: true, //开启显示
+              position: 'bottom', //在上方显示
+              color: '#fffc00',
+              fontSize: 12,
+              formatter:option?option.formatter:'{c}' 
             }
           },{
             name:'停车费',
             type:'line',
             barWidth: '30%',
             data:obj.parking,
+            label: {
+              show: true, //开启显示
+              position: 'top', //在上方显示
+              color: '#00E4FF',
+              fontSize: 12,
+              formatter:option?option.formatter:'{c}' 
+            },
             itemStyle: {
-              normal: {
-                color:'#00E4FF',
-                label: {
-                  show: true, //开启显示
-                  position: 'top', //在上方显示
-                  textStyle: { //数值样式
-                    color: '#fff',
-                    fontSize: 12
-                  }
-                }
-              }
+              color:'#00E4FF'
             }
           }]
       }

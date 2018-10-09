@@ -99,7 +99,7 @@ export default {
         })
     },
     /**
-     * 查询租金，收缴率/查询物业，收缴率
+     * 查询租金，租金收缴率/查询物业，物业收缴率
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]
@@ -123,7 +123,6 @@ export default {
                     _.each(obj['rent'],function(v){
                         data.axis.push(v.dataTime)
                     })
-                    console.log(data)
                     onSuccess&&onSuccess(data)
                 }else{
                     console.error('searchCL出参格式异常')
@@ -144,7 +143,8 @@ export default {
     _CalcRate: function(listA,listB){
         let result = []
         _.each(listA,(v,index)=>{
-            result.push(Math.round(v/(listB[index]+v)*100))
+            //租金收缴率=租金/(租金+租金欠费)
+            result.push(Math.round(v/(listB[index]+v)*10000)/100)
         })
         return result
     },
@@ -165,7 +165,8 @@ export default {
                 })
                 if(obj){
                     valueB = obj.dataValue
-                    let value = ((valueA-valueB)/valueA).toFixed(2)
+                    //同比数据=(X月数据-去年X月数据)/去年X月数据
+                    let value = Math.round((valueA-valueB)/valueB*10000)/100
                     resultObj[key].push(+value)
                 }
             })
@@ -192,7 +193,8 @@ export default {
                 }else{
                     valueB = lstB[index-1].dataValue
                 }
-                let value = ((valueA-valueB)/valueA).toFixed(3)
+                //环比数据=[X月数据-(X-1)月数据]/(X-1)月数据
+                let value = Math.round((valueA-valueB)/valueB*10000)/100
                 resultObj[key].push(+value)
             })
         })
@@ -257,7 +259,7 @@ export default {
         },onError)
     },
     /**
-     * 查询同比：租金/物业费同环比
+     * 查询同比：租金/物业费同比
      * @param  {[type]} url       [description]
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
@@ -272,19 +274,31 @@ export default {
             _.each(keys,(key)=>{
                 nowYearLst[key] = nowLst[key]
             })
+            nowYearLst.rate = me._CalcRateTwo(nowLst[keys[0]],nowLst[keys[1]])
             resultObj.axis = nowLst.axis
             params.time = +params.time-1
             me.queryLst(url,params,function(lst){
                 _.each(keys,(key)=>{
                     lastYearLst[key] = lst[key]
                 })
+                lastYearLst.rate = me._CalcRateTwo(lst[keys[0]],lst[keys[1]])
                 me._YoyALG(nowYearLst,lastYearLst,function(obj){
                     resultObj = _.extend(resultObj,obj)
-                    console.log(resultObj)
                     onSuccess&&onSuccess(resultObj)
                 })
             },onError)
         },onError)
+    },
+    _CalcRateTwo: function(objA,objB){
+        let result = []
+        _.each(objA,(v,index)=>{
+            //租金收缴率=租金/(租金+租金欠费)
+            result.push({
+                dataTime:v.dataTime,
+                dataValue:Math.round(v.dataValue/(objB[index].dataValue+v.dataValue)*10000)/100
+            })
+        })
+        return result
     },
 
     /**
@@ -312,7 +326,7 @@ export default {
         },onError)
     },
     /**
-     * 查询环比数据：租金/物业费同环比
+     * 查询环比数据：租金/物业费环比
      * @param  {[type]} params    [description]
      * @param  {[type]} onSuccess [description]
      * @param  {[type]} onError   [description]
@@ -327,14 +341,15 @@ export default {
                 nowYearLst[key] = nowLst[key]
             })
             resultObj.axis = nowLst.axis
+            nowYearLst.rate = me._CalcRateTwo(nowLst[keys[0]],nowLst[keys[1]])
             params.time = +params.time-1
             me.queryLst(url,params,function(lst){
                 _.each(keys,(key)=>{
                     lastYearLst[key] = lst[key]
                 })
+                lastYearLst.rate = me._CalcRateTwo(lst[keys[0]],lst[keys[1]])
                 me._QoQALG(nowYearLst,lastYearLst,function(obj){
                     resultObj = _.extend(resultObj,obj)
-                    console.log(resultObj)
                     onSuccess&&onSuccess(resultObj)
                 })
             },onError)
