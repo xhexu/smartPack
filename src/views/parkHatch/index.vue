@@ -11,19 +11,20 @@
         :auto-upload="false">
         <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">申请</el-button>
+        <div slot="tip" class="el-upload__tip">可根据指南中入驻申请流程，按申请操作要求填写表单上传</div>
       </el-upload>
     </el-dialog>
   <div class="index">
     <el-row>
       <el-col :span="8" class="left" :style="{height: layoutHeight+'px'}">
-        <card :option="cardTL" :info="policy" style="top:-50px"></card>
-        <card :option="cardBL" :info="incubator" style="margin-top: 40px"></card>
+        <card :option="cardTL" moreTitle="政策" :info="policy" style="top:-50px"></card>
+        <card :option="cardBL" moreTitle="孵化器" :info="incubator" style="margin-top: 40px"></card>
       </el-col>
       <el-col :span="8" style="padding-top: 5%;padding-bottom: 9%" :style="{position: 'relative',height: layoutHeight+'px'}">
         <img style="position: relative" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div class="building"  :class="{animMap:showMap}">
           <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;
-          height: 28px;width: 92px;color: #01A4AE;margin-top: 20px">申请</div>
+          height: 28px;width: 92px;color: #01A4AE;margin-top: 20px">入驻申请</div>
           <div style="height: 70%">
             <img style="height: 100%;" src="/static/hatch_center.gif"/>
           </div>
@@ -31,8 +32,8 @@
         <img style="position: relative;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
       </el-col>
       <el-col :span="8" class="right" :style="{height: layoutHeight+'px'}">
-        <card :option="cardTR" :info="activity" style="top:-50px"></card>
-        <card :option="cardBR" :info="guide" style="margin-top: 40px"></card>
+        <card :option="cardTR" moreTitle="活动" :info="activity" style="top:-50px"></card>
+        <card :option="cardBR" moreTitle="指南" :info="guide" style="margin-top: 40px"></card>
       </el-col>
     </el-row>
   </div>
