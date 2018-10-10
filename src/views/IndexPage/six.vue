@@ -34,7 +34,7 @@ export default {
     return {
       isShowWindow: false,
       info: '',
-      color:['#308AD5','#3063D5','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3','#3063D5','#308AD','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3']
+      color:['#308AD5','#3063D5','#0540C5','#0E9AB3','#3063D5','#308AD','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3']
     }
   },
   methods: {
@@ -95,10 +95,15 @@ export default {
                 name:'面积模式',
                 type:'pie',
                 radius : [10, 60],
-                center : ['50%', '50%'],
+                center : ['50%', '55%'],
                 roseType : 'area',
                 data:obj,
-                color:me.color
+                color:me.color,
+                label:{
+                  verticalAlign:'bottom',
+                  fontSize: 14,
+                  color:'#00E4FF'
+                }
             }
         ]
       }
