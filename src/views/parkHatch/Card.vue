@@ -4,12 +4,24 @@
       <el-dialog :title="htmlTitle" :visible.sync="dialogFormVisible">
       <div style="max-width: 100%" v-html="htmlContent"></div>
       </el-dialog>
+      <el-dialog :title="moreTitle" width="30%" :visible.sync="dialogFormVisible2">
+        <ul >
+          <li v-for="item in info" style="width: 100%;padding-top: 5px" @click="handleClick(item)" >
+            <el-row :gutter="8">
+              <el-col :title=item.title :span="16" style="cursor:pointer;font-size: 14px" align="left">
+                {{ item.title.substr(0,17) }} <span v-if="item.title.length > 17">...</span>
+              </el-col>
+              <el-col :span="8" style="font-size: 12px"  align="center">{{ getFormtTime(item.checkTime) }}</el-col>
+            </el-row>
+          </li>
+        </ul>
+      </el-dialog>
     </div>
     <div class="card" :style="{backgroundImage: 'url(' + cardBgUrl + ')'}">
       <div class="card-title" :class="titleClass">{{title}}</div>
         <div  class="card-div nwwest-roll" style="overflow:hidden;clear:both;width: 90%;height: 80%"  :class="cardDivClass"  id="nwwest-roll">
-          <ul id="roll-ul" >
-            <li @mouseover="stopScroll" @mouseout="beginScroll" ref="rollul" v-for="item in info" style="width: 100%;padding-top: 5px" @click="handleClick(item)" :class="{anim:animate==true}">
+          <ul >
+            <li v-for="item in showInfo" style="width: 100%;padding-top: 5px" @click="handleClick(item)" :class="{anim:animate==true}">
               <el-row :gutter="8">
                 <el-col :title=item.title :span="16" style="font-size: 14px" align="left">
                  {{ item.title.substr(0,7) }}...
@@ -18,6 +30,7 @@
               </el-row>
             </li>
           </ul>
+          <a @click="showMoreInfo" v-if="info.length>5" style="float: left;color:#01A4AE;cursor:pointer;"> more</a>
         </div>
     </div>
   </div>
@@ -39,12 +52,13 @@ export default {
       default () {
         return []
       }
-    }
+    },
+    moreTitle: ''
   },
   data () {
     return {
+      showInfo: [],
       animate: true,
-      showItemDiv: false,
       cardDivClass: '',
       itemClass: '',
       titleClass: '',
@@ -52,6 +66,7 @@ export default {
       cardBgUrl: '',
       title: '-----',
       dialogFormVisible: false,
+      dialogFormVisible2: false,
       htmlContent: '',
       htmlTitle: '',
       canScroll: true
@@ -60,7 +75,8 @@ export default {
   mounted () {
     this.dealChartOption()
     this.dealCardOption()
-    setInterval(this.scroll, 2000)
+    // setInterval(this.scroll, 2000)
+    this.showInfo = this.info.length > 5 ? this.info.slice(0, 5) : this.info
   },
   methods: {
     handleClick (item) {
@@ -111,29 +127,9 @@ export default {
         console.error('卡片入参异常')
       }
     },
-    scroll(){
-      let con1 = this.$refs.rollul
-      if(con1==null || con1.length==0 || !this.canScroll){
-        return
-      }
-      con1[0].style.marginTop='30px';
-      this.animate=!this.animate
-      var that = this; // 在异步函数中会出现this的偏移问题，此处一定要先保存好this的指向
-      setTimeout(function(){
-        that.info.push(that.info[0]);
-        that.info.shift();
-        con1[0].style.marginTop='0px';
-        that.animate=!that.animate; // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
-      },0)
-    },
-    stopScroll(){
-      this.canScroll=false
-    },
-    beginScroll(){
-      this.canScroll=true
-      // setInterval(this.scroll, 2000)
+    showMoreInfo() {
+      this.dialogFormVisible2 = true
     }
-
   }
 
 }
@@ -141,6 +137,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  li:hover{
+    color: #EB850C;
+  }
   img {
     max-width: 100%;
   }
