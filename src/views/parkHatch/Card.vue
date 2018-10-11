@@ -76,7 +76,8 @@ export default {
     this.dealChartOption()
     this.dealCardOption()
     // setInterval(this.scroll, 2000)
-    this.showInfo = this.info.length > 5 ? this.info.slice(0, 5) : this.info
+    let length = this.info.length
+    this.showInfo = length > 5 ? this.info.slice(0, 5) : this.info
   },
   methods: {
     handleClick (item) {
