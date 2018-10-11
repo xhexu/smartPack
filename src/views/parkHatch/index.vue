@@ -17,8 +17,8 @@
   <div class="index">
     <el-row>
       <el-col :span="8" class="left" :style="{height: layoutHeight+'px'}">
-        <card :option="cardTL" moreTitle="政策" :info="policy" style="top:-50px"></card>
-        <card :option="cardBL" moreTitle="孵化器" :info="incubator" style="margin-top: 40px"></card>
+        <card :option="cardTL" moreTitle="政策" :info="policy" :dataLength="policy_length" style="top:-50px"></card>
+        <card :option="cardBL" moreTitle="孵化器" :info="incubator" :dataLength="incubator_length" style="margin-top: 40px"></card>
       </el-col>
       <el-col :span="8" style="padding-top: 5%;padding-bottom: 9%" :style="{position: 'relative',height: layoutHeight+'px'}">
         <img style="position: relative" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
@@ -32,8 +32,8 @@
         <img style="position: relative;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
       </el-col>
       <el-col :span="8" class="right" :style="{height: layoutHeight+'px'}">
-        <card :option="cardTR" moreTitle="活动" :info="activity" style="top:-50px"></card>
-        <card :option="cardBR" moreTitle="指南" :info="guide" style="margin-top: 40px"></card>
+        <card :option="cardTR" moreTitle="活动" :info="activity" :dataLength="activity_length" style="top:-50px"></card>
+        <card :option="cardBR" moreTitle="指南" :info="guide" :dataLength="guide_length" style="margin-top: 40px"></card>
       </el-col>
     </el-row>
   </div>
@@ -59,7 +59,7 @@ export default {
       playFlag: false,
       showMap: false,
       dialogFormVisible: false,
-      dialogFormVisible2:false,
+      dialogFormVisible2: false,
       cardTL: {
         title: '政策',
         position: 'TL'
@@ -77,9 +77,13 @@ export default {
         position: 'TR'
       },
       policy: [],
+      policy_length: 0,
       activity: [],
+      activity_length: 0,
       incubator: [],
-      guide: []
+      incubator_length: 0,
+      guide: [],
+      guide_length: 0
     }
   },
   methods: {
@@ -134,13 +138,20 @@ export default {
           this.guide.push(data[index])
         }
       }
+      this.policy_length = this.policy.length
+      this.activity_length = this.activity.length
+      this.incubator_length = this.incubator.length
+      this.guide_length = this.guide.length
+      console.info(this.policy_length,this.activity_length,this.incubator_length,this.guide_length)
       this.$nextTick()
     }
   },
-  mounted () {
-    this.animate()
+  created () {
     this.beginLoadData()
     this.fileUrl = `${http.defaults.baseURL}/itfincubationinfo/save`
+  },
+  mounted () {
+    this.animate()
   },
   computed: {
     layoutHeight(){

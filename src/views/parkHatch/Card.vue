@@ -22,7 +22,7 @@
         <div  class="card-div nwwest-roll" style="overflow:hidden;clear:both;width: 90%;height: 80%"  :class="cardDivClass"  id="nwwest-roll">
           <ul >
             <li v-for="item in showInfo" style="width: 100%;padding-top: 5px" @click="handleClick(item)" :class="{anim:animate==true}">
-              <el-row :gutter="8">
+              <el-row :gutter="8" >
                 <el-col :title=item.title :span="16" style="font-size: 14px" align="left">
                  {{ item.title.substr(0,7) }}...
                 </el-col>
@@ -30,7 +30,7 @@
               </el-row>
             </li>
           </ul>
-          <a @click="showMoreInfo" v-if="info.length>5" style="float: left;color:#01A4AE;cursor:pointer;"> more</a>
+          <a @click="showMoreInfo" v-if="dataLength>5" style="float: left;color:#01A4AE;cursor:pointer;"> more</a>
         </div>
     </div>
   </div>
@@ -53,7 +53,16 @@ export default {
         return []
       }
     },
-    moreTitle: ''
+    moreTitle: '',
+    dataLength: null
+  },
+  watch: {
+    dataLength: {
+      handler: function(val, oldval) {
+        this.dataLength = val
+        this.showInfo = this.dataLength > 5 ? this.info.slice(0, 5) : this.info
+      }
+    }
   },
   data () {
     return {
@@ -76,8 +85,6 @@ export default {
     this.dealChartOption()
     this.dealCardOption()
     // setInterval(this.scroll, 2000)
-    let length = this.info.length
-    this.showInfo = length > 5 ? this.info.slice(0, 5) : this.info
   },
   methods: {
     handleClick (item) {
