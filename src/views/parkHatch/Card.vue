@@ -4,16 +4,26 @@
       <el-dialog :title="htmlTitle" :visible.sync="dialogFormVisible">
       <div style="max-width: 100%" v-html="htmlContent"></div>
       </el-dialog>
-      <el-dialog :title="moreTitle" width="30%" :visible.sync="dialogFormVisible2">
+      <el-dialog :title="moreTitle" width="30%"  :visible.sync="dialogFormVisible2">
+        <el-row :gutter="8">
+          <el-col :span="16"  align="left">
+            <span>标题</span>
+          </el-col>
+          <el-col :span="8" style="font-size: 12px"  align="center"><span>时间</span></el-col>
+        </el-row>
         <ul >
-          <li v-for="item in info" style="width: 100%;padding-top: 5px" @click="handleClick(item)" >
+          <li v-for="item in pageInfo" style="width: 100%;padding-top: 5px" @click="handleClick(item)" >
             <el-row :gutter="8">
               <el-col :title=item.title :span="16" style="cursor:pointer;font-size: 14px" align="left">
-                {{ item.title.substr(0,17) }} <span v-if="item.title.length > 17">...</span>
+                {{ item.title.substr(0,12) }} <span v-if="item.title.length > 17">...</span>
               </el-col>
               <el-col :span="8" style="font-size: 12px"  align="center">{{ getFormtTime(item.checkTime) }}</el-col>
             </el-row>
           </li>
+          <el-row v-if="dataLength > 10">
+            <el-col :span="12"><a style="color:#01A4AE;cursor:pointer;" @click="backPage">上一页</a></el-col>
+            <el-col :span="12"><a style="color:#01A4AE;cursor:pointer;" @click="nextPageText">下一页</a></el-col>
+          </el-row>
         </ul>
       </el-dialog>
     </div>
@@ -61,11 +71,13 @@ export default {
       handler: function(val, oldval) {
         this.dataLength = val
         this.showInfo = this.dataLength > 5 ? this.info.slice(0, 5) : this.info
+        this.pageInfo = this.info.slice(0, 10)
       }
     }
   },
   data () {
     return {
+      pageInfo: [],
       showInfo: [],
       animate: true,
       cardDivClass: '',
@@ -78,7 +90,8 @@ export default {
       dialogFormVisible2: false,
       htmlContent: '',
       htmlTitle: '',
-      canScroll: true
+      canScroll: true,
+      page: 1
     }
   },
   mounted () {
@@ -87,6 +100,21 @@ export default {
     // setInterval(this.scroll, 2000)
   },
   methods: {
+    backPage(){
+      if (this.page === 1) {
+      } else {
+        this.page = Number(this.page - 1)
+        this.pageInfo = this.info.slice(this.page * 10 - 10, this.page * 10)
+      }
+    },
+    nextPageText() {
+      if (this.page * 10 > this.dataLength) {
+        console.info('no big')
+      } else {
+        this.pageInfo = this.info.slice(this.page * 10, this.page * 10 + 10)
+        this.page = Number(this.page + 1)
+      }
+    },
     handleClick (item) {
       this.dialogFormVisible = true
       this.htmlContent = item.content

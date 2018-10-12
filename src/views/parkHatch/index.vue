@@ -142,7 +142,6 @@ export default {
       this.activity_length = this.activity.length
       this.incubator_length = this.incubator.length
       this.guide_length = this.guide.length
-      console.info(this.policy_length,this.activity_length,this.incubator_length,this.guide_length)
       this.$nextTick()
     }
   },
