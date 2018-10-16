@@ -72,7 +72,7 @@ export default {
           });
           info = []
           info.push("<div style=\"padding:0px 0px 0px 4px;\"><b>"+this.markerList[i].title+"</b>");
-          info.push("地址 :"+this.markerList[i].address+"</div>");
+          info.push(this.markerList[i].address+"</div>");
           marker.content =  info.join("<br/>");
           marker.on('click', markerClick);
       }
