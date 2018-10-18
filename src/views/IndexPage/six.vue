@@ -7,7 +7,7 @@
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
-        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
+        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,.8);">
           <div id="bChart-six" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
@@ -44,6 +44,9 @@ export default {
         this.sendHttpForGLCS('bChart-six',{
           series:{
             radius : [20, 150]
+          },
+          title:{
+            top:'4%'
           }
         })
       }else{
@@ -80,7 +83,7 @@ export default {
         title : {
             text: '产业分类',
             left:'5%',
-            top:'2%',
+            top:options&&options.hasOwnProperty('title')?options.title.top:'-2%',
             textStyle:{
               color:'#00E4FF'
             }

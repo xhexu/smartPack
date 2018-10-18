@@ -11,7 +11,7 @@
           <div v-bind:class="{'activeClass':isActive=='q'}" @click="clickBtn('q')">环比</div>  
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
-        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
+        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,.8);">
           <div id="bChart-one" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
@@ -77,7 +77,7 @@ export default {
         this.sendHttpForRent('bChart-one',{
           title:{
             text:'2018年度',
-            top: '6%'
+            top: '4%'
           },
           series:[{
             type:'line',
@@ -103,7 +103,7 @@ export default {
           me.initMap(res,"bChart-one",{
             title:{
               text:'2018年度',
-              top: '6%'
+              top: '4%'
             },
             series:[{
               type:'line',
@@ -129,7 +129,7 @@ export default {
           me.initMap(res,"bChart-one",{
             title:{
               text:'2018年度',
-              top: '6%'
+              top: '4%'
             },
             series:[{
               type:'line',
@@ -179,7 +179,7 @@ export default {
           title: {
               text: option?option.title.text:'租金信息',
               left:'5%',
-              top:option?option.title.top:'2%',
+              top:option?option.title.top:'-2%',
               textStyle:{
                 color:'#00E4FF'
               }

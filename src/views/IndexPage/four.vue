@@ -7,7 +7,7 @@
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
         <img style="width: 100%;position: absolute;left: 0;top: 8px" src="../../assets/top_bar.png"/>
-        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
+        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,.8);">
           <div id="bChart-four" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 2px;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
@@ -45,7 +45,10 @@ export default {
       if(!this.isShowWindow&&!this.info){
         this.isShowWindow = !this.isShowWindow
         this.sendHttpForLetting('bChart-four',{
-            radius:160
+            radius:160,
+            title:{
+              top:'4%'
+            }
         })
       }else{
         this.isShowWindow = false
@@ -79,7 +82,7 @@ export default {
         title : {
           text: '出租率',
           left:'5%',
-          top:'5%',
+          top:option&&option.hasOwnProperty('title')?option.title.top:'-2%',
           textStyle:{
             color:'#00E4FF'
           }
@@ -105,17 +108,18 @@ export default {
           center: ['50%','50%'],
           radius: option?option.radius:70,
           axisLine:{
-            show: false
+            show: true
           },
           splitArea:{
             areaStyle:{
-              color:'#000'
+              color: ['#000']
             }
           },
           splitLine:{
             show: true,
             lineStyle:{
-              opacity:0.4
+              opacity:.1,
+              color: '#fffc00'
             }
           }
         }],

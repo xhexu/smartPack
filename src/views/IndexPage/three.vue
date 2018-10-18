@@ -11,7 +11,7 @@
           <div v-bind:class="{'activeClass':isActive=='q'}" @click="clickBtn('q')">环比</div>  
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
-        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
+        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,.8);">
           <div id="bChart-three" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
@@ -69,7 +69,7 @@ export default {
           me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
-              top: '6%'
+              top: '4%'
             },
             formatter:'{c}%',
             tooltip:{
@@ -84,7 +84,7 @@ export default {
           me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
-              top: '6%'
+              top: '4%'
             },
             formatter:'{c}%',
             tooltip:{
@@ -100,7 +100,16 @@ export default {
       if(!this.isShowWindow&&!this.info){
         this.isActive = ''
         this.isShowWindow = !this.isShowWindow
-        this.sendHttpForCar('bChart-three')
+        this.sendHttpForCar('bChart-three',{
+          title:{
+            text:'2018年度',
+            top: '4%'
+          },
+          formatter:'{c}',
+          tooltip:{
+            formatter:'{a0}:{c0}<br/>{a1}:{c1}'
+          }
+        })
       }else{
         this.isShowWindow = false
       }
@@ -127,7 +136,7 @@ export default {
           title: {
               text: option?option.title.text:'车辆信息',
               left:'5%',
-              top:option?option.title.top:'2%',
+              top:option?option.title.top:'-2%',
               textStyle:{
                 color:'#00E4FF'
               }
