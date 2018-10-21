@@ -1,8 +1,10 @@
 <template>
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
+    <div class="chart_t_bg"></div>
     <div class="trMap" @click="openWindow" id="chart-six"></div>
     <div class="chart_tip" v-if="info" v-text="info"></div>
+    <div class="chart_b_bg"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" @click.stop>
@@ -33,6 +35,7 @@ export default {
   data () {
     return {
       isShowWindow: false,
+      chartRadius: window.innerWidth>1366?110:60,
       info: '',
       color:['#308AD5','#3063D5','#0540C5','#0E9AB3','#3063D5','#308AD','#0540C5','#308AD5','#0E9AB3','#3063D5','#0E9AB3']
     }
@@ -97,7 +100,7 @@ export default {
             {
                 name:'面积模式',
                 type:'pie',
-                radius : [10, 60],
+                radius : [10, this.chartRadius],
                 center : ['50%', '55%'],
                 roseType : 'area',
                 data:obj,
@@ -126,6 +129,27 @@ export default {
 .chart{
   width:100%;
   height:200px;
+  position: relative;
+  &_t_bg{
+    width: 96%;
+    height: 25px;
+    background-image: linear-gradient(to bottom , rgba(62, 62, 62, 0.4), rgba(0, 0, 0, 0.1));
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 10px;
+  }
+  &_b_bg{
+    width: 96%;
+    height: 25px;
+    background-image: linear-gradient(to bottom ,rgba(0, 0, 0, 0.1), rgba(62, 62, 62, 0.4));
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: -30px;
+  }
 }
 .trMap{
   width: 100%;
@@ -184,6 +208,9 @@ export default {
     .chart{
       width:100%;
       height:300px;
+      &_b_bg{
+        bottom: -40px;
+      }
     }
 }
 </style>
