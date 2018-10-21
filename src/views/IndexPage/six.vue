@@ -133,7 +133,7 @@ export default {
   &_t_bg{
     width: 96%;
     height: 25px;
-    background-image: linear-gradient(to bottom , rgba(62, 62, 62, 0.4), rgba(0, 0, 0, 0.1));
+    background-image: linear-gradient(to bottom , rgba(49,49,49, 0.4), rgba(0, 0, 0, 0.1));
     position: absolute;
     margin: 0 auto;
     left: 0;
@@ -143,7 +143,7 @@ export default {
   &_b_bg{
     width: 96%;
     height: 25px;
-    background-image: linear-gradient(to bottom ,rgba(0, 0, 0, 0.1), rgba(62, 62, 62, 0.4));
+    background-image: linear-gradient(to bottom ,rgba(0, 0, 0, 0.1), rgba(49,49,49, 0.4));
     position: absolute;
     margin: 0 auto;
     left: 0;
