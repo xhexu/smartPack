@@ -133,6 +133,7 @@ export default {
   #main{
     height: 100%;
     background: url('/static/bg.png');
+    background-color: rgb(0,0,0);
   }
 .index{
   height:100%;
