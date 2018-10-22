@@ -149,12 +149,14 @@ export default {
   }
   .box{
     width:45%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
-    font-weight: bold;text-align: left;margin:30% auto;position: relative;padding-top: 100px;padding-bottom:50px;font-size: 14px;
+    text-align: left;margin:30% auto;position: relative;padding-top: 100px;padding-bottom:50px;font-size: 14px;
     b{color:red;position: absolute;font-size: 16px; top:33px;}
     .btn{
       display: block;width:50%; height:36px; margin: 0px auto; line-height: 36px;text-align: center;
       background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
-      text-decoration: none;color:#ccc;
+      text-decoration: none;
+      color:#000;
+      font-family:'Microsoft YaHei';
     }
   }
 </style>

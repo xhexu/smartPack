@@ -10,7 +10,7 @@
           <div style="margin: 20px 5px;" @click="loginHandel(item.sequence)">
             <img style="width: 100%"  src="../../assets/top_bar.png"/>
             <div style="color: #00fcff;">{{item.title}}</div>
-            <img style="width:100%;"  :src=" false &&item.imgUrl ? item.imgUrl: '/static/building.gif'"/>
+            <img style="width:100%;"  :src=" false &&item.imgUrl ? item.imgUrl: '/static/map.png'"/>
             <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;"  src="../../assets/top_bar.png"/>
           </div>
         </div>

@@ -22,6 +22,7 @@
   #main {
     height: 100%;
     background: url('../../static/bg.png');
+    background-color: rgb(0,0,0);
     .header{
       width:100%;
       height:13%;
