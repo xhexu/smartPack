@@ -16,7 +16,8 @@
       <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
         <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div class="building"  :class="{animMap:showMap}">
-          <img style="width:100%;" src="../../assets/building.gif"/>
+          <span style="height: 100%;vertical-align: middle;display: inline-block"></span>
+          <img style="width:80%;vertical-align: middle" src="../../assets/building.gif"/>
         </div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
       </el-col>
@@ -118,6 +119,8 @@ export default {
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
     .building{
+      text-align: center;
+      vertical-align:middle;
       width:95%;height:95%;opacity:0;margin: 15px auto;background:url('/static/bg_view.png') no-repeat center;
       background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
     }
