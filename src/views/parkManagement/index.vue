@@ -151,11 +151,11 @@ export default {
     }
   }
   .box{
-    width:45%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
+    width:50%;background: url('/static/divTL.png') no-repeat;background-size: 100% 100%;color:#01A4AE;position: relative;
     text-align: left;margin:30% auto;position: relative;padding-top: 100px;padding-bottom:50px;font-size: 14px;
     b{color:red;position: absolute;font-size: 16px; top:33px;}
     .btn{
-      display: block;width:50%; height:36px; margin: 0px auto; line-height: 36px;text-align: center;
+      display: block;width:50%; height:36px; margin: 50px auto auto; line-height: 36px;text-align: center;
       background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
       text-decoration: none;
       color:#000;
