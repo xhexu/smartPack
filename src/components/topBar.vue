@@ -1,6 +1,6 @@
 <template>
   <div class="topBar">
-    <div style="position: relative;width: 400px;margin: 0 auto">
+    <div style="position: relative;width: 400px;margin: 0 auto;left:-50px">
       <img src="../assets/title.png">
       <div class="clock">
         <div style="float: left">

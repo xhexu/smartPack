@@ -1,8 +1,10 @@
 <template>
   <div class="chart">
     <img style="width: 100%" src="../../assets/top_bar.png"/>
+    <div class="chart_t_bg"></div>
     <div class="trMap" @click="openWindow" id="chart-three"></div>
     <div class="chart_tip" v-if="info" v-text="info"></div>
+    <div class="chart_b_bg"></div>
     <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" src="../../assets/top_bar.png"/>
     <div class="bigBg" v-show="isShowWindow" @click="openWindow">
       <div class="bigChart" v-show="isShowWindow" @click.stop>
@@ -11,7 +13,7 @@
           <div v-bind:class="{'activeClass':isActive=='q'}" @click="clickBtn('q')">环比</div>  
         </div>
         <img style="width: 100%;position: absolute;left: 0;top: 0" src="../../assets/top_bar.png"/>
-        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,1);">
+        <div style="width:99%;height:100%;margin: 0 auto;background-color:rgba(0,0,0,.8);">
           <div id="bChart-three" style="width: 100%;height:100%"></div>
         </div>
         <img style="position: absolute;left: 0;bottom: 0;width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);" src="../../assets/top_bar.png"/>
@@ -69,7 +71,7 @@ export default {
           me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
-              top: '6%'
+              top: '4%'
             },
             formatter:'{c}%',
             tooltip:{
@@ -84,7 +86,7 @@ export default {
           me.initMap(res,"bChart-three",{
             title:{
               text:'2018年度',
-              top: '6%'
+              top: '4%'
             },
             formatter:'{c}%',
             tooltip:{
@@ -100,7 +102,16 @@ export default {
       if(!this.isShowWindow&&!this.info){
         this.isActive = ''
         this.isShowWindow = !this.isShowWindow
-        this.sendHttpForCar('bChart-three')
+        this.sendHttpForCar('bChart-three',{
+          title:{
+            text:'2018年度',
+            top: '4%'
+          },
+          formatter:'{c}',
+          tooltip:{
+            formatter:'{a0}:{c0}<br/>{a1}:{c1}'
+          }
+        })
       }else{
         this.isShowWindow = false
       }
@@ -127,7 +138,7 @@ export default {
           title: {
               text: option?option.title.text:'车辆信息',
               left:'5%',
-              top:option?option.title.top:'2%',
+              top:option?option.title.top:'-2%',
               textStyle:{
                 color:'#00E4FF'
               }
@@ -223,6 +234,26 @@ export default {
   width:100%;
   height:200px;
   position: relative;
+  &_t_bg{
+    width: 96%;
+    height: 25px;
+    background-image: linear-gradient(to bottom , rgba(62, 62, 62, 0.4), rgba(0, 0, 0, 0.1));
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 10px;
+  }
+  &_b_bg{
+    width: 96%;
+    height: 25px;
+    background-image: linear-gradient(to bottom ,rgba(0, 0, 0, 0.1), rgba(62, 62, 62, 0.4));
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: -30px;
+  }
 }
 .trMap{
   width: 100%;
@@ -300,6 +331,9 @@ export default {
     .chart{
       width:100%;
       height:300px;
+      &_b_bg{
+        bottom: -40px;
+      }
     }
 }
 </style>
