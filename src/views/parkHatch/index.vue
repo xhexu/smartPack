@@ -20,17 +20,26 @@
         <card :option="cardTL" moreTitle="政策" :info="policy" :dataLength="policy_length" style="top:-50px"></card>
         <card :option="cardBL" moreTitle="孵化器" :info="incubator" :dataLength="incubator_length" style="margin-top: 40px"></card>
       </el-col>
-      <el-col :span="8" style="padding-top: 5%;padding-bottom: 9%" :style="{position: 'relative',height: layoutHeight+'px'}">
-        <img style="position: relative" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+      <el-col :span="8" style="margin-top: 5%;"    :style="{position: 'relative',height: layoutHeight/1.5+'px'}">
+        <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div class="building"  :class="{animMap:showMap}">
           <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;
-          height: 28px;width: 92px;color: #01A4AE;margin-top: 20px">入驻申请</div>
+          height: 28px;width: 92px;color: #01A4AE;margin-top: 20px;vertical-align: middle;padding-top: 5px">入驻申请</div>
+          <img style="height: 60%;vertical-align: middle;margin-top: 8%" src="/static/hatch_center.gif"/>
+        </div>
+        <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+      </el-col>
+      <!--<el-col :span="8" style="padding-top: 5%;padding-bottom: 9%" :style="{position: 'relative',height: layoutHeight+'px'}">
+        <img style="position: relative;top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
+        <div class="building"  :class="{animMap:showMap}">
+          <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;
+          height: 28px;width: 92px;color: #01A4AE;margin-top: 20px;vertical-align: middle;">入驻申请</div>
           <div style="height: 70%">
             <img style="height: 100%;" src="/static/hatch_center.gif"/>
           </div>
         </div>
         <img style="position: relative;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-      </el-col>
+      </el-col>-->
       <el-col :span="8" class="right" :style="{height: layoutHeight+'px'}">
         <card :option="cardTR" moreTitle="活动" :info="activity" :dataLength="activity_length" style="top:-50px"></card>
         <card :option="cardBR" moreTitle="指南" :info="guide" :dataLength="guide_length" style="margin-top: 40px"></card>
@@ -175,7 +184,9 @@ export default {
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
     .building{
-      width:95%;height:95%;opacity:0;margin: 15px auto;
+      text-align: center;
+      vertical-align:middle;
+      width:95%;height:95%;opacity:0;margin: -5px auto;background:url('/static/bg_view.png') no-repeat center;
       background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
     }
     .animTop{

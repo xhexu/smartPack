@@ -39,8 +39,8 @@
                 <el-col :span="8" style="font-size: 12px"  align="center">{{ getFormtTime(item.checkTime) }}</el-col>
               </el-row>
             </li>
+            <li @click="showMoreInfo" style="float: left;margin-top: 10px" v-if="dataLength>5">more</li>
           </ul>
-          <a @click="showMoreInfo" v-if="dataLength>5" style="float: left;color:#01A4AE;cursor:pointer;"> more</a>
         </div>
     </div>
   </div>
@@ -210,7 +210,7 @@ export default {
       }
       &-div-tl{
       left: 10px;
-      top: 40px;
+      top: 56px;
       }
       &-title{
         position: absolute;
@@ -220,7 +220,7 @@ export default {
         height:30px;
         width:94px;
         left: 15px;
-        top: 15px !important;
+        top: 24px !important;
         padding-top: 10px;
         background:transparent url('/static/hatch_but_bg.png') no-repeat center;
       }

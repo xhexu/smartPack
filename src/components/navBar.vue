@@ -1,5 +1,5 @@
 <template>
-  <el-row style="width:50%; margin:0 auto;align-self: center;">
+  <el-row style="width:40%; margin:0 auto;align-self: center;">
     <el-col :span="4" :offset="1" v-for="item in navList" :key="item.index" :class="{active: item.index==nowIndex}">
       <div @click="clickMenu(item)">{{item.title}}</div>
     </el-col>
@@ -55,13 +55,11 @@ export default {
 
 <style lang="scss" scoped>
   .el-col {
-    background: transparent url('/static/btn.png') no-repeat;
-    background-size: 100% 100%;
+    background: transparent url('/static/btn.png') no-repeat center;
     cursor: pointer;
+    margin-left: 0px;
     div {
       display: block;
-      width: 100%;
-      height: 40px;
       font-size: 14px;
       line-height: 40px;
       color: #01A4AE;

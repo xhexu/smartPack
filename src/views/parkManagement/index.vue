@@ -13,7 +13,7 @@
         </transition>
         &nbsp;
       </el-col>
-      <el-col :span="12" :style="{position: 'relative',height: layoutHeight+'px'}">
+      <el-col :span="10" :offset="1" :style="{position: 'relative',height: layoutHeight+'px'}">
         <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
         <div class="building"  :class="{animMap:showMap}">
           <span style="height: 100%;vertical-align: middle;display: inline-block"></span>
@@ -21,7 +21,7 @@
         </div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
       </el-col>
-      <el-col :span="6" class="right" :style="{height: layoutHeight+'px'}">
+      <el-col :span="6" :offset="1" class="right" :style="{height: layoutHeight+'px'}">
         <transition name="el-fade-in-linear">
           <div class="box" v-show="showBox">
             <b>B</b>
