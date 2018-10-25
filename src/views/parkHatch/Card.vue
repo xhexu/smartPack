@@ -34,12 +34,12 @@
             <li v-for="item in showInfo" style="width: 100%;padding-top: 5px" @click="handleClick(item)" :class="{anim:animate==true}">
               <el-row :gutter="8" >
                 <el-col :title=item.title :span="16" style="font-size: 14px" align="left">
-                 {{ item.title.substr(0,7) }}...
+                 {{ item.title.substr(0,fontLong)  }}  {{item.title.length>fontLong ? "..." : ""}}
                 </el-col>
                 <el-col :span="8" style="font-size: 12px"  align="center">{{ getFormtTime(item.checkTime) }}</el-col>
               </el-row>
             </li>
-            <li @click="showMoreInfo" style="float: left;margin-top: 10px" v-if="dataLength>5">more</li>
+            <li @click="showMoreInfo" style="float: left;margin-top: 10px" v-if="dataLength>fontHang">more</li>
           </ul>
         </div>
     </div>
@@ -70,7 +70,7 @@ export default {
     dataLength: {
       handler: function(val, oldval) {
         this.dataLength = val
-        this.showInfo = this.dataLength > 5 ? this.info.slice(0, 5) : this.info
+        this.showInfo = this.dataLength > this.fontHang ? this.info.slice(0, this.fontHang) : this.info
         this.pageInfo = this.info.slice(0, 10)
       }
     }
@@ -91,10 +91,14 @@ export default {
       htmlContent: '',
       htmlTitle: '',
       canScroll: true,
-      page: 1
+      page: 1,
+      fontLong: 7,
+      fontHang: 5
     }
   },
   mounted () {
+    this.fontHang = document.documentElement.clientHeight * 0.23 / 24;
+    this.fontLong = document.documentElement.clientWidth / 8 / 16;
     this.dealChartOption()
     this.dealCardOption()
     // setInterval(this.scroll, 2000)

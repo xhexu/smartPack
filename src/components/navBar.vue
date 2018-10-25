@@ -56,8 +56,10 @@ export default {
 <style lang="scss" scoped>
   .el-col {
     background: transparent url('/static/btn.png') no-repeat center;
+    background-size: 100% 100%;
     cursor: pointer;
     margin-left: 0px;
+    max-width: 120px;
     div {
       display: block;
       font-size: 14px;
