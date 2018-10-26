@@ -217,6 +217,7 @@ export default {
       top: 56px;
       }
       &-title{
+        font-size: 15px;
         position: absolute;
         color: #01A4AE;
       }

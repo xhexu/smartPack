@@ -22,9 +22,9 @@
       </el-col>
       <el-col :span="8" style="margin-top: 5%;"    :style="{position: 'relative',height: layoutHeight/1.5+'px'}">
         <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/top_bar.png"/>
-        <div class="building"  :class="{animMap:showMap}">
-          <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;
-          height: 28px;width: 92px;color: #01A4AE;margin-top: 20px;vertical-align: middle;padding-top: 5px;font-size: 16px">入驻申请</div>
+        <div class="building" style="margin-top: 12px;"  :class="{animMap:showMap}">
+          <div @click="shenQing" style="cursor:pointer;background:transparent url('/static/hatch_but_bg.png') no-repeat center;position: absolute;
+          height: 28px;width: 92px;color: #01A4AE;margin-top: 10px;margin-left:10px;vertical-align: middle;padding-top: 6px;font-size: 15px">入驻申请</div>
           <img style="height: 60%;vertical-align: middle;margin-top: 8%" src="/static/hatch_center.gif"/>
         </div>
         <img style="-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/top_bar.png"/>
