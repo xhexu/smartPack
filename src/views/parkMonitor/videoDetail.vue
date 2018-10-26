@@ -69,9 +69,11 @@ export default {
   },
   methods: {
     callBack () {
-      this.video.passageway.forEach((en, index) => {
-        this.video.I_Stop(index)
-      })
+      if (this.video != null) {
+        this.video.passageway.forEach((en, index) => {
+          this.video.I_Stop(index)
+        })
+      }
       this.$router.push({path: '/monitorDetail', query: {index: 4}})
     },
     videoInit () {
