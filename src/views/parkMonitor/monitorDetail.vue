@@ -6,7 +6,15 @@
       <el-col :span="2" :style="{height: layoutHeight+'px'}">
       </el-col>
       <el-col :span="20" >
-        <div style="width: 25%;position: relative;float: left;margin-bottom: 10px" v-for="(item ) in videoConfig">
+        <div style="width: 25%;position: relative;float: left;margin-bottom: 10px;margin-left: 4%;margin-right: 4%" v-for="(item ) in videoConfig">
+          <div style="margin: 20px 5px;" @click="loginHandel(item.sequence)">
+            <img style="width: 100%"  src="../../assets/top_bar.png"/>
+            <img style="width:92%;margin-top: -5px;cursor:pointer"  :src=" false &&item.imgUrl ? item.imgUrl: '/static/map.png'"/>
+            <img style="width: 100%;-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);bottom:45%;"  src="../../assets/top_bar.png"/>
+          </div>
+          <div style="color: #00fcff;text-align: left;margin-top: 0px">{{item.title}}</div>
+        </div>
+        <div style="width: 25%;position: relative;float: left;margin-bottom: 10px" v-for="(item ) in videoConfig2">
           <div style="margin: 20px 5px;" @click="loginHandel(item.sequence)">
             <img style="width: 100%"  src="../../assets/top_bar.png"/>
             <img style="width:92%;margin-top: -5px;cursor:pointer"  :src=" false &&item.imgUrl ? item.imgUrl: '/static/map.png'"/>
@@ -35,7 +43,8 @@ export default {
       dialogFormVisible: false,
       pass: '',
       name: '',
-      videoConfig: []
+      videoConfig: [],
+      videoConfig2: []
     }
   },
   methods: {
@@ -50,7 +59,8 @@ export default {
     this.$http.post('/itfvideo/list')
       .then((data) => {
         if (data.success) {
-          this.videoConfig = data.result
+          this.videoConfig = data.result.slice(0, 3)
+          this.videoConfig2 = data.result.slice(3, 7)
         } else {
           this.$message(data.message)
         }
