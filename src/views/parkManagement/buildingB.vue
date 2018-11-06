@@ -3,8 +3,8 @@
   <router-link class="back"  :to="{path:'/management',query:{index:2}}">返回</router-link>
   <el-col :span="6" :offset="1" class="left" :style="{height: layoutHeight-60+'px'}">
     <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/building_top.png"/>
-    <div class="building"  :class="{animMap:showMap}">
-      <img style="width:80%;" src="../../assets/building.png"/>
+    <div class="building" :class="{animMap:showMap}">
+      <img style="width:80%;margin-top: 15%" src="../../assets/building.png"/>
     </div>
     <img style="-moz-transform:rotateX(180deg);-webkit-transform:rotateX(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/building_top.png"/>
   </el-col>
@@ -28,11 +28,14 @@
     <div class="infoBox">
       <div style="width:80%;height:80%;margin: 16% 0 0 14%;position: relative;">
         <div id="info_show_id" style="position: relative;height: 45%;width: 100%;overflow-x: hidden;overflow-y: scroll;">
-          <b>{{compData.enterpriseName}}</b>
+          <b >{{compData.enterpriseName}}</b>
           <p>{{compData.enterpriseIntro}}</p>
         </div>
         <div id="chart" v-show="showChart"></div>
       </div>
+    </div>
+    <div style="position: absolute;width: 40%;height: 60%;right: 0px;top:10%">
+      <img src="../../assets/donghua.png"/>
     </div>
     <p class="btns">
       <span style="margin-right: 80px;"><span style="font-size: 40px;">{{index}}</span>F</span>
@@ -318,13 +321,18 @@ export default {
 <style lang="scss" scoped>
   #info_show_id::-webkit-scrollbar { width: 0 !important }
   #info_show_id{ -ms-overflow-style: none; }
-  #info_show_id{ overflow: -moz-scrollbars-none; }
+  #info_show_id{ overflow: -moz-scrollbars-none;
+    b{margin-left:3%;width: 90%}
+    p{margin-left:3%;width: 90%} }
 .layout{
   height: 100%;min-width:1200px;margin: 0px auto;
   .back{
-    display: block;width:80px; height:40px; line-height: 40px;text-align: center; position: fixed; left:20px; top:20px;
-    background: url('/static/bg_btn.png') no-repeat;background-size: 100% 100%;cursor: pointer;
-    text-decoration: none;color:#ccc;
+    display: block;width:110px; height:40px; line-height: 40px;text-align: center; position: fixed; left:20px; top:20px;
+    color: #00fcff;
+    background: url('../../assets/btn.png') no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    text-decoration: none;
   }
   .left{
     position: relative;
@@ -332,15 +340,15 @@ export default {
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
     .building{
-      width:94%;height:95%;opacity:0;margin: 12px 0 0 15px;background:url('/static/bg_view.png') no-repeat center;
+      width:94%;height:70%;opacity:0;margin: 18% 0 0 15px;background:url('/static/bg_view.png') no-repeat center;
       background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
       img{width:80%;margin: 120px auto;}
     }
     .animTop{
-      top:0!important;
+      top:13%!important;
     }
     .animBtm{
-      bottom:0!important;
+      bottom:13%!important;
     }
     .animMap{
       opacity:1.0!important;
@@ -373,6 +381,7 @@ export default {
       }
     }
     .btns{
+      margin-left: 3%;
       height:40px; line-height: 40px;color:#01A4AE;font-weight: bold;font-size: 26px;text-align: center;position: absolute;bottom: 20px;left:15%;
       .active{color:yellow;}
     }
