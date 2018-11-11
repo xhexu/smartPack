@@ -28,7 +28,7 @@
           <div id="chart" v-show="showChart"></div>
         </div>
       </div>
-      <div style="position: absolute;width: 40%;height: 60%;right: 0px;top:10%">
+      <div id="donghua_id" style="position: absolute;width: 40%;height: 60%;right: 0px;top:10%">
         <img src="../../assets/donghua.png"/>
       </div>
       <p class="btns">
@@ -121,7 +121,14 @@ export default {
         }
       }
     },
+    donghua () {
+      document.getElementById('donghua_id').classList.add('donghua')
+      document.getElementById('donghua_id').addEventListener('animationend', function () {
+        document.getElementById('donghua_id').classList.remove('donghua')
+      })
+    },
     comClick (param) {
+      this.donghua()
       this.compData = {}
       this.yyeData = []
       this.nsyData = []
@@ -188,6 +195,7 @@ export default {
       }
     },
     itemClick (index) {
+
       this.index = index
       this.floorData = []
       let list = []
@@ -314,6 +322,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @keyframes huaDong {
+    10% {  right: 10px }
+    80% {   right: 300px;-webkit-transform:scale(1.2)  }
+    90% {   right: 100px;-webkit-transform:scale(0.6)  }
+    100% {   right: 0px }
+  }
+    .donghua{
+    animation: huaDong 2s;
+  }
+
   #info_show_id::-webkit-scrollbar { width: 0 !important }
   #info_show_id{ -ms-overflow-style: none; }
   #info_show_id{ overflow: -moz-scrollbars-none; b{
@@ -341,10 +359,10 @@ export default {
         img{width:80%;margin: 120px auto;}
       }
       .animTop{
-        top:13% !important;
+        top:12% !important;
       }
       .animBtm{
-        bottom:13% !important;
+        bottom:13%  !important;
       }
       .animMap{
         opacity:1.0!important;
