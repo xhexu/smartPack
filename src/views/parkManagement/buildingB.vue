@@ -3,9 +3,11 @@
   <router-link class="back"  :to="{path:'/management',query:{index:2}}">返回</router-link>
   <el-col :span="6" :offset="1" class="left" :style="{height: layoutHeight-60+'px'}">
     <img style="top:45%;" :class="{animTop:playFlag,anim:true}" src="../../assets/building_top.png"/>
+    <div style="height: 15%;width: 10px"></div>
     <div class="building" :class="{animMap:showMap}">
-      <img style="width:80%;margin-top: 15%" src="../../assets/building.png"/>
+      <img style="width:80%;" src="../../assets/building.png"/>
     </div>
+    <div style="height: 15%;width: 10px"></div>
     <img style="-moz-transform:rotateX(180deg);-webkit-transform:rotateX(180deg);bottom:45%;" :class="{animBtm:playFlag,anim:true}" src="../../assets/building_top.png"/>
   </el-col>
   <el-col :span="1" :offset="1" class="center" :style="{height: layoutHeight-80+'px'}">
@@ -34,7 +36,7 @@
         <div id="chart" v-show="showChart"></div>
       </div>
     </div>
-    <div style="position: absolute;width: 40%;height: 60%;right: 0px;top:10%">
+    <div id="donghua_id" style="position: absolute;width: 40%;height: 60%;right: 0px;top:10%">
       <img src="../../assets/donghua.png"/>
     </div>
     <p class="btns">
@@ -127,7 +129,14 @@ export default {
         }
       }
     },
+    donghua () {
+      document.getElementById('donghua_id').classList.add('donghua')
+      document.getElementById('donghua_id').addEventListener('animationend', function () {
+        document.getElementById('donghua_id').classList.remove('donghua')
+      })
+    },
     comClick (param) {
+      this.donghua()
       this.compData = {}
       this.yyeData = []
       this.nsyData = []
@@ -319,6 +328,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @keyframes huaDong {
+    70% {   right: 320px;-webkit-transform:scale(1.2);opacity:0.1  }
+    71% {   right: 320px;-webkit-transform:scale(1.2);opacity:0  }
+    72% {   right: -120px;-webkit-transform:scale(0.6);opacity:0  }
+    73% {   right: -120px;-webkit-transform:scale(0.6);opacity:0.3  }
+    99% {   right: 0px;opacity:0.3  }
+    100% {   right: 0px }
+  }
+  .donghua{
+    animation: huaDong 1s;
+  }
   #info_show_id::-webkit-scrollbar { width: 0 !important }
   #info_show_id{ -ms-overflow-style: none; }
   #info_show_id{ overflow: -moz-scrollbars-none;
@@ -340,15 +360,15 @@ export default {
       width:100%;position: absolute;left: 0;transition: all .5s ease .5s;-webkit-transition:all .5s ease .5s;
     }
     .building{
-      width:94%;height:70%;opacity:0;margin: 18% 0 0 15px;background:url('/static/bg_view.png') no-repeat center;
+      width:94%;height:70%;opacity:0;margin: 13px 0 0 15px;background:url('/static/bg_view.png') no-repeat center;
       background-size: 100% 100%;transition: all .5s ease 1s;-webkit-transition:all .5s ease 1s;
-      img{width:80%;margin: 120px auto;}
+      img{width:80%;margin: 15%auto;}
     }
     .animTop{
-      top:13%!important;
+      top:15%!important;
     }
     .animBtm{
-      bottom:13%!important;
+      bottom:10%!important;
     }
     .animMap{
       opacity:1.0!important;
