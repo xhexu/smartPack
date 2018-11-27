@@ -1,11 +1,11 @@
-####  企业经营数据 [#调试地址](http://101.132.179.45:8086/swagger-ui.html#/itf-enter-info-controller/searchJYUsingPOST)
+####  企业经营数据 [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-enter-info-controller/searchJYUsingPOST)
 
 1. url
 ```
 post :  /itfenterinfo/searchJY
 ```
 
-2. 入参 
+2. 入参
 ```
 code : 企业编号 : 必填
 time : 年份, 例如 2018    必填
@@ -14,7 +14,7 @@ time : 年份, 例如 2018    必填
 3. 出参
 ```
 dataTime : 月份
-dataType :   income : 收入 , rate : 缴税  
+dataType :   income : 收入 , rate : 缴税
 dataValue : 数据的值
 
 {

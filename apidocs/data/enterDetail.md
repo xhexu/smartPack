@@ -1,11 +1,11 @@
-####  查询企业详情信息-包含图片  [#调试地址](http://101.132.179.45:8086/swagger-ui.html#/itf-enter-info-controller/searchDetailUsingPOST)
+####  查询企业详情信息-包含图片  [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-enter-info-controller/searchDetailUsingPOST)
 
 1. url
 ```
 post :  /itfenterinfo/searchDetail
 ```
 
-2. 入参 
+2. 入参
 - 现在我只给企业编号为: A 的上传了图片, 你们可以去后台,上传图片
 ```
 code : 企业编号 : 必填

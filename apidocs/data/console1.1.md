@@ -1,11 +1,11 @@
-#### 园区-经营分析--车辆信息  [#调试地址](http://101.132.179.45:8086/swagger-ui.html#/itf-park-info-controller/searchCLUsingPOST)
+#### 园区-经营分析--车辆信息  [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-park-info-controller/searchCLUsingPOST)
 
 1. url
 ```
 post :  /itfparkinfo/searchCL
 ```
 
-2. 入参 
+2. 入参
 ```
 parkCode : 园区编号 : 必填
 type : 查询类型, 年: y , 月 : m , 周:d  必填
@@ -29,12 +29,12 @@ parkCode=e&type=d
          m : 表示天 1-31
          d ; 表示天 : 值直接是日期: 例如 : 2018-08-29
 
-2. dataType 有两个值 
+2. dataType 有两个值
         parking : 停车费
         traffic : 车流量
 
 3. dataValue 这个就不解释了
- 
+
 {
   "success": true,
   "exceptionType": "",

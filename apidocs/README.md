@@ -9,9 +9,9 @@
   result: null  // 结果, 一般是json格式的数据, 具体按实际接口来
 }
 ```
-- 测试服务器地址 : http://101.132.179.45:8086
+- 测试服务器地址 : http://wpms.eworld-online.com
 - 后台测试账号 systemadmin/123456
-- swagger-ui 地址 : http://101.132.179.45:8086/swagger-ui.html
+- swagger-ui 地址 : http://wpms.eworld-online.com/swagger-ui.html
 
 #### 实体信息
 -  [园区实体](data/park.md)
@@ -31,16 +31,16 @@
 - 2.1 [查询园区详情](data/parkDetail.md)
 - 2.2 [经营分析-车辆](data/console1.1.md)
 - 2.3 [经营分析-物业费](data/console1.2.md)
-- 2.4 [行业分类-接口调试](http://101.132.179.45:8086/swagger-ui.html#/itf-enter-info-controller/cyTypeDataUsingPOST)
+- 2.4 [行业分类-接口调试](http://wpms.eworld-online.com/swagger-ui.html#/itf-enter-info-controller/cyTypeDataUsingPOST)
 
 - 2.4 [车辆同比和环比js算法](cl.html)
 
 #### 企业信息
 
-- 3.1 [查询企业集合--不包含图片](data/enterList.md) 
-- 3.2 [查询企业详情--包含图片](data/enterDetail.md) 
-- 3.3 [企业经营数据](data/enterJY.md) 
+- 3.1 [查询企业集合--不包含图片](data/enterList.md)
+- 3.2 [查询企业详情--包含图片](data/enterDetail.md)
+- 3.3 [企业经营数据](data/enterJY.md)
 
 #### 孵化信息
 
-- 4.1 [查询孵化信息](data/fuhua.md) 
+- 4.1 [查询孵化信息](data/fuhua.md)

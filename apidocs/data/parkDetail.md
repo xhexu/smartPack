@@ -1,4 +1,4 @@
-#### 查询园区详情  [#调试地址](http://101.132.179.45:8086/swagger-ui.html#/itf-park-info-controller/searchDetailUsingPOST_1)
+#### 查询园区详情  [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-park-info-controller/searchDetailUsingPOST_1)
 
 1. url
 ```

@@ -1,11 +1,11 @@
-#### 园区-经营分析--物业费  [#调试地址](http://101.132.179.45:8086/swagger-ui.html#/itf-park-info-controller/searchWYUsingPOST)
+#### 园区-经营分析--物业费  [#调试地址](http://wpms.eworld-online.com/swagger-ui.html#/itf-park-info-controller/searchWYUsingPOST)
 
 1. url
 ```
 post :  /itfparkinfo/searchWY
 ```
 
-2. 入参 
+2. 入参
 ```
 parkCode : 园区编号 : 必填
 time :时间参数, 年份,例如 2018   必填

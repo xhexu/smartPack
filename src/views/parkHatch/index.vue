@@ -62,7 +62,7 @@ export default {
     Card
   },
   data () {
-    return {//http://101.132.179.45:8086
+    return {//http://wpms.eworld-online.com
       fileUrl: `${http.defaults.baseURL}/itfincubationinfo/save`,
       headers: {access_token: window.localStorage.getItem('access_token')},
       playFlag: false,
