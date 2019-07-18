@@ -78,7 +78,7 @@ export default {
         this.initData()
         this.sendHttpForRent('bChart-one',{
           title:{
-            text:'2018年度',
+            text:this.queryParams.time+'年度',
             top: '4%'
           },
           series:[{
@@ -104,7 +104,7 @@ export default {
         busHttp._QueryYoYForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
           me.initMap(res,"bChart-one",{
             title:{
-              text:'2018年度',
+              text:this.queryParams.time+'年度',
               top: '4%'
             },
             series:[{
@@ -130,7 +130,7 @@ export default {
         busHttp._QueryQoQForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
           me.initMap(res,"bChart-one",{
             title:{
-              text:'2018年度',
+              text:this.queryParams.time+'年度',
               top: '4%'
             },
             series:[{
