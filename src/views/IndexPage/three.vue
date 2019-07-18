@@ -70,7 +70,7 @@ export default {
         busHttp._QueryYoY("/itfparkinfo/searchCL",me.queryParams,(res)=>{
           me.initMap(res,"bChart-three",{
             title:{
-              text:'2018年度',
+              text:this.queryParams.time+'年度',
               top: '4%'
             },
             formatter:'{c}%',
@@ -85,7 +85,7 @@ export default {
         busHttp._QueryQoQ("/itfparkinfo/searchCL",me.queryParams,(res)=>{
           me.initMap(res,"bChart-three",{
             title:{
-              text:'2018年度',
+              text:this.queryParams.time+'年度',
               top: '4%'
             },
             formatter:'{c}%',
@@ -104,7 +104,7 @@ export default {
         this.isShowWindow = !this.isShowWindow
         this.sendHttpForCar('bChart-three',{
           title:{
-            text:'2018年度',
+            text:this.queryParams.time+'年度',
             top: '4%'
           },
           formatter:'{c}',
