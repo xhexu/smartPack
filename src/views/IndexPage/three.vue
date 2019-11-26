@@ -25,7 +25,7 @@
 import echarts from 'echarts'
 import busHttp from './http.js'
 import _ from 'underscore'
-
+let now_year = new Date().getFullYear();
 export default {
   name: 'TR',
   props: {
@@ -44,7 +44,7 @@ export default {
       queryParams:{
         parkCode:'e',
         type:'y',
-        time:new Date().getFullYear()
+        time:now_year
       }
     }
   },
@@ -67,10 +67,10 @@ export default {
         time:new Date().getFullYear()
       }
       flag=='y'?(()=>{
-        busHttp._QueryYoY("/itfparkinfo/searchCL",me.queryParams,(res)=>{
+        busHttp._QueryYoY("/itfparkinfo/searchCL",{parkCode:'e',type:'y',time:now_year},(res)=>{
           me.initMap(res,"bChart-three",{
             title:{
-              text:this.queryParams.time+'年度',
+              text:now_year+'年度',
               top: '4%'
             },
             formatter:'{c}%',
@@ -82,10 +82,10 @@ export default {
           me.errorEvent(error)
         })
       })():(()=>{
-        busHttp._QueryQoQ("/itfparkinfo/searchCL",me.queryParams,(res)=>{
+        busHttp._QueryQoQ("/itfparkinfo/searchCL",{parkCode:'e',type:'y',time:now_year},(res)=>{
           me.initMap(res,"bChart-three",{
             title:{
-              text:this.queryParams.time+'年度',
+              text:now_year+'年度',
               top: '4%'
             },
             formatter:'{c}%',
@@ -104,7 +104,7 @@ export default {
         this.isShowWindow = !this.isShowWindow
         this.sendHttpForCar('bChart-three',{
           title:{
-            text:this.queryParams.time+'年度',
+            text:now_year+'年度',
             top: '4%'
           },
           formatter:'{c}',
@@ -125,7 +125,7 @@ export default {
     },
     sendHttpForCar (domId,option) {
       let me = this
-      busHttp._QueryParkCL(me.queryParams,function(data){
+      busHttp._QueryParkCL({parkCode:'e',type:'y',time:now_year},function(data){
         if(_.isObject(data)){//parking : 停车费,traffic : 车流量
           me.initMap(data,domId,option)
         }

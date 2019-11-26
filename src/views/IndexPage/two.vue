@@ -25,7 +25,7 @@
 import echarts from 'echarts'
 import busHttp from './http.js'
 import _ from 'underscore'
-
+let now_year = new Date().getFullYear();
 export default {
   name: 'TR',
   props: {
@@ -47,7 +47,7 @@ export default {
       },
       queryParams:{
         parkCode:'e',
-        time:new Date().getFullYear()
+        time:now_year
       }
     }
   },
@@ -68,10 +68,10 @@ export default {
       me.initData()
       me.isActive = flag
       flag=='y'?(()=>{
-        busHttp._QueryYoYForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
+        busHttp._QueryYoYForRent(me.dataObj,"/itfparkinfo/searchWY",{parkCode:'e',time:now_year},(res)=>{
           me.initMap(res,"bChart-two",{
             title:{
-              text:this.queryParams.time+'年度',
+              text:now_year+'年度',
               top: '4%'
             },
             series:[{
@@ -93,10 +93,10 @@ export default {
           me.errorEvent(error)
         })
       })():(()=>{
-        busHttp._QueryQoQForRent(me.dataObj,"/itfparkinfo/searchWY",me.queryParams,(res)=>{
+        busHttp._QueryQoQForRent(me.dataObj,"/itfparkinfo/searchWY",{parkCode:'e',time:now_year},(res)=>{
           me.initMap(res,"bChart-two",{
             title:{
-              text:this.queryParams.time+'年度',
+              text:now_year+'年度',
               top: '4%'
             },
             series:[{
@@ -133,7 +133,7 @@ export default {
         this.initData()
         this.sendHttpForFee('bChart-two',{
           title:{
-            text:this.queryParams.time+'年度',
+            text:now_year+'年度',
             top: '4%'
           },
           series:[{
@@ -160,7 +160,7 @@ export default {
     },
     sendHttpForFee (domId,option) {
       let me = this
-      busHttp._QueryRent(me.dataObj,me.queryParams,function(data){
+      busHttp._QueryRent(me.dataObj,{parkCode:'e',time:now_year},function(data){
         if(_.isObject(data)){
           me.initMap(data,domId,option)
         }
